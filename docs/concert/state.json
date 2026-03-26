@@ -1,15 +1,15 @@
 {
-  "mission": "",
-  "mission_path": "",
-  "workflow": "",
-  "workflow_path": "",
-  "branch": "",
+  "mission": "concert2-v1",
+  "mission_path": "docs/concert/missions/2026-03-26-concert2-v1",
+  "workflow": "mission-full",
+  "workflow_path": "docs/concert/workflows/CONCERT-WORKFLOW-MISSION-FULL.md",
+  "branch": "setup-concert",
   "pr_number": 0,
   "status_display": "wip_pr",
-  "feature_size": "",
-  "stage": "init",
+  "feature_size": "large",
+  "stage": "requirements",
   "pipeline": {
-    "vision": "pending",
+    "vision": "accepted",
     "requirements": "pending",
     "architecture": "pending",
     "ux": "pending",
@@ -28,6 +28,20 @@
   "blockers": [],
   "telemetry": [],
   "failure_log": [],
-  "history": [],
-  "next_steps": []
+  "history": [
+    {
+      "action": "mission_created",
+      "timestamp": "2026-03-26",
+      "details": "Vision captured via interactive interview"
+    },
+    {
+      "action": "vision_accepted",
+      "timestamp": "2026-03-26",
+      "details": "Vision accepted, VISION-SPEC.md created, advancing to requirements"
+    }
+  ],
+  "next_steps": [
+    "Run /concert:plan to generate requirements from the accepted vision",
+    "Run /concert:status to check current status"
+  ]
 }
