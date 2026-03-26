@@ -7,10 +7,10 @@
   "pr_number": 2,
   "status_display": "wip_pr",
   "feature_size": "large",
-  "stage": "requirements",
+  "stage": "architecture",
   "pipeline": {
     "vision": "accepted",
-    "requirements": "draft",
+    "requirements": "accepted",
     "architecture": "pending",
     "ux": "pending",
     "tasks": "pending"
@@ -43,12 +43,20 @@
       "action": "requirements_drafted",
       "timestamp": "2026-03-26",
       "details": "Requirements formalized: 34 functional, 7 non-functional, 6 data, 5 integration, 12 edge cases, 5 open questions"
+    },
+    {
+      "action": "requirements_reviewed",
+      "timestamp": "2026-03-26",
+      "details": "Requirements reviewed: added FR-035 through FR-041, updated FR-009/011/013/017/018/020/025, resolved open questions #1 and #5"
+    },
+    {
+      "action": "requirements_accepted",
+      "timestamp": "2026-03-26",
+      "details": "Requirements accepted, REQUIREMENTS-SPEC.md created, advancing to architecture. Final count: 41 functional, 7 non-functional, 6 data, 5 integration requirements"
     }
   ],
   "next_steps": [
-    "Review requirements: docs/concert/missions/2026-03-26-concert2-v1/REQUIREMENTS.md",
-    "Refine them: /concert:review",
-    "Accept & continue: /concert:accept",
-    "Check status: /concert:status"
+    "Run /concert:plan to generate architecture from accepted requirements",
+    "Run /concert:status to check current status"
   ]
 }
