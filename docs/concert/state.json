@@ -10,7 +10,7 @@
   "stage": "requirements",
   "pipeline": {
     "vision": "accepted",
-    "requirements": "pending",
+    "requirements": "draft",
     "architecture": "pending",
     "ux": "pending",
     "tasks": "pending"
@@ -38,10 +38,17 @@
       "action": "vision_accepted",
       "timestamp": "2026-03-26",
       "details": "Vision accepted, VISION-SPEC.md created, advancing to requirements"
+    },
+    {
+      "action": "requirements_drafted",
+      "timestamp": "2026-03-26",
+      "details": "Requirements formalized: 34 functional, 7 non-functional, 6 data, 5 integration, 12 edge cases, 5 open questions"
     }
   ],
   "next_steps": [
-    "Run /concert:plan to generate requirements from the accepted vision",
-    "Run /concert:status to check current status"
+    "Review requirements: docs/concert/missions/2026-03-26-concert2-v1/REQUIREMENTS.md",
+    "Refine them: /concert:review",
+    "Accept & continue: /concert:accept",
+    "Check status: /concert:status"
   ]
 }
