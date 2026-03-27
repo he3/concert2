@@ -65,7 +65,7 @@ Each Claude Code command file follows this exact template. Copy it exactly for e
 | plan.md | concert-analyst, concert-architect, concert-designer, or concert-planner | Plan the next stage — auto-selects the appropriate consultant agent based on pipeline state |
 | run.md | concert-runner | Execute the current phase — runs the code quality loop for each task |
 | review.md | concert-reviewer | Review the current stage draft — two-phase review (user changes, then reviewer concerns) |
-| accept.md | (direct action) | Accept the current stage draft — copy to *-SPEC.md and advance pipeline |
+| accept.md | (direct action) | Accept the current stage draft — copy to *-SPEC.md, finalize stage (does NOT advance pipeline) |
 | status.md | concert-status | Check current mission status — cold-start recovery command |
 | continue.md | concert-continue | Continue work — resume after crashes, timeouts, or cross-environment handoffs |
 | debug.md | concert-debug | Debug a failure — scientific-method debugging with hypothesis testing |
@@ -89,10 +89,10 @@ Each Claude Code command file follows this exact template. Copy it exactly for e
 1. Read state.json to determine current stage
 2. Read the draft document for the current stage
 3. Copy it to `docs/concert/*-SPEC.md` (VISION.md -> VISION-SPEC.md, etc.)
-4. Update state.json: `pipeline.<stage> = "accepted"`, advance `stage` to next
+4. Update state.json: `pipeline.<stage> = "accepted"` (do NOT advance `stage` — that is done by `/concert:continue`)
 5. Update WIP PR body
 6. Commit all changes
-7. Output next steps
+7. Output next steps: prompt user to run `/concert:continue` to advance
 
 **restart.md** — Direct action:
 1. Read state.json to determine current stage

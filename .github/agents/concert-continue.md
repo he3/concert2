@@ -2,10 +2,15 @@
      This file is managed by Concert and will be overwritten on `concert update`.
      Any manual changes will be lost. To customize behavior, see docs/concert/README.md -->
 ---
-description: "Continue Concert mission from where the last session stopped"
+description: "Continue Concert mission — advance to next stage after acceptance, or resume from where the last session stopped"
 concert_version: "1.0.0"
 ---
 Read docs/concert/agents/concert-continue.md for your complete instructions.
 Read docs/concert/state.json for current position.
 Read the workflow file referenced in state.json → workflow_path.
-Continue execution from the current position.
+
+Determine the next action:
+- If a planning stage was just accepted → advance to the next planning stage and run the appropriate consultant
+- If tasks were just accepted → advance to execution stage (but don't auto-run — just update state and show next steps)
+- If in execution → continue from where it left off
+- If there's a failure → assess if continuable or needs debugging

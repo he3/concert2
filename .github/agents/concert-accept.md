@@ -2,7 +2,7 @@
      This file is managed by Concert and will be overwritten on `concert update`.
      Any manual changes will be lost. To customize behavior, see docs/concert/README.md -->
 ---
-description: "Accept the current Concert pipeline stage and advance"
+description: "Accept the current Concert pipeline stage (does not advance — use concert-continue to advance)"
 concert_version: "1.0.0"
 ---
 Read docs/concert/state.json for current position.
@@ -12,6 +12,7 @@ Perform the accept procedure:
 1. Determine the current stage from state.json
 2. Read the plan file for that stage (e.g., VISION.md, REQUIREMENTS.md)
 3. Create the corresponding project-level spec (*-SPEC.md) in docs/concert/
-4. Update state.json → pipeline.<stage> = "accepted"
-5. Advance to the next stage per the workflow definition
-6. Output next steps
+4. Update state.json → pipeline.<stage> = "accepted" (do NOT advance stage — that is done by concert-continue)
+5. Update WIP PR body
+6. Commit
+7. Output next steps: prompt user to run concert-continue to advance to the next stage

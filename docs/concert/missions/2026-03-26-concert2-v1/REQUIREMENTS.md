@@ -125,7 +125,7 @@ The system must support a review cycle at each planning stage (vision, requireme
   - **Phase 2 — Reviewer concerns:** Only after the user has no more changes does the reviewer present its own findings, one concern at a time, organized by severity (critical, important, suggestion). Each concern is discussed and resolved before moving to the next.
 - This two-phase flow ensures the user's priorities are addressed first and that no concern is lost in a wall of text
 - `concert-accept` creates a project-level `*-SPEC.md` from the plan document (vision -> VISION-SPEC.md, requirements -> REQUIREMENTS-SPEC.md, etc.)
-- `concert-accept` updates `state.json` with `pipeline.<stage> = "accepted"` and advances to the next stage
+- `concert-accept` updates `state.json` with `pipeline.<stage> = "accepted"` and prompts the user to run `concert-continue` to advance to the next stage (accept does NOT auto-advance)
 - `concert-restart` discards the current stage output and re-runs the consultant agent from scratch
 - All three commands work with an explicit stage argument or default to the current stage from `state.json`
 - The review agent is interactive-only and fails with a clear message in non-interactive environments

@@ -89,9 +89,17 @@ For each planning stage:
   |
   |- Copy plan doc to *-SPEC.md
   |- Update state.json (pipeline.<stage> = "accepted")
-  |- Advance to next stage
   |- Update WIP PR body
   |- Commit
+  |- Print next steps: /concert:continue to advance, /concert:status to check
+  |
+  v
+/concert:continue
+  |
+  |- Read state.json to determine what's next
+  |- Advance stage to next per workflow
+  |- Run the appropriate consultant agent (for planning stages)
+  |- Or update state for execution (but don't auto-run)
   |- Print next steps
 ```
 
@@ -409,7 +417,7 @@ Agent: [writes VISION.md, creates branch, creates WIP PR, updates state.json, co
 
        Next steps:
          1. Review the vision:       /concert:review
-         2. Accept and advance:      /concert:accept
+         2. Accept the vision:        /concert:accept
          3. Check status:            /concert:status
 ```
 
@@ -521,9 +529,11 @@ Concert Status: concert2-v1
   Next steps:
     1. Review the UX draft:
        Claude Code:  /concert:review
-    2. Accept UX and advance to tasks:
+    2. Accept UX:
        Claude Code:  /concert:accept
-    3. Check the WIP PR:
+    3. After accepting, advance to tasks:
+       Claude Code:  /concert:continue
+    4. Check the WIP PR:
        https://github.com/he3/concert2/pull/42
 ```
 
@@ -683,6 +693,7 @@ _Not started — planning in progress._
 ### Next Steps
 1. Review UX draft in Claude Code: `/concert:review`
 2. Accept UX: `/concert:accept`
+3. After accepting, advance to tasks: `/concert:continue`
 
 ---
 _Updated by Concert at 2026-03-26T18:00:00Z_

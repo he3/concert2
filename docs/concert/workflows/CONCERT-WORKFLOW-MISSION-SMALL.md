@@ -109,9 +109,11 @@ After each planning stage (stages 1–2), the review cycle runs automatically:
 → **Refer to:** `CONCERT-WORKFLOW-REVIEW-CYCLE.md`
 
 The review cycle allows the user to:
-1. **Accept** the stage output → creates `*-SPEC.md` (vision only) and advances
+1. **Accept** the stage output → creates `*-SPEC.md` (vision only) and finishes the stage
 2. **Revise** the stage output → refine via conversation, then re-review
 3. **Restart** the stage → discards output and re-runs the consultant
+
+After accepting, the user runs `/concert:continue` to advance to the next stage.
 
 Stages 3–5 (execution, verification, retrospective) do NOT trigger the interactive
 review cycle.
@@ -125,9 +127,10 @@ After each stage completes and is accepted:
 1. **Create project-level spec** (where applicable):
    - Stage 1 → `VISION-SPEC.md`
    - Stage 2 → No spec (produces TASK files directly)
-2. **Update state.json** — Set `pipeline.<stage>` to `"accepted"` and advance `stage`
+2. **Update state.json** — Set `pipeline.<stage>` to `"accepted"` (do NOT advance `stage` — that is done by `/concert:continue`)
 3. **Update human status display** — Update WIP PR body or `STATUS.md`
-4. **Output next steps** — Show the user what to do next with file paths and commands
+4. **Commit** the spec file and state changes
+5. **Output next steps** — Prompt the user to run `/concert:continue` to advance to the next stage
 
 ---
 

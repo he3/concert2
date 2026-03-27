@@ -46,7 +46,7 @@ This workflow defines the review/accept/restart cycle used at every planning sta
 | Command | Agent | Interactive | Action |
 |---------|-------|-------------|--------|
 | concert-review | concert-reviewer | yes | Two-phase review of the draft document |
-| concert-accept | (no agent) | no | Accept draft, copy to *-SPEC.md, advance pipeline |
+| concert-accept | (no agent) | no | Accept draft, copy to *-SPEC.md, finalize stage (does NOT advance pipeline) |
 | concert-restart | (no agent) | no | Discard draft, re-run the consultant agent |
 
 3. **Two-phase review flow:**
@@ -57,10 +57,10 @@ This workflow defines the review/accept/restart cycle used at every planning sta
 
 4. **Accept behavior:**
    - Copy the draft document to project-level `*-SPEC.md` (e.g., VISION.md -> docs/concert/VISION-SPEC.md)
-   - Update state.json: `pipeline.<stage> = "accepted"`
-   - Advance the `stage` field to the next pipeline stage
+   - Update state.json: `pipeline.<stage> = "accepted"` (do NOT advance `stage` — that is done by `/concert:continue`)
    - Update WIP PR body
    - Commit all changes
+   - Prompt user to run `/concert:continue` to advance to the next stage
 
 5. **Restart behavior:**
    - Update state.json: `pipeline.<stage> = "pending"`
@@ -125,7 +125,7 @@ This workflow defines the post-mission retrospective process.
 ## Acceptance Criteria
 
 - [ ] CONCERT-WORKFLOW-REVIEW-CYCLE.md includes the two-phase review flow with counter format
-- [ ] CONCERT-WORKFLOW-REVIEW-CYCLE.md includes accept behavior (copy to *-SPEC.md, advance pipeline)
+- [ ] CONCERT-WORKFLOW-REVIEW-CYCLE.md includes accept behavior (copy to *-SPEC.md, finalize stage, prompt /concert:continue)
 - [ ] CONCERT-WORKFLOW-REVIEW-CYCLE.md includes restart behavior
 - [ ] CONCERT-WORKFLOW-OBSERVABILITY.md includes the complete telemetry record schema
 - [ ] CONCERT-WORKFLOW-OBSERVABILITY.md includes failure logging rules

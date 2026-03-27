@@ -92,7 +92,8 @@
   ],
   "next_steps": [
     "Run /concert:review to review the task plan",
-    "Run /concert:accept to accept and advance to execution",
+    "Run /concert:accept to accept the task plan",
+    "After accepting, run /concert:continue to advance to execution",
     "Run /concert:status to check current status"
   ]
 }
