@@ -7,11 +7,11 @@
   "pr_number": 2,
   "status_display": "wip_pr",
   "feature_size": "large",
-  "stage": "architecture",
+  "stage": "ux",
   "pipeline": {
     "vision": "accepted",
     "requirements": "accepted",
-    "architecture": "draft",
+    "architecture": "accepted",
     "ux": "pending",
     "tasks": "pending"
   },
@@ -58,11 +58,20 @@
       "action": "architecture_drafted",
       "timestamp": "2026-03-26",
       "details": "Architecture designed: npm package (3 CLI commands, ~1 dependency), markdown agents as brain, TypeScript/tsup build, surgical merge for config/state, quality loop with crash-recoverable quality_loop_state, cross-environment handoff via concert-push"
+    },
+    {
+      "action": "architecture_reviewed",
+      "timestamp": "2026-03-26",
+      "details": "Architecture reviewed: removed simple mode, removed context gating (deferred), simplified model tier routing, added branch/PR strategy (Section 9), added PR merge gate, added documentation agent to phase flow, removed Concert 1 migration, fixed conventional commits"
+    },
+    {
+      "action": "architecture_accepted",
+      "timestamp": "2026-03-26",
+      "details": "Architecture accepted, ARCHITECTURE-SPEC.md created, advancing to UX. 17 sections covering system overview, tech stack, package structure, CLI commands, agent/workflow/skill architecture, state management, GitHub workflow generation, code quality loop, branch/PR strategy, cross-environment handoff, plan usage (deferred), model tier routing, update mechanism, documentation currency, security, trade-offs, dependency budget"
     }
   ],
   "next_steps": [
-    "Run /concert:review to review the architecture draft",
-    "Run /concert:accept to accept and advance to UX stage",
+    "Run /concert:plan to plan the UX stage",
     "Run /concert:status to check current status"
   ]
 }
