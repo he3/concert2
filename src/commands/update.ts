@@ -271,11 +271,13 @@ function updateManagedFilesWithVersionCheck(
       if (!isManagedFile(targetContent)) continue;
 
       const fileVersion = extractHeaderVersion(targetContent);
+      // Always overwrite managed files — they are canonical from the template
+      const fromVersion = fileVersion ? `v${fileVersion}` : "unknown";
+      fs.copyFileSync(srcFile, targetFile);
       if (fileVersion === currentVersion) {
+        // Same version but overwrite anyway (idempotent)
         skippedFiles.push({ path: relPath, version: `v${fileVersion}` });
       } else {
-        const fromVersion = fileVersion ? `v${fileVersion}` : "unknown";
-        fs.copyFileSync(srcFile, targetFile);
         updatedFiles.push({ path: relPath, from: fromVersion, to: `v${currentVersion}` });
       }
     } else {
