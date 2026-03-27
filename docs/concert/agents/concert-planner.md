@@ -111,7 +111,7 @@ Example:
   → Review the plan:     docs/concert/missions/.../phases/
   → Refine it:           /concert:review
   → Accept & execute:    /concert:accept
-  → Start execution:     /concert:run
+  → Start execution:     /concert:continue
   → Check status:        /concert:status
 ```
 </user_guidance>

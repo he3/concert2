@@ -1,6 +1,6 @@
 ---
 task: "agent-planner-runner"
-title: "Write agent definitions for concert-planner and concert-runner"
+title: "Write agent definitions for concert-planner and concert-continue (execution)"
 depends_on: ["default-state-and-config"]
 wave: 1
 model: sonnet
@@ -8,14 +8,14 @@ model: sonnet
 
 ## Objective
 
-Write the full agent definition markdown files for `concert-planner` (the task decomposer) and `concert-runner` (the execution orchestrator). These are the two most complex agents in Concert — the planner decomposes approved plans into executable task files with model-tier optimization, and the runner orchestrates the code quality loop for each task.
+Write the full agent definition markdown files for `concert-planner` (the task decomposer) and `concert-continue` (the execution orchestrator). These are the two most complex agents in Concert — the planner decomposes approved plans into executable task files with model-tier optimization, and the runner orchestrates the code quality loop for each task.
 
 The runner is a **lean orchestrator only**. It does NOT contain coder or reviewer instructions. Those live in separate agent files (`concert-coder.md`, `concert-code-reviewer.md`) created by a separate task.
 
 ## Files
 
 - `templates/docs/concert/agents/concert-planner.md`
-- `templates/docs/concert/agents/concert-runner.md`
+- `templates/docs/concert/agents/concert-continue.md`
 
 ## Requirements
 
@@ -118,10 +118,10 @@ The planner runs as a **single agent** (not subagents) to maximize prompt cache 
 - Does NOT accept or reject prior stages
 - Does NOT split into subagents — stays as a single cached context
 
-### concert-runner.md
+### concert-continue.md
 
 **Frontmatter:**
-- `name: concert-runner`
+- `name: concert-continue`
 - `description: Execution orchestrator — runs the code quality loop for each task`
 - `tools: Read, Write, Edit, Bash, Glob, Grep, Task`
 - `model: balanced`
@@ -135,7 +135,7 @@ The runner is lean in both environments. Coder and reviewer behaviors are define
 
 | Agent file | Purpose | Loaded when |
 |------------|---------|-------------|
-| `concert-runner.md` | Orchestration: task ordering, state, quality loop decisions, telemetry | Always (it's the entry point) |
+| `concert-continue.md` | Orchestration: task ordering, state, quality loop decisions, telemetry | Always (it's the entry point) |
 | `concert-coder.md` | TDD implementation: read task, write tests, implement, verify, commit | When it's time to code a task |
 | `concert-code-reviewer.md` | Code review: read diff against acceptance criteria, rate findings by severity | When it's time to review a task |
 
@@ -233,14 +233,14 @@ How these are invoked depends on the environment:
 - [ ] `concert-planner.md` includes detailed model tier assignment guidelines with downtierring rules
 - [ ] `concert-planner.md` includes task file format specification
 - [ ] `concert-planner.md` includes dependency DAG validation rules
-- [ ] `concert-runner.md` includes the full code quality loop with all decision branches
-- [ ] `concert-runner.md` documents coder continuation (SendMessage) across iterations instead of respawning
-- [ ] `concert-runner.md` documents why reviewers are fresh-spawned each iteration (different diffs)
-- [ ] `concert-runner.md` includes the pre-loading table (what orchestrator reads vs. subagents)
-- [ ] `concert-runner.md` references `concert-coder.md` and `concert-code-reviewer.md` (does NOT inline their instructions)
-- [ ] `concert-runner.md` includes state management and crash recovery details
-- [ ] `concert-runner.md` includes environment detection logic (Task tool presence)
-- [ ] `concert-runner.md` includes documentation agent spawning after phase completion
+- [ ] `concert-continue.md` includes the full code quality loop with all decision branches
+- [ ] `concert-continue.md` documents coder continuation (SendMessage) across iterations instead of respawning
+- [ ] `concert-continue.md` documents why reviewers are fresh-spawned each iteration (different diffs)
+- [ ] `concert-continue.md` includes the pre-loading table (what orchestrator reads vs. subagents)
+- [ ] `concert-continue.md` references `concert-coder.md` and `concert-code-reviewer.md` (does NOT inline their instructions)
+- [ ] `concert-continue.md` includes state management and crash recovery details
+- [ ] `concert-continue.md` includes environment detection logic (Task tool presence)
+- [ ] `concert-continue.md` includes documentation agent spawning after phase completion
 - [ ] Both files follow the agent file format exactly
 - [ ] Both files start with the managed header
 - [ ] Both files have complete boundaries section

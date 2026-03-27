@@ -627,7 +627,7 @@ The orchestrator routes each task to its assigned model tier. Per-task model rou
 2. All tasks in that session run on the selected model
 3. Task files are grouped by model tier so the user can launch separate sessions per tier
 ```
-The planner groups tasks into task files by model tier. The user launches `concert-run` (or `concert-continue`) multiple times — once with sonnet selected for sonnet-tier task files, once with opus for opus-tier files. The agent skips task files that don't match the session's model tier, or the user specifies which tier to run.
+The planner groups tasks into task files by model tier. The user launches `concert-continue` multiple times — once with sonnet selected for sonnet-tier task files, once with opus for opus-tier files. The agent skips task files that don't match the session's model tier, or the user specifies which tier to run.
 
 This is why task filenames include the model suffix (e.g., `TASK-2026-03-28-auth-middleware-sonnet.md`) — it tells the user which model to select in the GitHub UI.
 

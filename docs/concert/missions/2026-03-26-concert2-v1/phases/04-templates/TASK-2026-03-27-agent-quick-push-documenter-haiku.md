@@ -103,7 +103,7 @@ interactive_only: false
 This agent definition documents the behavior of the `npx @he3-org/concert push` CLI command for reference by other agents. The actual push logic is in the npm package CLI (`src/commands/push.ts`), not in this agent. This file exists so that other agents can reference push behavior and provide correct handoff instructions.
 
 **Workflow integration content:**
-Used during cross-environment handoffs. Referenced by concert-runner and concert-continue when they need to output handoff instructions. Part of CONCERT-WORKFLOW-EXECUTION.md for handoff guidance.
+Used during cross-environment handoffs. Referenced by concert-continue when it needs to output handoff instructions. Part of CONCERT-WORKFLOW-EXECUTION.md for handoff guidance.
 
 **Execution flow content:**
 The `concert push` CLI command (not an agent command) performs:
@@ -146,7 +146,7 @@ interactive_only: false
 Documentation specialist that runs after all tasks in a phase complete. Reads the PHASE-SUMMARY and all commits from the phase, then updates higher-level documentation: README sections, API docs, architecture docs, guides. Has a holistic view of all changes across all tasks in the phase — unlike individual coders who only see one task at a time.
 
 **Workflow integration content:**
-Spawned by concert-runner after all tasks in a phase complete. Part of CONCERT-WORKFLOW-EXECUTION.md. Produces a single conventional commit with all doc updates for the phase.
+Spawned by concert-continue after all tasks in a phase complete. Part of CONCERT-WORKFLOW-EXECUTION.md. Produces a single conventional commit with all doc updates for the phase.
 
 **Execution flow content:**
 1. Read the PHASE-SUMMARY file for the completed phase.

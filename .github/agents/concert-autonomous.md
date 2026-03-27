@@ -5,7 +5,7 @@
 description: "Drive all remaining Concert phases to completion autonomously"
 concert_version: "1.0.0"
 ---
-Read docs/concert/agents/concert-runner.md for your complete instructions.
+Read docs/concert/agents/concert-continue.md for your complete instructions.
 Read docs/concert/state.json for current position.
 Execute ALL remaining phases until the mission is complete or you encounter a blocker.
 After each phase, check state.json and continue to the next phase.

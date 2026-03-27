@@ -103,7 +103,7 @@ The system must support decomposing approved plans into executable phases and ta
 The system must support executing task files through phases and waves with atomic commits.
 
 **Acceptance Criteria:**
-- The `concert-run` command starts execution from the current phase/task position in `state.json`
+- The `concert-continue` command starts execution from the current phase/task position in `state.json`
 - Tasks within a wave respect dependency ordering (wave 1 before wave 2, etc.)
 - Each task produces exactly one commit with conventional commit format
 - After each task commit, `state.json` is updated with: incremented `tasks_completed`, updated execution position, history entry, and telemetry record
@@ -187,7 +187,7 @@ The system must support updating Concert files in a repository to a new version.
 All Concert commands must be prefixed with `concert-` to avoid collisions with Claude Code and other tools.
 
 **Acceptance Criteria:**
-- Every user-facing command uses the `concert-` prefix: `concert-init`, `concert-plan`, `concert-run`, `concert-review`, `concert-accept`, `concert-restart`, `concert-status`, `concert-continue`, `concert-debug`, `concert-verify`, `concert-replan`, `concert-push`, `concert-quick`
+- Every user-facing command uses the `concert-` prefix: `concert-init`, `concert-plan`, `concert-review`, `concert-accept`, `concert-restart`, `concert-status`, `concert-continue`, `concert-debug`, `concert-verify`, `concert-replan`, `concert-push`, `concert-quick`
 - No Concert command conflicts with built-in Claude Code commands
 - GitHub Agent definition files in `.github/agents/` use the `concert-` prefix in their filenames
 
@@ -333,7 +333,7 @@ Concert commands must work from the GitHub Agents UI.
 - Each Concert command has a corresponding `.github/agents/concert-<name>.md` file
 - GitHub Agent files contain the agent description and point to the full agent definition in `docs/concert/agents/`
 - Agents that require interactivity (`concert-init`, `concert-review`) detect non-interactive environments and output a clear error directing the user to Claude Code
-- Non-interactive agents (`concert-plan`, `concert-run`, `concert-continue`, `concert-status`, `concert-verify`) work fully from GitHub Agents UI
+- Non-interactive agents (`concert-plan`, `concert-continue`, `concert-status`, `concert-verify`) work fully from GitHub Agents UI
 
 ### FR-027: Claude Code Web UI Compatibility (must)
 
@@ -462,7 +462,7 @@ The system must provide a Node CLI command to safely push local work to origin f
 
 ### FR-039: Context/Plan Usage Gating (deferred)
 
-**Deferred until Claude Code exposes plan usage programmatically.** When CC provides a way to read the current plan usage percentage, this requirement should be implemented: gate `concert-run` at task boundaries to stop before hitting the plan usage limit, save state, and output handoff instructions. Until then, plan usage exhaustion is handled as an undetectable halt — recovered via `npx @he3-org/concert push` + `concert-continue`.
+**Deferred until Claude Code exposes plan usage programmatically.** When CC provides a way to read the current plan usage percentage, this requirement should be implemented: gate `concert-continue` at task boundaries to stop before hitting the plan usage limit, save state, and output handoff instructions. Until then, plan usage exhaustion is handled as an undetectable halt — recovered via `npx @he3-org/concert push` + `concert-continue`.
 
 ### FR-040: Documentation Currency (must)
 
@@ -747,7 +747,7 @@ Concert must integrate with the GitHub Agents UI for autonomous agent execution.
 Concert must integrate with Claude Code's skill/command system.
 
 **Acceptance Criteria:**
-- Concert commands are accessible via `/concert:init`, `/concert:plan`, `/concert:run`, `/concert:review`, `/concert:accept`, `/concert:status`, `/concert:continue`, `/concert:debug`, `/concert:verify`
+- Concert commands are accessible via `/concert:init`, `/concert:plan`, `/concert:review`, `/concert:accept`, `/concert:status`, `/concert:continue`, `/concert:debug`, `/concert:verify`
 - Skill commands load and execute the corresponding agent definitions
 - The CLAUDE.md project configuration file references Concert commands
 

@@ -1,6 +1,6 @@
 # /concert:continue
 
-Resume from where the last session stopped, or advance to the next stage after acceptance.
+The universal "do the next thing" command — starts execution, resumes mid-task, or advances to the next stage after acceptance.
 
 ## Steps
 
@@ -9,7 +9,7 @@ Resume from where the last session stopped, or advance to the next stage after a
 3. Assess the current state and determine the next action:
    - If no mission exists → output "No active mission. Start one with `/concert:init`"
    - If a planning stage was just accepted (stage status is "accepted" but pipeline has not advanced) → advance to the next planning stage per the workflow, run the appropriate consultant agent, update state.json
-   - If tasks were just accepted → advance to execution stage, update state.json, but do NOT auto-run execution — just update state and show next steps
+   - If tasks were just accepted → advance to execution stage, update state.json, and begin execution
    - If in execution mid-task → resume that task from the last commit
    - If in execution between tasks → start the next task
    - If in execution between task files → start the next task file
@@ -37,8 +37,8 @@ For planning stages (after advancing and running the consultant):
 For execution (after advancing to execution stage):
 ```
 📋 Next steps:
-  → Start execution:    /concert:run
-  → Check status:       /concert:status
+  → Continue execution:  /concert:continue
+  → Check status:        /concert:status
 ```
 
 For mid-execution resume:

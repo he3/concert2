@@ -50,7 +50,7 @@ This is the large feature workflow. All stages are active.
 | architecture | concert-architect | no | Generate ARCHITECTURE.md from accepted requirements |
 | ux | concert-designer | no | Generate UX.md from accepted architecture |
 | tasks | concert-planner | no | Decompose approved plans into task files |
-| execution | concert-runner | no | Execute task files through the code quality loop |
+| execution | concert-continue | no | Execute task files through the code quality loop |
 | verification | concert-verifier | no | Verify completed work against requirements |
 
 3. **Stage transition rules:**

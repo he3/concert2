@@ -113,7 +113,7 @@ For each planning stage:
 **Trigger:** After tasks stage is accepted, the user runs phases.
 
 ```
-/concert:run (or /concert:continue)
+/concert:continue
   |
   |- Read state.json for execution position
   |- For each task in current phase:
@@ -281,7 +281,7 @@ Warning: Concert files already exist in this repository
 Concert updated to v0.4.0 (was v0.3.0)
 
   Updated managed files:
-    docs/concert/agents/concert-runner.md    (v0.3.0 -> v0.4.0)
+    docs/concert/agents/concert-continue.md  (v0.3.0 -> v0.4.0)
     docs/concert/agents/concert-reviewer.md  (v0.3.0 -> v0.4.0)
     docs/concert/workflows/CONCERT-WORKFLOW-EXECUTION.md  (v0.3.0 -> v0.4.0)
 
@@ -904,7 +904,7 @@ Verification complete: [pass-count]/[total-count] requirements passed
     1. Review verification results:
        Read [mission-path]/VERIFICATION.md
     2. [If gaps:] Run gap closure tasks:
-       /concert:run
+       /concert:continue
     3. [If all pass:] Mission complete!
 ```
 

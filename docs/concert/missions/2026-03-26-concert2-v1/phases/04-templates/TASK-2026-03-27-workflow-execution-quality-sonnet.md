@@ -95,7 +95,7 @@ This workflow governs the orchestrator-coder-reviewer loop for a single task.
 
 1. **Loop structure:**
 ```
-Orchestrator (concert-runner)
+Orchestrator (concert-continue)
   |
   |--> Spawn Coder (model from task frontmatter)
   |      |- Read task file, applicable skills

@@ -42,11 +42,10 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 
 - `/concert:init` — Start a new mission
 - `/concert:plan` — Plan a stage
-- `/concert:run` — Execute a phase
 - `/concert:review` — Review a stage
 - `/concert:accept` — Accept a stage
 - `/concert:status` — Check current status
-- `/concert:continue` — Continue work
+- `/concert:continue` — Continue to next stage or resume execution
 - `/concert:debug` — Debug an issue
 - `/concert:verify` — Verify work
 - `/concert:quick` — Run a quick task

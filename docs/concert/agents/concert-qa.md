@@ -101,7 +101,7 @@ Gaps:
 📋 Next steps:
   → Review gaps:          docs/concert/missions/.../VERIFICATION.md
   → Auto-generated fix tasks in: docs/concert/missions/.../phases/fix/
-  → Run fixes:            /concert:run fix
+  → Run fixes:            /concert:continue
   → Re-verify:            /concert:verify
 ```
 </user_guidance>

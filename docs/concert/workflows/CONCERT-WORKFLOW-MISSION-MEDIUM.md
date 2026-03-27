@@ -33,7 +33,7 @@ Each planning stage (1–4) triggers the review cycle defined in
 | 2 | requirements | concert-analyst | VISION.md, codebase, specs | REQUIREMENTS.md | 3 |
 | 3 | architecture | concert-architect | VISION.md, REQUIREMENTS.md, specs | ARCHITECTURE.md | 4 |
 | 4 | tasks | concert-planner | all mission docs, specs, codebase | phases/ with model-tiered TASK files | 5 |
-| 5 | execution | concert-runner | TASK files (model per file) | code + PHASE-SUMMARY files | 6 |
+| 5 | execution | concert-continue | TASK files (model per file) | code + PHASE-SUMMARY files | 6 |
 | 6 | verification | concert-qa | REQUIREMENTS-SPEC.md, PHASE-SUMMARY files | VERIFICATION.md + COST-REPORT.md | 7 |
 | 7 | retrospective | concert-retrospective | telemetry[], COST-REPORT.md, failure_log, mission docs | CONCERT-IMPROVEMENT.md | done |
 
@@ -79,8 +79,8 @@ Each planning stage (1–4) triggers the review cycle defined in
 
 ### Stage 5: Execution
 
-- **Command:** `/concert:run`
-- **Agent:** `concert-runner` (spawns subagents per task model tier)
+- **Command:** `/concert:continue`
+- **Agent:** `concert-continue` (spawns subagents per task model tier)
 - **Interactive:** No — can run autonomously
 - **Reads:** `TASK-*.md` files, `CONCERT-WORKFLOW-EXECUTION.md` for wave/failure rules
 - **Produces:** Committed code, `PHASE-SUMMARY-NN.md` files, telemetry records

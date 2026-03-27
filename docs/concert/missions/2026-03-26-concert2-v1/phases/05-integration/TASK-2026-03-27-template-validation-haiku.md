@@ -53,7 +53,8 @@ const expectedAgents = [
   "concert-architect",
   "concert-designer",
   "concert-planner",
-  "concert-runner",
+  "concert-coder",
+  "concert-code-reviewer",
   "concert-reviewer",
   "concert-continue",
   "concert-status",
@@ -84,7 +85,7 @@ const expectedAgents = [
 
 ```typescript
 const expectedCommands = [
-  "init", "plan", "run", "review", "accept", "status",
+  "init", "plan", "review", "accept", "status",
   "continue", "debug", "verify", "quick", "push", "restart", "replan",
 ];
 // For each command:

@@ -31,7 +31,7 @@ pipeline advances. Execution follows `CONCERT-WORKFLOW-EXECUTION.md` rules.
 | 3 | architecture | concert-architect | VISION.md, REQUIREMENTS.md, existing specs | ARCHITECTURE.md | 4 |
 | 4 | ux | concert-designer | all mission docs, platform UX skills | UX.md | 5 |
 | 5 | tasks | concert-planner | all mission docs, all specs, codebase | phases/ with model-tiered TASK files | 6 |
-| 6 | execution | concert-runner | TASK files (model per file) | code + PHASE-SUMMARY files | 7 |
+| 6 | execution | concert-continue | TASK files (model per file) | code + PHASE-SUMMARY files | 7 |
 | 7 | verification | concert-qa | REQUIREMENTS-SPEC.md, PHASE-SUMMARY files | VERIFICATION.md + COST-REPORT.md | 8 |
 | 8 | retrospective | concert-retrospective | telemetry[], COST-REPORT.md, failure_log, mission docs | CONCERT-IMPROVEMENT.md | done |
 
@@ -86,8 +86,8 @@ pipeline advances. Execution follows `CONCERT-WORKFLOW-EXECUTION.md` rules.
 
 ### Stage 6: Execution
 
-- **Command:** `/concert:run`
-- **Agent:** `concert-runner` (spawns subagents per task model tier)
+- **Command:** `/concert:continue`
+- **Agent:** `concert-continue` (spawns subagents per task model tier)
 - **Interactive:** No — can run autonomously
 - **Reads:** `TASK-*.md` files, `CONCERT-WORKFLOW-EXECUTION.md` for wave/failure rules
 - **Produces:** Committed code, `PHASE-SUMMARY-NN.md` files, telemetry records

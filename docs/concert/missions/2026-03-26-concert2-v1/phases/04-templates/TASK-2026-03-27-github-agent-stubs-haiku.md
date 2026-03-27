@@ -19,9 +19,10 @@ Create one stub file for each of these agents:
 - `templates/.github/agents/concert-architect.md`
 - `templates/.github/agents/concert-designer.md`
 - `templates/.github/agents/concert-planner.md`
-- `templates/.github/agents/concert-runner.md`
-- `templates/.github/agents/concert-reviewer.md`
+- `templates/.github/agents/concert-coder.md`
+- `templates/.github/agents/concert-code-reviewer.md`
 - `templates/.github/agents/concert-continue.md`
+- `templates/.github/agents/concert-reviewer.md`
 - `templates/.github/agents/concert-status.md`
 - `templates/.github/agents/concert-debug.md`
 - `templates/.github/agents/concert-verifier.md`
@@ -65,9 +66,10 @@ Use the exact descriptions below for each agent stub:
 | concert-architect | Architecture planner — designs system architecture from accepted requirements |
 | concert-designer | UX designer — creates UX specifications from accepted architecture |
 | concert-planner | Task decomposer — breaks approved plans into executable phases, waves, and task files |
-| concert-runner | Execution orchestrator — runs the code quality loop for each task |
+| concert-coder | TDD implementer — writes tests first, implements, verifies all tests pass |
+| concert-code-reviewer | Code quality reviewer — reviews diffs against acceptance criteria with severity ratings |
+| concert-continue | Execution orchestrator and session continuation — starts execution, resumes after crashes/timeouts, or advances to next stage |
 | concert-reviewer | Two-phase reviewer — applies user changes first, then presents reviewer concerns one at a time |
-| concert-continue | Session continuation — resumes work after crashes, timeouts, or cross-environment handoffs |
 | concert-status | Cold-start recovery — reads state.json and displays full mission status with next steps |
 | concert-debug | Scientific-method debugger — forms hypotheses and tests them systematically to fix failures |
 | concert-verifier | Acceptance tester — verifies completed work against requirements |

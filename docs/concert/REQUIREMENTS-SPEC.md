@@ -99,7 +99,7 @@ The system must support decomposing approved plans into executable phases and ta
 The system must support executing task files through phases and waves with atomic commits.
 
 **Acceptance Criteria:**
-- The `concert-run` command starts execution from the current phase/task position in `state.json`
+- The `concert-continue` command starts execution from the current phase/task position in `state.json`
 - Tasks within a wave respect dependency ordering (wave 1 before wave 2, etc.)
 - Each task produces exactly one commit with conventional commit format
 - After each task commit, `state.json` is updated with: incremented `tasks_completed`, updated execution position, history entry, and telemetry record
@@ -183,7 +183,7 @@ The system must support updating Concert files in a repository to a new version.
 All Concert commands must be prefixed with `concert-` to avoid collisions with Claude Code and other tools.
 
 **Acceptance Criteria:**
-- Every user-facing command uses the `concert-` prefix: `concert-init`, `concert-plan`, `concert-run`, `concert-review`, `concert-accept`, `concert-restart`, `concert-status`, `concert-continue`, `concert-debug`, `concert-verify`, `concert-replan`, `concert-push`, `concert-quick`
+- Every user-facing command uses the `concert-` prefix: `concert-init`, `concert-plan`, `concert-review`, `concert-accept`, `concert-restart`, `concert-status`, `concert-continue`, `concert-debug`, `concert-verify`, `concert-replan`, `concert-push`, `concert-quick`
 - No Concert command conflicts with built-in Claude Code commands
 - GitHub Agent definition files in `.github/agents/` use the `concert-` prefix in their filenames
 
@@ -329,7 +329,7 @@ Concert commands must work from the GitHub Agents UI.
 - Each Concert command has a corresponding `.github/agents/concert-<name>.md` file
 - GitHub Agent files contain the agent description and point to the full agent definition in `docs/concert/agents/`
 - Agents that require interactivity (`concert-init`, `concert-review`) detect non-interactive environments and output a clear error directing the user to Claude Code
-- Non-interactive agents (`concert-plan`, `concert-run`, `concert-continue`, `concert-status`, `concert-verify`) work fully from GitHub Agents UI
+- Non-interactive agents (`concert-plan`, `concert-continue`, `concert-status`, `concert-verify`) work fully from GitHub Agents UI
 
 ### FR-027: Claude Code Web UI Compatibility (must)
 
@@ -454,14 +454,14 @@ The system must provide a Node CLI command to safely push local work to origin f
 - If there is nothing to push (already up to date), it outputs a confirmation and next steps
 - The command works without an active LLM session (critical for when CC plan usage is exhausted)
 
-### FR-039: Context Usage Gating for concert-run (must)
+### FR-039: Context Usage Gating for concert-continue (must)
 
-The `concert-run` command must check context usage before starting each new task to avoid mid-task exhaustion.
+The `concert-continue` command must check context usage before starting each new task to avoid mid-task exhaustion.
 
 **Acceptance Criteria:**
 - `concert.jsonc` includes a configurable `"execution.max_context_usage_percent"` value (default: 85)
-- Before starting each new task, `concert-run` checks current context usage (only when running in Claude Code)
-- If context usage exceeds the configured threshold, `concert-run` stops, saves all state (including `quality_loop_state` if active), commits state.json, and outputs handoff instructions: "Run `npx @he3-org/concert push` to push to origin, then run `concert-continue` in GitHub Agents UI"
+- Before starting each new task, `concert-continue` checks current context usage (only when running in Claude Code)
+- If context usage exceeds the configured threshold, `concert-continue` stops, saves all state (including `quality_loop_state` if active), commits state.json, and outputs handoff instructions: "Run `npx @he3-org/concert push` to push to origin, then run `concert-continue` in GitHub Agents UI"
 - The check occurs at the task boundary — never mid-task or mid-quality-loop — so the current task always completes fully before halting
 - In GitHub Agents UI, the check is skipped (GitHub manages its own session limits)
 - If context usage cannot be determined, the agent proceeds with a warning
@@ -749,7 +749,7 @@ Concert must integrate with the GitHub Agents UI for autonomous agent execution.
 Concert must integrate with Claude Code's skill/command system.
 
 **Acceptance Criteria:**
-- Concert commands are accessible via `/concert:init`, `/concert:plan`, `/concert:run`, `/concert:review`, `/concert:accept`, `/concert:status`, `/concert:continue`, `/concert:debug`, `/concert:verify`
+- Concert commands are accessible via `/concert:init`, `/concert:plan`, `/concert:review`, `/concert:accept`, `/concert:status`, `/concert:continue`, `/concert:debug`, `/concert:verify`
 - Skill commands load and execute the corresponding agent definitions
 - The CLAUDE.md project configuration file references Concert commands
 

@@ -55,7 +55,7 @@ Success:
 Concert updated to vX.Y.Z (was vA.B.C)
 
   Updated managed files:
-    docs/concert/agents/concert-runner.md    (vA.B.C -> vX.Y.Z)
+    docs/concert/agents/concert-continue.md  (vA.B.C -> vX.Y.Z)
     ...
 
   Skipped (already current):

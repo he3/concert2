@@ -30,7 +30,7 @@ If any skipped stage is later needed, the user can run `/concert:plan <stage>`
 |---|-------|-------|-------|--------|------|
 | 1 | vision | concert-interviewer | user input, existing specs | VISION.md | 2 |
 | 2 | tasks | concert-planner | VISION.md, all existing specs, codebase | phases/ with model-tiered TASK files | 3 |
-| 3 | execution | concert-runner | TASK files (model per file) | code + PHASE-SUMMARY files | 4 |
+| 3 | execution | concert-continue | TASK files (model per file) | code + PHASE-SUMMARY files | 4 |
 | 4 | verification | concert-qa | REQUIREMENTS-SPEC.md, PHASE-SUMMARY files | VERIFICATION.md + COST-REPORT.md | 5 |
 | 5 | retrospective | concert-retrospective | telemetry[], COST-REPORT.md, failure_log, mission docs | CONCERT-IMPROVEMENT.md | done |
 
@@ -59,8 +59,8 @@ If any skipped stage is later needed, the user can run `/concert:plan <stage>`
 
 ### Stage 3: Execution
 
-- **Command:** `/concert:run`
-- **Agent:** `concert-runner` (spawns subagents per task model tier)
+- **Command:** `/concert:continue`
+- **Agent:** `concert-continue` (spawns subagents per task model tier)
 - **Interactive:** No — can run autonomously
 - **Reads:** `TASK-*.md` files, `CONCERT-WORKFLOW-EXECUTION.md`
 - **Produces:** Committed code, `PHASE-SUMMARY-NN.md` files, telemetry records

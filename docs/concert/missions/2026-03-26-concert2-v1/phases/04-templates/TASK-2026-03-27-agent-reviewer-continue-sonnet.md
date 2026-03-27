@@ -100,7 +100,7 @@ Same as other agent tasks — managed header, YAML frontmatter, six XML sections
 
    **If mid-execution (tasks_completed < tasks_total):**
    - Determine current phase and task position
-   - Resume execution using the same logic as concert-runner
+   - Resume execution using the orchestrator logic (load concert-coder.md/concert-code-reviewer.md on demand)
 
    **If in planning stage (pipeline has a "draft" stage):**
    - Suggest `concert-review` or `concert-accept` for the draft stage
@@ -129,7 +129,7 @@ Same as other agent tasks — managed header, YAML frontmatter, six XML sections
 - Does NOT start new missions — only continues existing ones
 - Does NOT skip tasks or phases
 - Does NOT modify approved mission documents
-- Respects the same quality loop rules as concert-runner
+- Respects the same quality loop rules defined in CONCERT-WORKFLOW-CODE-QUALITY.md
 
 ## Acceptance Criteria
 

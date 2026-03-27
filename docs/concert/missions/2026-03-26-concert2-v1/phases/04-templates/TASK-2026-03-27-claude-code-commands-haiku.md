@@ -63,11 +63,10 @@ Each Claude Code command file follows this exact template. Copy it exactly for e
 |-------------|-------|-------------|
 | init.md | concert-init | Start a new mission — interactive interview to create vision |
 | plan.md | concert-analyst, concert-architect, concert-designer, or concert-planner | Plan the next stage — auto-selects the appropriate consultant agent based on pipeline state |
-| run.md | concert-runner | Execute the current phase — runs the code quality loop for each task |
+| continue.md | concert-continue | Continue work — start execution, resume mid-task, or advance to next stage |
 | review.md | concert-reviewer | Review the current stage draft — two-phase review (user changes, then reviewer concerns) |
 | accept.md | (direct action) | Accept the current stage draft — copy to *-SPEC.md, finalize stage (does NOT advance pipeline) |
 | status.md | concert-status | Check current mission status — cold-start recovery command |
-| continue.md | concert-continue | Continue work — resume after crashes, timeouts, or cross-environment handoffs |
 | debug.md | concert-debug | Debug a failure — scientific-method debugging with hypothesis testing |
 | verify.md | concert-verifier | Verify completed work — check implementation against requirements |
 | quick.md | concert-quick | Run a quick task — skip the full pipeline for small changes |

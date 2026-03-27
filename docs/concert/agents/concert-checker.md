@@ -73,7 +73,7 @@ Example (PASS):
 
 📋 Next steps:
   → Accept the plan:    /concert:accept
-  → Start execution:    /concert:run
+  → Start execution:    /concert:continue
 ```
 
 Example (FAIL):

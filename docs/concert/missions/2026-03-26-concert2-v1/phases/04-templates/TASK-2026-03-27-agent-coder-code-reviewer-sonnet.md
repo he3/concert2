@@ -10,7 +10,7 @@ model: sonnet
 
 Write the full agent definition markdown files for `concert-coder` (the TDD implementer) and `concert-code-reviewer` (the code quality reviewer). These two agents are the core of the code quality loop — the coder implements tasks using TDD, the code-reviewer evaluates the implementation against acceptance criteria.
 
-These are NOT standalone agents that users invoke directly. They are loaded on-demand by the `concert-runner` orchestrator:
+These are NOT standalone agents that users invoke directly. They are loaded on-demand by the `concert-continue` orchestrator:
 - **Claude Code:** Runner spawns them as subagents via the Task tool
 - **GitHub Agents UI:** Runner reads their agent files on demand when entering coder/reviewer mode
 
@@ -37,7 +37,7 @@ These are NOT standalone agents that users invoke directly. They are loaded on-d
 - `tools: Read, Write, Edit, Bash, Glob, Grep`
 - `model: varies` (assigned per task by the runner based on task file frontmatter)
 - `interactive_only: false`
-- `invoked_by: concert-runner` (not user-invocable)
+- `invoked_by: concert-continue` (not user-invocable)
 
 **Role:** Implementation agent that follows TDD discipline. Reads a task file, writes tests first, implements the solution, verifies all tests pass, updates inline documentation, and commits. The coder is focused and single-task — it knows nothing about the broader mission pipeline or other tasks.
 
@@ -88,7 +88,7 @@ These are NOT standalone agents that users invoke directly. They are loaded on-d
 - `tools: Read, Grep, Glob`
 - `model: balanced` (always sonnet — reviewer quality should not vary with task tier)
 - `interactive_only: false`
-- `invoked_by: concert-runner` (not user-invocable)
+- `invoked_by: concert-continue` (not user-invocable)
 
 **Role:** Code review agent that evaluates a coder's implementation against the task's acceptance criteria. Reads the task file and the diff, produces structured findings with severity ratings. The reviewer is adversarial but fair — it catches real issues without nitpicking style preferences that are covered by linters.
 
@@ -139,11 +139,11 @@ These are NOT standalone agents that users invoke directly. They are loaded on-d
 - [ ] `concert-coder.md` includes iteration 2+ flow (receiving and addressing findings)
 - [ ] `concert-coder.md` specifies that it runs ALL tests, not just new ones
 - [ ] `concert-coder.md` includes inline documentation update rules
-- [ ] `concert-coder.md` marks itself as `invoked_by: concert-runner` (not user-invocable)
+- [ ] `concert-coder.md` marks itself as `invoked_by: concert-continue` (not user-invocable)
 - [ ] `concert-code-reviewer.md` includes the full severity rating system (CRIT/MAJ/MIN/NTH/PASS)
 - [ ] `concert-code-reviewer.md` includes structured findings format
 - [ ] `concert-code-reviewer.md` specifies read-only tools only
-- [ ] `concert-code-reviewer.md` marks itself as `invoked_by: concert-runner` (not user-invocable)
+- [ ] `concert-code-reviewer.md` marks itself as `invoked_by: concert-continue` (not user-invocable)
 - [ ] Both files follow the agent file format exactly
 - [ ] Both files start with the managed header
 
