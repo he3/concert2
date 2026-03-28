@@ -135,22 +135,14 @@ npm run test:watch   # Re-run tests on changes
 
 ### Deploying a new version
 
-1. Update the version in `package.json`:
+Releases are automated via [release-please](https://github.com/googleapis/release-please). On merge to `main`:
 
-```bash
-npm version patch   # or minor / major
-```
+1. **release-please** analyzes conventional commits and opens a release PR with a version bump and changelog entry:
+   - `fix:` commits → patch bump
+   - `feat:` commits → minor bump
+   - `feat!:` or `BREAKING CHANGE:` → major bump
+2. When the release PR is merged, the workflow builds, tests, and **publishes to npm** automatically.
 
-2. Build and test:
+To trigger a release, just merge PRs with conventional commit titles to `main`. No manual version bumps needed.
 
-```bash
-npm run build && npm test
-```
-
-3. Publish to npm:
-
-```bash
-npm publish --access public
-```
-
-The package is scoped to `@he3-org/concert`, so `--access public` is required on first publish or if the scope default is private.
+**Setup required:** Add an `NPM_TOKEN` secret to the repository for npm publishing.
