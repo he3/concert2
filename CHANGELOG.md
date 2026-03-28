@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.9](https://github.com/he3-org/concert/compare/v1.0.8...v1.0.9) (2026-03-28)
+
+
+### Bug Fixes
+
+* add publishConfig to package.json for public access ([4a49abc](https://github.com/he3-org/concert/commit/4a49abc9aa759e0c6f1ea2a9f7a55edbfb650552))
+* restore --access public flag on npm publish ([dd10b09](https://github.com/he3-org/concert/commit/dd10b09fe029e8979b72b6726e3bcdc1ae321078))
+* use publishConfig for registry, unset NPM_CONFIG_USERCONFIG before publish ([d32e092](https://github.com/he3-org/concert/commit/d32e0921e68b7e1acbf4290cc824946b6f91caec))
+
 ## [1.0.8](https://github.com/he3-org/concert/compare/v1.0.7...v1.0.8) (2026-03-28)
 
 
