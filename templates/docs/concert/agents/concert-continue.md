@@ -54,6 +54,9 @@ Entry point for all execution and continuation scenarios. Works with all mission
 - **If execution complete** (tasks_completed == tasks_total):
   Suggest `/concert:verify`.
 
+- **If mission is verified/complete:**
+  Suggest `/concert:archive` to remove the mission folder and reset state.
+
 **Step 3: Execute the current task (one at a time):**
 
 Do NOT read ahead into future tasks or phases. Execute only the current task:

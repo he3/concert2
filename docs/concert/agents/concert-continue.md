@@ -65,7 +65,7 @@ Before doing anything:
    → Run QA agent if not yet done, or report verification results
 
    **If mission is complete:**
-   → Report completion status and suggest shipping
+   → Report completion status and suggest `/concert:archive` to remove the mission folder and reset state
 
 4. **Commit state.json after every update** — task completion, phase advancement, stage changes.
    Run `git add docs/concert/state.json && git commit` after each state change.

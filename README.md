@@ -90,6 +90,7 @@ Then on the other side:
 /concert:quick <task>  # Quick one-off task outside the pipeline
 /concert:restart       # Restart a stage
 /concert:replan        # Replan a stage
+/concert:archive       # Archive completed mission and reset state
 ```
 
 ## Development
