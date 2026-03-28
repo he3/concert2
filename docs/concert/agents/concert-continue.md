@@ -35,40 +35,48 @@ Before doing anything:
    **If no mission exists:**
    → Output: "No active mission. Start one with `/concert:init`"
 
-   **If in planning stages (vision/requirements/architecture/ux/tasks):**
-   a. Check which stage is current and its status
-   b. If stage has a draft → suggest review or accept
-   c. If stage needs to be run → invoke the appropriate consultant agent
-   d. Follow the workflow's stage transition rules
+   **If a stage needs planning** (stage is pending, no draft exists):
+   Read and invoke the specific consultant agent for the current stage:
+   - `requirements` → read `docs/concert/agents/concert-analyst.md`, follow its instructions
+   - `architecture` → read `docs/concert/agents/concert-architect.md`, follow its instructions
+   - `ux` → read `docs/concert/agents/concert-designer.md`, follow its instructions
+   - `tasks` → read `docs/concert/agents/concert-planner.md`, follow its instructions
+   No other agent may be used for these stages.
+
+   **If in planning stage with a draft:**
+   Suggest `/concert:review` or `/concert:accept` for the draft stage.
 
    **If in execution stage:**
-   a. Parse `pipeline.execution` for exact position:
-      - phase, task_file, task_index, total_tasks
-   b. Determine continuation point:
+   The exact position is already in state.json: `current_phase`, `current_task_file`, `current_task_index`.
+   Read ONLY the current task file — do NOT read other task files or scan all phases.
+   Determine continuation point from state.json:
       - **Mid-task** (task_index > 0, task not in telemetry) → resume from last commit in that task
       - **Between tasks** (task just completed) → start next task in the file
       - **Between task files** (file just completed) → start next task file in the phase
-      - **Between phases** (phase just completed) → check if replanning needed, then start next phase
+      - **Between phases** (phase just completed) → start next phase
       - **All phases done** → run verification
-   c. Check for failure block:
+   Check for failure block:
       - If present → assess: can we retry, or does this need `/concert:debug`?
       - If retryable → clear failure, attempt the task again
       - If not retryable → report and suggest debugging
-   d. Execute the determined action following workflow rules
-   e. Update state.json continuously during execution
+   Execute the current task, then advance to the next. Do NOT read ahead into future tasks or phases.
 
    **If in verification stage:**
    → Run QA agent if not yet done, or report verification results
 
    **If mission is complete:**
-   → Report completion status and suggest shipping
+   → Report completion status and suggest `/concert:archive` to remove the mission folder and reset state
 
-4. After execution or at session end:
+4. **Commit state.json after every update** — task completion, phase advancement, stage changes.
+   Run `git add docs/concert/state.json && git commit` after each state change.
+   This is non-negotiable: crash recovery must lose at most one task of work.
+5. After execution or at session end:
    a. Update state.json with clear next_steps for the NEXT continuation
    b. Update history with what this session accomplished
    c. Update human status display
-5. Report confidence in what was accomplished
-6. Output next steps
+   d. Commit state.json
+6. Report confidence in what was accomplished
+7. Output next steps
 
 On failure:
 1. Update state.json with failure details
@@ -78,12 +86,26 @@ On failure:
 </execution_flow>
 
 <user_guidance>
-CRITICAL: Every output you produce MUST end with a "Next steps" section.
+CRITICAL: Every output you produce MUST end with a "Next steps" section that is specific to the current state. Never use generic placeholders — always include:
+- The exact document path to review (e.g., `docs/concert/missions/.../REQUIREMENTS.md`)
+- The exact stage name that `/concert:continue` will advance to
+- The exact stage name that `/concert:review` will act on
+
+Example (after planning a stage):
+```
+✅ Requirements drafted: docs/concert/missions/2026-03-28-auth-system/REQUIREMENTS.md
+
+📋 Next steps:
+  → Review requirements:     /concert:review requirements
+    (reviews docs/concert/missions/2026-03-28-auth-system/REQUIREMENTS.md)
+  → Accept and advance:      /concert:accept requirements
+    (creates REQUIREMENTS-SPEC.md, then /concert:continue advances to architecture)
+  → Check status:            /concert:status
+```
 
 Example (resuming execution):
 ```
 📍 Continuing from: Phase 3, TASK-rest-endpoints-sonnet, Task 3 (Pagination)
-   Previous session: crashed at context 67%
 
 ✅ Task 3 complete: Add pagination to list endpoints
 ✅ Task 4 complete: Add sorting to list endpoints
@@ -91,7 +113,7 @@ Example (resuming execution):
 📊 Phase 3: 100% complete (4/4 tasks)
 
 📋 Next steps:
-  → Review phase summary:  docs/concert/missions/.../phases/03/PHASE-SUMMARY-03.md
+  → Review phase summary:  docs/concert/missions/2026-03-28-auth-system/phases/03/PHASE-SUMMARY-03.md
   → Continue to Phase 4:   /concert:continue
   → Verify all work:       /concert:verify
   → Check status:          /concert:status
@@ -123,4 +145,8 @@ Example (resuming execution):
 - NEVER skip confidence reporting
 - NEVER proceed past failures without explicit retry logic or user guidance
 - NEVER modify mission planning documents during execution
+- MUST use ONLY the agent files in `docs/concert/agents/` — never discover or use agents from other sources
+- MUST use the exact agent specified for each scenario in the execution flow above — no substitutions
+- MUST NOT read all task files or scan all phases before executing — state.json has the exact position, read only the current task file
+- MUST commit state.json after every update — task completion, phase advancement, stage changes. Never batch state commits.
 </boundaries>

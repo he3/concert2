@@ -21,7 +21,6 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 ### Commands
 
 - \`/concert:init\` — Start a new mission
-- \`/concert:plan\` — Plan a stage
 - \`/concert:review\` — Review a stage
 - \`/concert:accept\` — Accept a stage
 - \`/concert:status\` — Check current status
@@ -31,6 +30,7 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 - \`/concert:quick\` — Run a quick task
 - \`/concert:restart\` — Restart a stage
 - \`/concert:replan\` — Replan from a stage
+- \`/concert:archive\` — Archive completed mission and reset state
 
 ### State
 
@@ -40,6 +40,17 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 - Workflows: \`docs/concert/workflows/\`
 - Skills: \`docs/concert/skills/\`
 - Missions: \`docs/concert/missions/\`
+
+### Do Not Modify
+
+The following paths are managed by Concert and must not be modified by other agents, refactoring tools, or automated processes. They will be overwritten on \`concert update\`:
+
+- \`docs/concert/agents/\`
+- \`docs/concert/workflows/\`
+- \`docs/concert/skills/\`
+- \`.claude/commands/concert/\`
+- \`.github/agents/concert-*.agent.md\`
+- \`concert.jsonc\` (modify manually only — Concert preserves your changes on update)
 
 ${CLAUDE_SECTION_END}`;
 }

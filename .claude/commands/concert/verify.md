@@ -26,4 +26,5 @@ After verify, output:
   → Improvements:         docs/concert/missions/.../CONCERT-IMPROVEMENT.md
   → If issues found:      /concert:run (gap-closure tasks auto-generated)
   → If clean:             Mission complete! Create PR for human review.
+  → Archive mission:      /concert:archive (removes mission folder, resets state)
 ```

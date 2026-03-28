@@ -10,3 +10,4 @@ Verify completed work — check implementation against requirements.
 2. Follow the execution flow defined in that agent.
 3. Read `docs/concert/state.json` for current mission state.
 4. Follow the agent's operating principles and boundaries exactly.
+5. After successful verification, suggest `/concert:archive` to clean up the mission folder and reset state.
