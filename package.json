@@ -11,8 +11,10 @@
     "templates"
   ],
   "scripts": {
+    "prebuild": "bash scripts/sync-templates.sh",
     "build": "tsup",
     "dev": "tsup --watch",
+    "pretest": "bash scripts/sync-templates.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
