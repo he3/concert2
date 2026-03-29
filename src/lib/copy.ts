@@ -195,15 +195,7 @@ export const LIVE_FILE_SOURCES = [
   { src: "docs/concert/skills/typescript-standards", target: "docs/concert/skills/typescript-standards" },
   { src: ".claude/commands/concert", target: ".claude/commands/concert" },
   { src: ".github/agents", target: ".github/agents", pattern: /^concert-.*\.agent\.md$/ },
-] as const;
-
-/**
- * GitHub workflow files that ship with Concert.
- * These are in templates/ since the concert repo's own workflows differ.
- */
-export const TEMPLATE_WORKFLOW_SOURCES = [
-  { src: ".github/workflows/concert-ci.yml", target: ".github/workflows/concert-ci.yml" },
-  { src: ".github/workflows/concert-version-check.yml", target: ".github/workflows/concert-version-check.yml" },
+  { src: ".github/workflows", target: ".github/workflows", pattern: /^concert-.*\.yml$/ },
 ] as const;
 
 /**
@@ -251,30 +243,6 @@ export function copyLiveFiles(
         fs.copyFileSync(srcFile, destFile);
         result.created.push(relPath);
       }
-    }
-  }
-
-  // Copy template workflow files
-  const templatesDir = path.join(packageRoot, "templates");
-  for (const wf of TEMPLATE_WORKFLOW_SOURCES) {
-    const srcFile = path.join(templatesDir, wf.src);
-    if (!fs.existsSync(srcFile)) continue;
-    const destFile = path.join(targetDir, wf.target);
-    const dir = path.dirname(destFile);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    const relPath = wf.target;
-    if (fs.existsSync(destFile)) {
-      if (overwrite) {
-        fs.copyFileSync(srcFile, destFile);
-        result.overwritten.push(relPath);
-      } else {
-        result.skipped.push(relPath);
-      }
-    } else {
-      fs.copyFileSync(srcFile, destFile);
-      result.created.push(relPath);
     }
   }
 

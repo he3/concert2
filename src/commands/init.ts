@@ -159,7 +159,7 @@ export async function runInit(cwd: string): Promise<number> {
   const workflowCount = liveCounts["workflows"] ?? 0;
   const skillCount = (liveCounts["cli-ux-guidelines"] ?? 0) + (liveCounts["typescript-standards"] ?? 0);
   const ghAgentCount = liveCounts["agents"] ?? 0;
-  const ghWorkflowCount = 2; // concert-ci.yml + concert-version-check.yml
+  const ghWorkflowCount = liveCounts["workflows"] ?? 0;
   const commandCount = liveCounts["concert"] ?? 0;
 
   // Output success

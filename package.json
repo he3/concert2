@@ -14,7 +14,9 @@
     "docs/concert/skills/cli-ux-guidelines",
     "docs/concert/skills/typescript-standards",
     ".claude/commands/concert",
-    ".github/agents"
+    ".github/agents",
+    ".github/workflows/concert-ci.yml",
+    ".github/workflows/concert-version-check.yml"
   ],
   "scripts": {
     "build": "tsup",
