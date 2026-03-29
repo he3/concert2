@@ -1,14 +1,16 @@
 {
-  "mission": "",
-  "mission_path": "",
-  "workflow": "",
-  "workflow_path": "",
-  "branch": "",
+  "mission": "Centralize Workflow Stage Definitions",
+  "mission_path": "docs/concert/missions/2026-03-29-centralize-workflow-stages",
+  "workflow": "mission-medium",
+  "workflow_path": "docs/concert/workflows/CONCERT-WORKFLOW-MISSION-MEDIUM.md",
+  "branch": "concert/centralize-workflow-stages",
   "pr_number": 0,
   "status_display": "wip_pr",
-  "feature_size": "",
-  "stage": "",
-  "pipeline": {},
+  "feature_size": "medium",
+  "stage": "vision",
+  "pipeline": {
+    "vision": "draft"
+  },
   "phases_completed": 0,
   "phases_total": 0,
   "tasks_completed": 0,
@@ -22,8 +24,15 @@
   "blockers": [],
   "telemetry": [],
   "failure_log": [],
-  "history": [],
+  "history": [
+    {
+      "action": "mission_initialized",
+      "timestamp": "2026-03-29T17:45:00Z",
+      "details": "Medium mission — centralize workflow stage definitions and user guidance"
+    }
+  ],
   "next_steps": [
-    "Run /concert:init to start a new mission"
+    "Review vision: /concert:review",
+    "Accept vision: /concert:accept"
   ]
 }
