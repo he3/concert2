@@ -184,6 +184,12 @@ function countRecursive(
 }
 
 /**
+ * Skills excluded from shipping. These are specific to the Concert repo
+ * and not useful for target repos. Everything else in docs/concert/skills/ ships.
+ */
+export const EXCLUDED_SKILLS: readonly string[] = [];
+
+/**
  * Live file sources that ship directly from the package (not templates).
  * Each entry maps a source directory (relative to package root) to a target
  * directory (relative to user's project root).
@@ -191,12 +197,24 @@ function countRecursive(
 export const LIVE_FILE_SOURCES = [
   { src: "docs/concert/agents", target: "docs/concert/agents" },
   { src: "docs/concert/workflows", target: "docs/concert/workflows" },
-  { src: "docs/concert/skills/cli-ux-guidelines", target: "docs/concert/skills/cli-ux-guidelines" },
-  { src: "docs/concert/skills/typescript-standards", target: "docs/concert/skills/typescript-standards" },
   { src: ".claude/commands/concert", target: ".claude/commands/concert" },
   { src: ".github/agents", target: ".github/agents", pattern: /^concert-.*\.agent\.md$/ },
   { src: ".github/workflows", target: ".github/workflows", pattern: /^concert-.*\.yml$/ },
 ] as const;
+
+/**
+ * Discover all skill directories that should ship, excluding EXCLUDED_SKILLS.
+ */
+export function discoverSkills(packageRoot: string): Array<{ src: string; target: string }> {
+  const skillsDir = path.join(packageRoot, "docs", "concert", "skills");
+  if (!fs.existsSync(skillsDir)) return [];
+  return fs.readdirSync(skillsDir, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !EXCLUDED_SKILLS.includes(e.name))
+    .map((e) => ({
+      src: `docs/concert/skills/${e.name}`,
+      target: `docs/concert/skills/${e.name}`,
+    }));
+}
 
 /**
  * Copy live files from the package root to the target directory.
@@ -209,7 +227,10 @@ export function copyLiveFiles(
 ): CopyResult {
   const result: CopyResult = { created: [], skipped: [], overwritten: [] };
 
-  for (const source of LIVE_FILE_SOURCES) {
+  // Combine static sources with dynamically discovered skills
+  const allSources = [...LIVE_FILE_SOURCES, ...discoverSkills(packageRoot)];
+
+  for (const source of allSources) {
     const srcDir = path.join(packageRoot, source.src);
     if (!fs.existsSync(srcDir)) continue;
 
@@ -254,7 +275,8 @@ export function copyLiveFiles(
  */
 export function countLiveFiles(packageRoot: string): Record<string, number> {
   const counts: Record<string, number> = {};
-  for (const source of LIVE_FILE_SOURCES) {
+  const allSources = [...LIVE_FILE_SOURCES, ...discoverSkills(packageRoot)];
+  for (const source of allSources) {
     const srcDir = path.join(packageRoot, source.src);
     if (!fs.existsSync(srcDir)) continue;
     const category = path.basename(source.src);
@@ -264,6 +286,11 @@ export function countLiveFiles(packageRoot: string): Record<string, number> {
       if ("pattern" in source && source.pattern && !source.pattern.test(entry.name)) continue;
       counts[category] = (counts[category] ?? 0) + 1;
     }
+  }
+  // Roll up individual skill counts into a single "skills" count
+  const skills = discoverSkills(packageRoot);
+  if (skills.length > 0) {
+    counts["skills"] = skills.length;
   }
   return counts;
 }

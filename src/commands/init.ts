@@ -157,7 +157,7 @@ export async function runInit(cwd: string): Promise<number> {
   const liveCounts = countLiveFiles(packageRoot);
   const agentCount = liveCounts["agents"] ?? 0;
   const workflowCount = liveCounts["workflows"] ?? 0;
-  const skillCount = (liveCounts["cli-ux-guidelines"] ?? 0) + (liveCounts["typescript-standards"] ?? 0);
+  const skillCount = liveCounts["skills"] ?? 0;
   const ghAgentCount = liveCounts["agents"] ?? 0;
   const ghWorkflowCount = liveCounts["workflows"] ?? 0;
   const commandCount = liveCounts["concert"] ?? 0;
