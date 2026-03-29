@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/he3-org/concert/compare/v1.0.10...v1.1.0) (2026-03-29)
+
+
+### Features
+
+* build-time template sync, archive old mission, prep for dogfooding ([d5440e8](https://github.com/he3-org/concert/commit/d5440e8e67054801ead56fe0736c16c96696e300))
+
 ## [1.0.10](https://github.com/he3-org/concert/compare/v1.0.9...v1.0.10) (2026-03-28)
 
 
