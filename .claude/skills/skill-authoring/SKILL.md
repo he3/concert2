@@ -3,11 +3,11 @@
      Any manual changes will be lost. To customize behavior, see docs/concert/README.md -->
 
 ---
-name: skill-design-guidelines
-description: Guides agents on how to design, structure, and write professional-grade skills for AI agents. Use when asked to create a new skill, structure a skill directory, or write a SKILL.md file. Do not use for general coding guidelines or standard documentation tasks.
+name: skill-authoring
+description: Guides agents on how to design, structure, and write professional-grade skills for AI agents. Use when asked to create a new skill, structure a skill directory, or write a SKILL.md file. Do not use for agent definition files (.claude/agents/), general coding guidelines, or standard documentation tasks.
 ---
 
-## Skill Design Guidelines
+## Skill Authoring
 
 This skill provides the operational runbook for creating reliable, token-efficient agent skills.
 
