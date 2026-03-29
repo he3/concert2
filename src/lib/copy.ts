@@ -9,21 +9,29 @@ export interface CopyResult {
 }
 
 /**
+ * Resolve the package root directory (parent of dist/).
+ * Live files (agents, workflows, skills, commands, GitHub agents) ship here.
+ */
+export function resolvePackageRoot(): string {
+  // __dirname points to dist/ when bundled
+  const fromDist = path.resolve(__dirname, "..");
+  if (fs.existsSync(path.join(fromDist, "templates"))) {
+    return fromDist;
+  }
+  // Development: use cwd
+  const fromCwd = process.cwd();
+  if (fs.existsSync(path.join(fromCwd, "templates"))) {
+    return fromCwd;
+  }
+  throw new Error("Cannot find package root directory");
+}
+
+/**
  * Resolve the path to the templates directory inside the npm package.
  * When bundled by tsup, the dist/ folder is a sibling of templates/.
  */
 export function resolveTemplatesDir(): string {
-  // __dirname points to dist/ when bundled
-  const fromDist = path.resolve(__dirname, "..", "templates");
-  if (fs.existsSync(fromDist)) {
-    return fromDist;
-  }
-  // Development: look relative to the project root
-  const fromCwd = path.resolve(process.cwd(), "templates");
-  if (fs.existsSync(fromCwd)) {
-    return fromCwd;
-  }
-  throw new Error("Cannot find templates directory");
+  return path.join(resolvePackageRoot(), "templates");
 }
 
 /**
@@ -173,4 +181,121 @@ function countRecursive(
       counts[category] = (counts[category] ?? 0) + 1;
     }
   }
+}
+
+/**
+ * Live file sources that ship directly from the package (not templates).
+ * Each entry maps a source directory (relative to package root) to a target
+ * directory (relative to user's project root).
+ */
+export const LIVE_FILE_SOURCES = [
+  { src: "docs/concert/agents", target: "docs/concert/agents" },
+  { src: "docs/concert/workflows", target: "docs/concert/workflows" },
+  { src: "docs/concert/skills/cli-ux-guidelines", target: "docs/concert/skills/cli-ux-guidelines" },
+  { src: "docs/concert/skills/typescript-standards", target: "docs/concert/skills/typescript-standards" },
+  { src: ".claude/commands/concert", target: ".claude/commands/concert" },
+  { src: ".github/agents", target: ".github/agents", pattern: /^concert-.*\.agent\.md$/ },
+] as const;
+
+/**
+ * GitHub workflow files that ship with Concert.
+ * These are in templates/ since the concert repo's own workflows differ.
+ */
+export const TEMPLATE_WORKFLOW_SOURCES = [
+  { src: ".github/workflows/concert-ci.yml", target: ".github/workflows/concert-ci.yml" },
+  { src: ".github/workflows/concert-version-check.yml", target: ".github/workflows/concert-version-check.yml" },
+] as const;
+
+/**
+ * Copy live files from the package root to the target directory.
+ * Copies entire directories, always overwriting managed files.
+ */
+export function copyLiveFiles(
+  packageRoot: string,
+  targetDir: string,
+  overwrite: boolean,
+): CopyResult {
+  const result: CopyResult = { created: [], skipped: [], overwritten: [] };
+
+  for (const source of LIVE_FILE_SOURCES) {
+    const srcDir = path.join(packageRoot, source.src);
+    if (!fs.existsSync(srcDir)) continue;
+
+    const targetPath = path.join(targetDir, source.target);
+    if (!fs.existsSync(targetPath)) {
+      fs.mkdirSync(targetPath, { recursive: true });
+    }
+
+    const entries = fs.readdirSync(srcDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        // Copy subdirectories recursively
+        copyRecursive(srcDir, targetPath, entry.name, overwrite, result);
+        continue;
+      }
+      if ("pattern" in source && source.pattern && !source.pattern.test(entry.name)) {
+        continue;
+      }
+      const srcFile = path.join(srcDir, entry.name);
+      const destFile = path.join(targetPath, entry.name);
+      const relPath = path.join(source.target, entry.name);
+
+      if (fs.existsSync(destFile)) {
+        if (overwrite) {
+          fs.copyFileSync(srcFile, destFile);
+          result.overwritten.push(relPath);
+        } else {
+          result.skipped.push(relPath);
+        }
+      } else {
+        fs.copyFileSync(srcFile, destFile);
+        result.created.push(relPath);
+      }
+    }
+  }
+
+  // Copy template workflow files
+  const templatesDir = path.join(packageRoot, "templates");
+  for (const wf of TEMPLATE_WORKFLOW_SOURCES) {
+    const srcFile = path.join(templatesDir, wf.src);
+    if (!fs.existsSync(srcFile)) continue;
+    const destFile = path.join(targetDir, wf.target);
+    const dir = path.dirname(destFile);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    const relPath = wf.target;
+    if (fs.existsSync(destFile)) {
+      if (overwrite) {
+        fs.copyFileSync(srcFile, destFile);
+        result.overwritten.push(relPath);
+      } else {
+        result.skipped.push(relPath);
+      }
+    } else {
+      fs.copyFileSync(srcFile, destFile);
+      result.created.push(relPath);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Count live files that would be installed from the package.
+ */
+export function countLiveFiles(packageRoot: string): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const source of LIVE_FILE_SOURCES) {
+    const srcDir = path.join(packageRoot, source.src);
+    if (!fs.existsSync(srcDir)) continue;
+    const category = path.basename(source.src);
+    const entries = fs.readdirSync(srcDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.isDirectory()) continue;
+      if ("pattern" in source && source.pattern && !source.pattern.test(entry.name)) continue;
+      counts[category] = (counts[category] ?? 0) + 1;
+    }
+  }
+  return counts;
 }

@@ -1,9 +1,9 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { copyManagedFiles, resolveTemplatesDir } from "../lib/copy.js";
+import { resolvePackageRoot, copyLiveFiles } from "../lib/copy.js";
 import { readConfigRaw, writeConfig, readConfig } from "../lib/config.js";
 import { readState, writeState } from "../lib/state.js";
-import { getPackageVersion, extractHeaderVersion, isManagedFile } from "../lib/version.js";
+import { getPackageVersion } from "../lib/version.js";
 import { mergeState, mergeConfig } from "../lib/merge.js";
 import { CLAUDE_SECTION_START, CLAUDE_SECTION_END } from "../types.js";
 import * as jsonc from "jsonc-parser";
@@ -115,33 +115,33 @@ export async function runUpdate(cwd: string): Promise<number> {
     return 2;
   }
 
-  // Resolve templates directory
-  let templatesDir: string;
+  // Resolve package root
+  let packageRoot: string;
   try {
-    templatesDir = resolveTemplatesDir();
+    packageRoot = resolvePackageRoot();
   } catch {
-    const devTemplates = path.resolve(cwd, "templates");
-    if (fs.existsSync(devTemplates)) {
-      templatesDir = devTemplates;
+    const devRoot = cwd;
+    if (fs.existsSync(path.join(devRoot, "templates"))) {
+      packageRoot = devRoot;
     } else {
-      process.stderr.write(`Error: cannot find templates directory\n`);
+      process.stderr.write(`Error: cannot find package root directory\n`);
       return 2;
     }
   }
 
-  // Track what changed
+  const templatesDir = path.join(packageRoot, "templates");
+
+  // Update live files (agents, workflows, skills, commands, GitHub agents)
+  // Always overwrite — these are managed by Concert
+  const liveResult = copyLiveFiles(packageRoot, cwd, true);
   const updatedFiles: Array<{ path: string; from: string; to: string }> = [];
   const skippedFiles: Array<{ path: string; version: string }> = [];
-
-  // Update managed files — walk templates, check version headers
-  updateManagedFilesWithVersionCheck(
-    templatesDir,
-    cwd,
-    "",
-    version,
-    updatedFiles,
-    skippedFiles,
-  );
+  for (const f of liveResult.overwritten) {
+    updatedFiles.push({ path: f, from: "previous", to: `v${version}` });
+  }
+  for (const f of liveResult.created) {
+    updatedFiles.push({ path: f, from: "none", to: `v${version}` });
+  }
 
   // Update CLAUDE.md section
   const claudeResult = updateClaudeMd(cwd);
@@ -244,54 +244,3 @@ export async function runUpdate(cwd: string): Promise<number> {
   return 0;
 }
 
-function updateManagedFilesWithVersionCheck(
-  srcDir: string,
-  targetDir: string,
-  relativePath: string,
-  currentVersion: string,
-  updatedFiles: Array<{ path: string; from: string; to: string }>,
-  skippedFiles: Array<{ path: string; version: string }>,
-): void {
-  const srcPath = relativePath ? path.join(srcDir, relativePath) : srcDir;
-  if (!fs.existsSync(srcPath)) return;
-  const entries = fs.readdirSync(srcPath, { withFileTypes: true });
-
-  for (const entry of entries) {
-    const relPath = relativePath ? path.join(relativePath, entry.name) : entry.name;
-    const srcFile = path.join(srcDir, relPath);
-    const targetFile = path.join(targetDir, relPath);
-
-    if (entry.isDirectory()) {
-      updateManagedFilesWithVersionCheck(
-        srcDir,
-        targetDir,
-        relPath,
-        currentVersion,
-        updatedFiles,
-        skippedFiles,
-      );
-    } else if (fs.existsSync(targetFile)) {
-      const targetContent = fs.readFileSync(targetFile, "utf-8");
-      if (!isManagedFile(targetContent)) continue;
-
-      const fileVersion = extractHeaderVersion(targetContent);
-      // Always overwrite managed files — they are canonical from the template
-      const fromVersion = fileVersion ? `v${fileVersion}` : "unknown";
-      fs.copyFileSync(srcFile, targetFile);
-      if (fileVersion === currentVersion) {
-        // Same version but overwrite anyway (idempotent)
-        skippedFiles.push({ path: relPath, version: `v${fileVersion}` });
-      } else {
-        updatedFiles.push({ path: relPath, from: fromVersion, to: `v${currentVersion}` });
-      }
-    } else {
-      // New file in template — create it
-      const dir = path.dirname(targetFile);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
-      fs.copyFileSync(srcFile, targetFile);
-      updatedFiles.push({ path: relPath, from: "none", to: `v${currentVersion}` });
-    }
-  }
-}

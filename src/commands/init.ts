@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { isGitRepo } from "../lib/git.js";
-import { copyTemplates, resolveTemplatesDir, countTemplateFiles } from "../lib/copy.js";
+import { copyTemplates, resolveTemplatesDir, resolvePackageRoot, copyLiveFiles, countLiveFiles } from "../lib/copy.js";
 import { readConfigRaw, writeConfig, modifyConfigField, detectProjectName } from "../lib/config.js";
 import { getPackageVersion } from "../lib/version.js";
 import { CLAUDE_SECTION_START, CLAUDE_SECTION_END } from "../types.js";
@@ -121,24 +121,26 @@ export async function runInit(cwd: string): Promise<number> {
     return 1;
   }
 
-  // Copy all template files
-  let templatesDir: string;
+  // Resolve package root and templates
+  let packageRoot: string;
   try {
-    templatesDir = resolveTemplatesDir();
+    packageRoot = resolvePackageRoot();
   } catch {
-    // Fallback: look relative to cwd for development
-    const devTemplates = path.resolve(cwd, "templates");
-    if (fs.existsSync(devTemplates)) {
-      templatesDir = devTemplates;
-    } else {
-      process.stderr.write(`Error: cannot find templates directory
+    process.stderr.write(`Error: cannot find package root directory
   This is an internal error. Please report it at https://github.com/he3-org/concert/issues
 `);
-      return 2;
-    }
+    return 2;
   }
 
+  const templatesDir = path.join(packageRoot, "templates");
+
+  // Copy template files (config, state, README, .gitkeep)
   const result = copyTemplates(templatesDir, cwd, false);
+
+  // Copy live files (agents, workflows, skills, commands, GitHub agents)
+  const liveResult = copyLiveFiles(packageRoot, cwd, false);
+  result.created.push(...liveResult.created);
+  result.skipped.push(...liveResult.skipped);
 
   // Set project_name in concert.jsonc
   const projectName = detectProjectName(cwd);
@@ -151,14 +153,14 @@ export async function runInit(cwd: string): Promise<number> {
   // Handle CLAUDE.md
   handleClaudeMd(cwd);
 
-  // Count files by category for output
-  const templateCounts = countTemplateFiles(templatesDir);
-  const agentCount = templateCounts["agents"] ?? 0;
-  const workflowCount = templateCounts["workflows"] ?? 0;
-  const skillCount = templateCounts["skills"] ?? 0;
-  const ghAgentCount = templateCounts["agents"] ?? 0; // .github/agents
-  const ghWorkflowCount = templateCounts["workflows"] ?? 0;
-  const commandCount = templateCounts["commands"] ?? 0;
+  // Count live files for output
+  const liveCounts = countLiveFiles(packageRoot);
+  const agentCount = liveCounts["agents"] ?? 0;
+  const workflowCount = liveCounts["workflows"] ?? 0;
+  const skillCount = (liveCounts["cli-ux-guidelines"] ?? 0) + (liveCounts["typescript-standards"] ?? 0);
+  const ghAgentCount = liveCounts["agents"] ?? 0;
+  const ghWorkflowCount = 2; // concert-ci.yml + concert-version-check.yml
+  const commandCount = liveCounts["concert"] ?? 0;
 
   // Output success
   process.stdout.write(`Concert v${version} initialized in ${cwd}

@@ -97,9 +97,8 @@ describe("templates directory", () => {
     expect(fs.existsSync(path.join(TEMPLATES_DIR, ".github"))).toBe(true);
   });
 
-  it("contains .claude directory", () => {
-    expect(fs.existsSync(path.join(TEMPLATES_DIR, ".claude"))).toBe(true);
-  });
+  // .claude commands are live files, not templates
+  // They ship from .claude/commands/concert/ in the package root
 });
 
 // ======================================================================

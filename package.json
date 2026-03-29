@@ -8,13 +8,17 @@
   },
   "files": [
     "dist",
-    "templates"
+    "templates",
+    "docs/concert/agents",
+    "docs/concert/workflows",
+    "docs/concert/skills/cli-ux-guidelines",
+    "docs/concert/skills/typescript-standards",
+    ".claude/commands/concert",
+    ".github/agents"
   ],
   "scripts": {
-    "prebuild": "bash scripts/sync-templates.sh",
     "build": "tsup",
     "dev": "tsup --watch",
-    "pretest": "bash scripts/sync-templates.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
