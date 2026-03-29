@@ -6,5 +6,5 @@ dist/
 templates/docs/concert/agents/
 templates/docs/concert/workflows/
 templates/docs/concert/skills/
-templates/.claude/commands/
+templates/.claude/commands/concert/
 templates/.github/agents/
