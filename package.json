@@ -12,6 +12,7 @@
     ".claude/agents",
     "docs/concert/workflows",
     ".claude/skills",
+    ".claude/rules",
     ".claude/commands/concert",
     ".github/agents",
     ".github/workflows/concert-ci.yml",

@@ -198,7 +198,25 @@ describe("skill files (live)", () => {
 });
 
 // ======================================================================
-// 8. Cross-reference consistency
+// 8. Rule files (live)
+// ======================================================================
+
+describe("rule files (live)", () => {
+  const rulesDir = path.join(ROOT, ".claude", "rules");
+
+  it("has at least 1 rule", () => {
+    const rules = fs.readdirSync(rulesDir).filter((f) => f.endsWith(".md"));
+    expect(rules.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("conventional-commits.md exists", () => {
+    const rulePath = path.join(rulesDir, "conventional-commits.md");
+    expect(fs.existsSync(rulePath)).toBe(true);
+  });
+});
+
+// ======================================================================
+// 9. Cross-reference consistency
 // ======================================================================
 
 describe("cross-reference consistency", () => {

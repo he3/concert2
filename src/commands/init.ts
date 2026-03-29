@@ -39,6 +39,7 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 - Agents: \`.claude/agents/\`
 - Workflows: \`docs/concert/workflows/\`
 - Skills: \`.claude/skills/\`
+- Rules: \`.claude/rules/\`
 - Missions: \`docs/concert/missions/\`
 
 ### Do Not Modify
@@ -48,6 +49,7 @@ The following paths are managed by Concert and must not be modified by other age
 - \`.claude/agents/\`
 - \`docs/concert/workflows/\`
 - \`.claude/skills/\`
+- \`.claude/rules/\`
 - \`.claude/commands/concert/\`
 - \`.github/agents/concert-*.agent.md\`
 - \`concert.jsonc\` (modify manually only — Concert preserves your changes on update)
@@ -161,6 +163,7 @@ export async function runInit(cwd: string): Promise<number> {
   const ghAgentCount = liveCounts["agents"] ?? 0;
   const ghWorkflowCount = liveCounts["workflows"] ?? 0;
   const commandCount = liveCounts["concert"] ?? 0;
+  const ruleCount = liveCounts["rules"] ?? 0;
 
   // Output success
   process.stdout.write(`Concert v${version} initialized in ${cwd}
@@ -169,6 +172,7 @@ export async function runInit(cwd: string): Promise<number> {
     .claude/agents/               (${agentCount} agent definitions)
     docs/concert/workflows/       (${workflowCount} workflow files)
     .claude/skills/               (${skillCount} skill files)
+    .claude/rules/                (${ruleCount} rule files)
     docs/concert/state.json       (empty state)
     .github/agents/               (${ghAgentCount} GitHub agent stubs)
     .github/workflows/            (${ghWorkflowCount} workflow files)
