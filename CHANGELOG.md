@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/he3-org/concert/compare/v1.4.0...v1.5.0) (2026-03-30)
+
+
+### Features
+
+* upgrade concert to v1.4.0 ([d989385](https://github.com/he3-org/concert/commit/d98938539233debfb2c553cece5a21df8fdd6c77))
+
 ## [1.4.0](https://github.com/he3-org/concert/compare/v1.3.0...v1.4.0) (2026-03-30)
 
 
