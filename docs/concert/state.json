@@ -7,10 +7,11 @@
   "pr_number": 24,
   "status_display": "wip_pr",
   "feature_size": "medium",
-  "stage": "requirements",
+  "stage": "architecture",
   "pipeline": {
     "vision": "accepted",
-    "requirements": "draft"
+    "requirements": "accepted",
+    "architecture": "draft"
   },
   "phases_completed": 0,
   "phases_total": 0,
@@ -35,9 +36,14 @@
       "action": "vision_accepted",
       "timestamp": "2026-03-29T17:48:00Z",
       "details": "Vision reviewed and accepted — advancing to requirements"
+    },
+    {
+      "action": "requirements_accepted",
+      "timestamp": "2026-03-29T18:15:00Z",
+      "details": "Requirements reviewed and accepted — R1-R6 covering registry, agent decoupling, templates, workflow simplification, backwards compat, testing"
     }
   ],
   "next_steps": [
-    "Continue to requirements: /concert:continue"
+    "Continue to architecture: /concert:continue"
   ]
 }
