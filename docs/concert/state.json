@@ -8,14 +8,7 @@
   "status_display": "wip_pr",
   "feature_size": "medium",
   "stage": "verification",
-  "pipeline": {
-    "vision": "accepted",
-    "requirements": "accepted",
-    "architecture": "accepted",
-    "tasks": "accepted",
-    "execution": "complete",
-    "verification": "complete"
-  },
+  "pipeline": {},
   "phases_completed": 3,
   "phases_total": 3,
   "tasks_completed": 9,
