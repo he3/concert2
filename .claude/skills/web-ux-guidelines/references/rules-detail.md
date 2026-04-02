@@ -105,14 +105,14 @@ Every `<input>`, `<select>`, and `<textarea>` must have an associated `<label>` 
 Validation errors must be programmatically associated with their input using `aria-describedby` or `aria-errormessage`. Error text must be visible, specific ("Email must include an @ symbol"), and announced by screen readers when the input receives focus.
 
 ```tsx
-<input id="email" type="email" aria-describedby="email-error" aria-invalid={hasError} />;
-{
-  hasError && (
+<>
+  <input id="email" type="email" aria-describedby="email-error" aria-invalid={hasError} />
+  {hasError && (
     <span id="email-error" role="alert">
       Email must include an @ symbol.
     </span>
-  );
-}
+  )}
+</>
 ```
 
 ### 12. Respect `prefers-reduced-motion`

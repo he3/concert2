@@ -43,14 +43,10 @@ React uses the `key` prop to reconcile list items across renders. Using the arra
 
 ```tsx
 // Bad — index key breaks state on reorder/insert
-{
-  items.map((item, index) => <Card key={index} {...item} />);
-}
+<>{items.map((item, index) => <Card key={index} {...item} />)}</>
 
 // Good — stable ID key
-{
-  items.map((item) => <Card key={item.id} {...item} />);
-}
+<>{items.map((item) => <Card key={item.id} {...item} />)}</>
 ```
 
 ### 4. Lazy-load routes and heavy components with `React.lazy` and `Suspense`
