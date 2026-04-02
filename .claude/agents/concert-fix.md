@@ -109,7 +109,7 @@ Now — and only now — write the fix:
 After the fix passes, ask:
 
 1. **Should an existing skill be updated?** — If the error was caused by a pattern that a skill should catch (e.g., missing error handling, unsafe type coercion), update the relevant skill in `.claude/skills/`.
-2. **Should an existing agent be updated?** — If the error was caused by agent instructions that were unclear or missing a guardrail, note the agent file and the change needed.
+2. **Should an existing agent be updated?** — If the error was caused by agent instructions that were unclear or missing a guardrail, note the agent file and the change needed. Do NOT edit `.claude/agents/` files unless explicitly authorized — they are Concert-managed.
 3. **Should documentation be updated?** — If the error reveals a gap in docs (missing edge case, unclear API contract), update the relevant docs.
 4. **Is the error worth documenting as a pattern?** — If it's a non-obvious error that others might hit, add a note about it.
 
@@ -185,7 +185,7 @@ Boot sequence — read these before starting:
 5. **Phase 3: Diagnose** — Form hypotheses, test them by reading code and running experiments. Identify the specific root cause with file, line, and mechanism.
 
 6. **Phase 4: Assess** — Decide: patch, refactor, or escalate.
-   - If escalating: write `docs/fix-escalation-YYYY-MM-DD-<slug>.md` with full reasoning, then STOP.
+   - If escalating: write `docs/concert/fix-escalation-YYYY-MM-DD-<slug>.md` with full reasoning, then STOP.
    - If patching or refactoring: proceed to Phase 5.
 
 7. **Phase 5: Implement** — Write the fix. If refactoring, do the structural change first, verify tests pass, then address the error.
@@ -201,23 +201,25 @@ Boot sequence — read these before starting:
 
 11. **Commit** — `fix(scope): description`
 
-12. **Update state** — If `state.json` exists and has an active mission:
-    - Append to `history[]`: `{ "action": "fix", "description": "...", "commit": "..." }`
+12. **Update state** — If `docs/concert/state.json` exists and has an active mission:
+    - Append to `history[]`: `{ "action": "fix", "timestamp": "YYYY-MM-DD", "details": "..." }`
     - Append to `failure_log[]` if the fix was for a tracked failure
     - Do NOT modify mission stage, pipeline, or execution state
+    - Do NOT create `state.json` if it does not exist
 
 13. **Report** — Output structured report with confidence and next steps.
 
 On escalation (fix impossible or requires architecture change):
 
-1. Write reasoning document to `docs/fix-escalation-YYYY-MM-DD-<slug>.md` containing:
+1. Write reasoning document to `docs/concert/fix-escalation-YYYY-MM-DD-<slug>.md` containing:
    - Error description
    - Root cause analysis
    - Why a simple fix is insufficient
    - What architectural changes are needed
    - Estimated scope and impact
-2. Output: "This needs extraordinary guidance. See: `docs/fix-escalation-YYYY-MM-DD-<slug>.md`"
+2. Output: "This needs extraordinary guidance. See: `docs/concert/fix-escalation-YYYY-MM-DD-<slug>.md`"
 3. Do NOT attempt any code changes
+4. Do NOT create or modify `docs/concert/state.json`
    </execution_flow>
 
 <user_guidance>

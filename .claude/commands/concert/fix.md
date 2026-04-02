@@ -21,13 +21,14 @@ redesign), a reasoning document is written to `docs/` and the command exits with
    - Assess whether refactoring would prevent the error class
    - If refactoring is warranted, apply it
    - Review the fix against the `CONCERT-WORKFLOW-FIX.md` quality loop
-   - If agents, skills, or documentation need updating to prevent recurrence, do that
+   - If skills or documentation need updating to prevent recurrence, update them; if an agent change is needed, note the required change and do not edit `.claude/agents/` unless explicitly authorized
 5. If the fix is impossible or requires architecture-level changes:
-   - Write a reasoning document to `docs/fix-escalation-<date>.md`
+   - Write a reasoning document to `docs/concert/fix-escalation-<date>.md`
    - Output: "This needs extraordinary guidance. See: `<document_path>`"
    - Do NOT attempt the fix
+   - Do NOT create or modify `docs/concert/state.json`
 6. Commit fix with conventional format: `fix(scope): description`
-7. Update `state.json` — log in `history[]`; append to `failure_log[]` only if the fix was for a tracked failure
+7. If `docs/concert/state.json` exists, update it — append an entry to `history[]`; append to `failure_log[]` only if the fix was for a tracked failure
 
 ## Next Steps
 

@@ -115,7 +115,7 @@ contained refactor:
 
 ```
 1. Fix agent writes a reasoning document:
-   Path: docs/fix-escalation-YYYY-MM-DD-<slug>.md
+   Path: docs/concert/fix-escalation-YYYY-MM-DD-<slug>.md
    Contents:
      - Error description and reproduction
      - Root cause analysis with evidence
@@ -126,7 +126,7 @@ contained refactor:
      - Suggested approach (if known)
 
 2. Fix agent outputs:
-   "This needs extraordinary guidance. See: docs/fix-escalation-YYYY-MM-DD-<slug>.md"
+   "This needs extraordinary guidance. See: docs/concert/fix-escalation-YYYY-MM-DD-<slug>.md"
 
 3. No code changes are made
 4. No commits are created
@@ -146,11 +146,8 @@ The fix command operates outside the mission pipeline but logs its activity:
   "history": [
     {
       "action": "fix",
-      "timestamp": "<ISO 8601>",
-      "description": "Fixed: <root cause summary>",
-      "commit": "<sha>",
-      "files_changed": ["<file1>", "<file2>"],
-      "test_added": "<test name>"
+      "timestamp": "YYYY-MM-DD",
+      "details": "Fixed: <root cause summary>"
     }
   ]
 }
