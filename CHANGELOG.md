@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0](https://github.com/he3-org/concert/compare/v1.4.0...v1.5.0) (2026-04-02)
+
+
+### Features
+
+* add Prettier, Husky, lint-staged; clarify concert repo editing rules ([#28](https://github.com/he3-org/concert/issues/28)) ([db2d51c](https://github.com/he3-org/concert/commit/db2d51ce37c8b17c9489129e4e668ad7758a332f))
+* upgrade concert to v1.4.0 ([d989385](https://github.com/he3-org/concert/commit/d98938539233debfb2c553cece5a21df8fdd6c77))
+
+
+### Bug Fixes
+
+* set concert_version dynamically from package version on init/update ([#27](https://github.com/he3-org/concert/issues/27)) ([ed756af](https://github.com/he3-org/concert/commit/ed756af30c1d8d2feaac89bc15e0f5c4e65d5ff8))
+
 ## [1.4.0](https://github.com/he3-org/concert/compare/v1.3.0...v1.4.0) (2026-03-30)
 
 ### Features
