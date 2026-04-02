@@ -2,12 +2,12 @@ dist
 node_modules
 *.lock
 package-lock.json
+# JSONC files: prettier adds trailing commas which jsonc-parser does not support
+*.jsonc
 # Concert-managed paths (do not modify)
 .claude/agents/
 .claude/skills/
 .claude/commands/concert/
 .github/agents/
 docs/concert/workflows/
-docs/concert/stage-registry.jsonc
 docs/concert/templates/
-concert.jsonc
