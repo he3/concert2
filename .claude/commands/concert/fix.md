@@ -27,7 +27,7 @@ redesign), a reasoning document is written to `docs/` and the command exits with
    - Output: "This needs extraordinary guidance. See: `<document_path>`"
    - Do NOT attempt the fix
 6. Commit fix with conventional format: `fix(scope): description`
-7. Update `state.json` — log in `history[]` and `failure_log[]`
+7. Update `state.json` — log in `history[]`; append to `failure_log[]` only if the fix was for a tracked failure
 
 ## Next Steps
 

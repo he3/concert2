@@ -199,4 +199,4 @@ The fix agent MUST guard against these common failure modes:
 | **Missing reproduction** | No failing test written before fixing                  | Go back to Phase 2 (reproduce)                                   |
 | **Scope creep**          | Fix grows to touch unrelated code                      | Split into fix + separate task/mission                           |
 | **Test theater**         | Test passes but doesn't actually validate the fix      | Verify test fails without fix applied                            |
-| **Band-aid refactor**    | Refactoring that doesn't actually improve the design   | Assess: does this prevent the error CLASS or just this instance? |
+| **Band-aid refactor**    | Refactoring that doesn't actually improve the design   | Assess: does this prevent the error class or just this instance? |
