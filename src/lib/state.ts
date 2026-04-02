@@ -1,8 +1,8 @@
-import * as fs from "node:fs";
-import * as path from "node:path";
-import type { ConcertState, HistoryEntry } from "../types.js";
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import type { ConcertState, HistoryEntry } from '../types.js';
 
-const STATE_PATH = "docs/concert/state.json";
+const STATE_PATH = 'docs/concert/state.json';
 
 /**
  * Resolve the absolute path to state.json from the given working directory.
@@ -20,7 +20,7 @@ export function readState(cwd: string): ConcertState | null {
   if (!fs.existsSync(statePath)) {
     return null;
   }
-  const raw = fs.readFileSync(statePath, "utf-8");
+  const raw = fs.readFileSync(statePath, 'utf-8');
   const parsed = JSON.parse(raw) as Record<string, unknown>;
   return applyStateDefaults(parsed);
 }
@@ -34,23 +34,19 @@ export function writeState(cwd: string, state: ConcertState): void {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  const content = JSON.stringify(state, null, 2) + "\n";
-  const tmpPath = statePath + ".tmp";
-  fs.writeFileSync(tmpPath, content, "utf-8");
+  const content = JSON.stringify(state, null, 2) + '\n';
+  const tmpPath = statePath + '.tmp';
+  fs.writeFileSync(tmpPath, content, 'utf-8');
   fs.renameSync(tmpPath, statePath);
 }
 
 /**
  * Add a history entry to state.
  */
-export function addHistoryEntry(
-  state: ConcertState,
-  action: string,
-  details: string,
-): void {
+export function addHistoryEntry(state: ConcertState, action: string, details: string): void {
   const entry: HistoryEntry = {
     action,
-    timestamp: new Date().toISOString().split("T")[0],
+    timestamp: new Date().toISOString().split('T')[0],
     details,
   };
   state.history.push(entry);
@@ -62,15 +58,15 @@ export function addHistoryEntry(
 function applyStateDefaults(parsed: Record<string, unknown>): ConcertState {
   const costParsed = (parsed.cost as Record<string, unknown> | undefined) ?? {};
   const merged = {
-    mission: "",
-    mission_path: "",
-    workflow: "",
-    workflow_path: "",
-    branch: "",
+    mission: '',
+    mission_path: '',
+    workflow: '',
+    workflow_path: '',
+    branch: '',
     pr_number: 0,
-    status_display: "wip_pr",
-    feature_size: "",
-    stage: "",
+    status_display: 'wip_pr',
+    feature_size: '',
+    stage: '',
     pipeline: {},
     phases_completed: 0,
     phases_total: 0,
@@ -84,8 +80,8 @@ function applyStateDefaults(parsed: Record<string, unknown>): ConcertState {
     next_steps: [],
     ...parsed,
     cost: {
-      estimated_remaining: "",
-      spent_this_mission: "",
+      estimated_remaining: '',
+      spent_this_mission: '',
       by_stage: {},
       ...costParsed,
     },

@@ -1,4 +1,4 @@
-import { readState } from "../lib/state.js";
+import { readState } from '../lib/state.js';
 import {
   isGitRepo,
   getCurrentBranch,
@@ -9,11 +9,11 @@ import {
   commit,
   isAheadOfRemote,
   getStagedFiles,
-} from "../lib/git.js";
-import * as fs from "node:fs";
-import * as path from "node:path";
+} from '../lib/git.js';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
-const STATE_FILE = "docs/concert/state.json";
+const STATE_FILE = 'docs/concert/state.json';
 
 /**
  * Run the concert push command.
@@ -55,7 +55,7 @@ export async function runPush(cwd: string): Promise<number> {
   // Check if there are staged changes to commit
   const staged = getStagedFiles(cwd);
   if (staged.length > 0) {
-    commit(cwd, "chore: concert-push handoff");
+    commit(cwd, 'chore: concert-push handoff');
   }
 
   // Determine if there's anything to push

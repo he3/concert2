@@ -27,5 +27,6 @@ Follow the same conventional commit format. The PR title becomes the squash comm
 ### PR Descriptions
 
 Include:
+
 - **Summary** — 1-3 bullet points of what changed and why
 - **Test plan** — how to verify the changes work

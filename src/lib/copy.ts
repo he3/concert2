@@ -1,6 +1,6 @@
-import * as fs from "node:fs";
-import * as path from "node:path";
-import { isManagedFile } from "./version.js";
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { isManagedFile } from './version.js';
 
 export interface CopyResult {
   created: string[];
@@ -14,16 +14,16 @@ export interface CopyResult {
  */
 export function resolvePackageRoot(): string {
   // __dirname points to dist/ when bundled
-  const fromDist = path.resolve(__dirname, "..");
-  if (fs.existsSync(path.join(fromDist, "templates"))) {
+  const fromDist = path.resolve(__dirname, '..');
+  if (fs.existsSync(path.join(fromDist, 'templates'))) {
     return fromDist;
   }
   // Development: use cwd
   const fromCwd = process.cwd();
-  if (fs.existsSync(path.join(fromCwd, "templates"))) {
+  if (fs.existsSync(path.join(fromCwd, 'templates'))) {
     return fromCwd;
   }
-  throw new Error("Cannot find package root directory");
+  throw new Error('Cannot find package root directory');
 }
 
 /**
@@ -31,7 +31,7 @@ export function resolvePackageRoot(): string {
  * When bundled by tsup, the dist/ folder is a sibling of templates/.
  */
 export function resolveTemplatesDir(): string {
-  return path.join(resolvePackageRoot(), "templates");
+  return path.join(resolvePackageRoot(), 'templates');
 }
 
 /**
@@ -45,10 +45,10 @@ export function resolveTemplatesDir(): string {
 export function copyTemplates(
   srcDir: string,
   targetDir: string,
-  overwrite: boolean = false,
+  overwrite: boolean = false
 ): CopyResult {
   const result: CopyResult = { created: [], skipped: [], overwritten: [] };
-  copyRecursive(srcDir, targetDir, "", overwrite, result);
+  copyRecursive(srcDir, targetDir, '', overwrite, result);
   return result;
 }
 
@@ -57,15 +57,13 @@ function copyRecursive(
   targetDir: string,
   relativePath: string,
   overwrite: boolean,
-  result: CopyResult,
+  result: CopyResult
 ): void {
   const srcPath = path.join(srcDir, relativePath);
   const entries = fs.readdirSync(srcPath, { withFileTypes: true });
 
   for (const entry of entries) {
-    const relPath = relativePath
-      ? path.join(relativePath, entry.name)
-      : entry.name;
+    const relPath = relativePath ? path.join(relativePath, entry.name) : entry.name;
     const srcFile = path.join(srcDir, relPath);
     const targetFile = path.join(targetDir, relPath);
 
@@ -98,12 +96,9 @@ function copyRecursive(
  * Copy only managed files from source to target (for update).
  * Only overwrites files that have the managed header in the target.
  */
-export function copyManagedFiles(
-  srcDir: string,
-  targetDir: string,
-): CopyResult {
+export function copyManagedFiles(srcDir: string, targetDir: string): CopyResult {
   const result: CopyResult = { created: [], skipped: [], overwritten: [] };
-  copyManagedRecursive(srcDir, targetDir, "", result);
+  copyManagedRecursive(srcDir, targetDir, '', result);
   return result;
 }
 
@@ -111,15 +106,13 @@ function copyManagedRecursive(
   srcDir: string,
   targetDir: string,
   relativePath: string,
-  result: CopyResult,
+  result: CopyResult
 ): void {
   const srcPath = path.join(srcDir, relativePath);
   const entries = fs.readdirSync(srcPath, { withFileTypes: true });
 
   for (const entry of entries) {
-    const relPath = relativePath
-      ? path.join(relativePath, entry.name)
-      : entry.name;
+    const relPath = relativePath ? path.join(relativePath, entry.name) : entry.name;
     const srcFile = path.join(srcDir, relPath);
     const targetFile = path.join(targetDir, relPath);
 
@@ -136,7 +129,7 @@ function copyManagedRecursive(
         result.created.push(relPath);
       } else {
         // File exists — only overwrite if it's a managed file
-        const content = fs.readFileSync(targetFile, "utf-8");
+        const content = fs.readFileSync(targetFile, 'utf-8');
         if (isManagedFile(content)) {
           fs.copyFileSync(srcFile, targetFile);
           result.overwritten.push(relPath);
@@ -154,30 +147,27 @@ function copyManagedRecursive(
  */
 export function countTemplateFiles(dir: string): Record<string, number> {
   const counts: Record<string, number> = {};
-  countRecursive(dir, "", counts);
+  countRecursive(dir, '', counts);
   return counts;
 }
 
 function countRecursive(
   baseDir: string,
   relativePath: string,
-  counts: Record<string, number>,
+  counts: Record<string, number>
 ): void {
   const dirPath = relativePath ? path.join(baseDir, relativePath) : baseDir;
   if (!fs.existsSync(dirPath)) return;
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
   for (const entry of entries) {
-    const relPath = relativePath
-      ? path.join(relativePath, entry.name)
-      : entry.name;
+    const relPath = relativePath ? path.join(relativePath, entry.name) : entry.name;
     if (entry.isDirectory()) {
       countRecursive(baseDir, relPath, counts);
-    } else if (entry.name !== ".gitkeep") {
+    } else if (entry.name !== '.gitkeep') {
       // Categorize by parent directory
       const parts = relPath.split(path.sep);
-      const category =
-        parts.length > 1 ? (parts[parts.length - 2] ?? "root") : "root";
+      const category = parts.length > 1 ? (parts[parts.length - 2] ?? 'root') : 'root';
       counts[category] = (counts[category] ?? 0) + 1;
     }
   }
@@ -193,9 +183,7 @@ export const EXCLUDED_SKILLS: readonly string[] = [];
  * Rules excluded from shipping. These are specific to the Concert repo
  * and not useful for target repos. Everything else in .claude/rules/ ships.
  */
-export const EXCLUDED_RULES: readonly string[] = [
-  "concert-repo-managed-files.md",
-];
+export const EXCLUDED_RULES: readonly string[] = ['concert-repo-managed-files.md'];
 
 /**
  * Live file sources that ship directly from the package (not templates).
@@ -203,12 +191,12 @@ export const EXCLUDED_RULES: readonly string[] = [
  * directory (relative to user's project root).
  */
 export const LIVE_FILE_SOURCES = [
-  { src: ".claude/agents", target: ".claude/agents" },
-  { src: "docs/concert/workflows", target: "docs/concert/workflows" },
-  { src: "docs/concert/templates", target: "docs/concert/templates" },
-  { src: ".claude/commands/concert", target: ".claude/commands/concert" },
-  { src: ".github/agents", target: ".github/agents", pattern: /^concert-.*\.agent\.md$/ },
-  { src: ".github/workflows", target: ".github/workflows", pattern: /^concert-.*\.yml$/ },
+  { src: '.claude/agents', target: '.claude/agents' },
+  { src: 'docs/concert/workflows', target: 'docs/concert/workflows' },
+  { src: 'docs/concert/templates', target: 'docs/concert/templates' },
+  { src: '.claude/commands/concert', target: '.claude/commands/concert' },
+  { src: '.github/agents', target: '.github/agents', pattern: /^concert-.*\.agent\.md$/ },
+  { src: '.github/workflows', target: '.github/workflows', pattern: /^concert-.*\.yml$/ },
 ] as const;
 
 /**
@@ -216,16 +204,17 @@ export const LIVE_FILE_SOURCES = [
  * These are copied individually (not as directory contents).
  */
 export const LIVE_INDIVIDUAL_FILES = [
-  { src: "docs/concert/stage-registry.jsonc", target: "docs/concert/stage-registry.jsonc" },
+  { src: 'docs/concert/stage-registry.jsonc', target: 'docs/concert/stage-registry.jsonc' },
 ] as const;
 
 /**
  * Discover all skill directories that should ship, excluding EXCLUDED_SKILLS.
  */
 export function discoverSkills(packageRoot: string): Array<{ src: string; target: string }> {
-  const skillsDir = path.join(packageRoot, ".claude", "skills");
+  const skillsDir = path.join(packageRoot, '.claude', 'skills');
   if (!fs.existsSync(skillsDir)) return [];
-  return fs.readdirSync(skillsDir, { withFileTypes: true })
+  return fs
+    .readdirSync(skillsDir, { withFileTypes: true })
     .filter((e) => e.isDirectory() && !EXCLUDED_SKILLS.includes(e.name))
     .map((e) => ({
       src: `.claude/skills/${e.name}`,
@@ -236,14 +225,17 @@ export function discoverSkills(packageRoot: string): Array<{ src: string; target
 /**
  * Discover all rule files that should ship, excluding EXCLUDED_RULES.
  */
-export function discoverRules(packageRoot: string): Array<{ src: string; target: string; file: string }> {
-  const rulesDir = path.join(packageRoot, ".claude", "rules");
+export function discoverRules(
+  packageRoot: string
+): Array<{ src: string; target: string; file: string }> {
+  const rulesDir = path.join(packageRoot, '.claude', 'rules');
   if (!fs.existsSync(rulesDir)) return [];
-  return fs.readdirSync(rulesDir, { withFileTypes: true })
-    .filter((e) => e.isFile() && e.name.endsWith(".md") && !EXCLUDED_RULES.includes(e.name))
+  return fs
+    .readdirSync(rulesDir, { withFileTypes: true })
+    .filter((e) => e.isFile() && e.name.endsWith('.md') && !EXCLUDED_RULES.includes(e.name))
     .map((e) => ({
-      src: ".claude/rules",
-      target: ".claude/rules",
+      src: '.claude/rules',
+      target: '.claude/rules',
       file: e.name,
     }));
 }
@@ -255,7 +247,7 @@ export function discoverRules(packageRoot: string): Array<{ src: string; target:
 export function copyLiveFiles(
   packageRoot: string,
   targetDir: string,
-  overwrite: boolean,
+  overwrite: boolean
 ): CopyResult {
   const result: CopyResult = { created: [], skipped: [], overwritten: [] };
 
@@ -287,7 +279,7 @@ export function copyLiveFiles(
   // Copy individual rule files (not a full directory copy)
   const rules = discoverRules(packageRoot);
   if (rules.length > 0) {
-    const rulesTargetDir = path.join(targetDir, ".claude", "rules");
+    const rulesTargetDir = path.join(targetDir, '.claude', 'rules');
     if (!fs.existsSync(rulesTargetDir)) {
       fs.mkdirSync(rulesTargetDir, { recursive: true });
     }
@@ -326,7 +318,7 @@ export function copyLiveFiles(
         copyRecursive(srcDir, targetPath, entry.name, overwrite, result);
         continue;
       }
-      if ("pattern" in source && source.pattern && !source.pattern.test(entry.name)) {
+      if ('pattern' in source && source.pattern && !source.pattern.test(entry.name)) {
         continue;
       }
       const srcFile = path.join(srcDir, entry.name);
@@ -370,19 +362,19 @@ export function countLiveFiles(packageRoot: string): Record<string, number> {
     const entries = fs.readdirSync(srcDir, { withFileTypes: true });
     for (const entry of entries) {
       if (entry.isDirectory()) continue;
-      if ("pattern" in source && source.pattern && !source.pattern.test(entry.name)) continue;
+      if ('pattern' in source && source.pattern && !source.pattern.test(entry.name)) continue;
       counts[category] = (counts[category] ?? 0) + 1;
     }
   }
   // Roll up individual skill counts into a single "skills" count
   const skills = discoverSkills(packageRoot);
   if (skills.length > 0) {
-    counts["skills"] = skills.length;
+    counts['skills'] = skills.length;
   }
   // Count rules
   const rules = discoverRules(packageRoot);
   if (rules.length > 0) {
-    counts["rules"] = rules.length;
+    counts['rules'] = rules.length;
   }
   return counts;
 }

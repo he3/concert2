@@ -1,13 +1,13 @@
-import { execFileSync } from "node:child_process";
+import { execFileSync } from 'node:child_process';
 
 /**
  * Check if the given directory is inside a git repository.
  */
 export function isGitRepo(cwd: string): boolean {
   try {
-    execFileSync("git", ["rev-parse", "--is-inside-work-tree"], {
+    execFileSync('git', ['rev-parse', '--is-inside-work-tree'], {
       cwd,
-      stdio: "pipe",
+      stdio: 'pipe',
     });
     return true;
   } catch {
@@ -21,10 +21,10 @@ export function isGitRepo(cwd: string): boolean {
  */
 export function getCurrentBranch(cwd: string): string | null {
   try {
-    const result = execFileSync("git", ["branch", "--show-current"], {
+    const result = execFileSync('git', ['branch', '--show-current'], {
       cwd,
-      stdio: "pipe",
-      encoding: "utf-8",
+      stdio: 'pipe',
+      encoding: 'utf-8',
     });
     const branch = result.trim();
     return branch || null;
@@ -38,9 +38,9 @@ export function getCurrentBranch(cwd: string): string | null {
  */
 export function hasUpstream(cwd: string): boolean {
   try {
-    execFileSync("git", ["rev-parse", "--abbrev-ref", "@{upstream}"], {
+    execFileSync('git', ['rev-parse', '--abbrev-ref', '@{upstream}'], {
       cwd,
-      stdio: "pipe",
+      stdio: 'pipe',
     });
     return true;
   } catch {
@@ -53,9 +53,9 @@ export function hasUpstream(cwd: string): boolean {
  */
 export function stageFiles(cwd: string, files: string[]): void {
   if (files.length === 0) return;
-  execFileSync("git", ["add", "--", ...files], {
+  execFileSync('git', ['add', '--', ...files], {
     cwd,
-    stdio: "pipe",
+    stdio: 'pipe',
   });
 }
 
@@ -64,14 +64,14 @@ export function stageFiles(cwd: string, files: string[]): void {
  * Returns the commit SHA.
  */
 export function commit(cwd: string, message: string): string {
-  execFileSync("git", ["commit", "-m", message], {
+  execFileSync('git', ['commit', '-m', message], {
     cwd,
-    stdio: "pipe",
+    stdio: 'pipe',
   });
-  const sha = execFileSync("git", ["rev-parse", "--short", "HEAD"], {
+  const sha = execFileSync('git', ['rev-parse', '--short', 'HEAD'], {
     cwd,
-    stdio: "pipe",
-    encoding: "utf-8",
+    stdio: 'pipe',
+    encoding: 'utf-8',
   });
   return sha.trim();
 }
@@ -83,15 +83,15 @@ export function commit(cwd: string, message: string): string {
 export function pushToOrigin(cwd: string): void {
   const branch = getCurrentBranch(cwd);
   if (!branch) {
-    throw new Error("Not on a branch — cannot push");
+    throw new Error('Not on a branch — cannot push');
   }
   const upstream = hasUpstream(cwd);
   if (upstream) {
-    execFileSync("git", ["push"], { cwd, stdio: "pipe" });
+    execFileSync('git', ['push'], { cwd, stdio: 'pipe' });
   } else {
-    execFileSync("git", ["push", "-u", "origin", branch], {
+    execFileSync('git', ['push', '-u', 'origin', branch], {
       cwd,
-      stdio: "pipe",
+      stdio: 'pipe',
     });
   }
 }
@@ -101,10 +101,10 @@ export function pushToOrigin(cwd: string): void {
  */
 export function hasUncommittedChanges(cwd: string): boolean {
   try {
-    const status = execFileSync("git", ["status", "--porcelain"], {
+    const status = execFileSync('git', ['status', '--porcelain'], {
       cwd,
-      stdio: "pipe",
-      encoding: "utf-8",
+      stdio: 'pipe',
+      encoding: 'utf-8',
     });
     return status.trim().length > 0;
   } catch {
@@ -117,15 +117,11 @@ export function hasUncommittedChanges(cwd: string): boolean {
  */
 export function isAheadOfRemote(cwd: string): boolean {
   try {
-    const result = execFileSync(
-      "git",
-      ["rev-list", "--count", "@{upstream}..HEAD"],
-      {
-        cwd,
-        stdio: "pipe",
-        encoding: "utf-8",
-      },
-    );
+    const result = execFileSync('git', ['rev-list', '--count', '@{upstream}..HEAD'], {
+      cwd,
+      stdio: 'pipe',
+      encoding: 'utf-8',
+    });
     return parseInt(result.trim(), 10) > 0;
   } catch {
     return false;
@@ -137,12 +133,12 @@ export function isAheadOfRemote(cwd: string): boolean {
  */
 export function getStagedFiles(cwd: string): string[] {
   try {
-    const result = execFileSync("git", ["diff", "--cached", "--name-only"], {
+    const result = execFileSync('git', ['diff', '--cached', '--name-only'], {
       cwd,
-      stdio: "pipe",
-      encoding: "utf-8",
+      stdio: 'pipe',
+      encoding: 'utf-8',
     });
-    return result.trim().split("\n").filter(Boolean);
+    return result.trim().split('\n').filter(Boolean);
   } catch {
     return [];
   }
@@ -152,5 +148,5 @@ export function getStagedFiles(cwd: string): string[] {
  * Stage all tracked modified files.
  */
 export function stageAll(cwd: string): void {
-  execFileSync("git", ["add", "-u"], { cwd, stdio: "pipe" });
+  execFileSync('git', ['add', '-u'], { cwd, stdio: 'pipe' });
 }

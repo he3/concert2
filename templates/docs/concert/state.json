@@ -23,7 +23,5 @@
   "telemetry": [],
   "failure_log": [],
   "history": [],
-  "next_steps": [
-    "Run /concert:init to start a new mission"
-  ]
+  "next_steps": ["Run /concert:init to start a new mission"]
 }
