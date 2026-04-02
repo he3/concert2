@@ -7,6 +7,7 @@
 The system must provide a CLI command `npx @he3-org/concert init` that bootstraps a repository with all Concert files.
 
 **Acceptance Criteria:**
+
 - Running `npx @he3-org/concert init` in a git repository creates the `docs/concert/` directory structure with agents, workflows, skills, and configuration files
 - Running `npx @he3-org/concert init` creates `.github/agents/` with all GitHub Agent definition files
 - Running `npx @he3-org/concert init` creates `.github/workflows/` with Concert workflow files (auto-continue, version-check)
@@ -22,6 +23,7 @@ The system must provide a CLI command `npx @he3-org/concert init` that bootstrap
 The system must support creating a new mission via an interactive interview process.
 
 **Acceptance Criteria:**
+
 - The `concert-init` command starts an interactive interview session
 - The interviewer agent reads existing project specs (`docs/concert/*-SPEC.md`) before asking questions
 - The interviewer asks one question at a time and waits for a response before proceeding
@@ -40,6 +42,7 @@ The system must support creating a new mission via an interactive interview proc
 The system must enforce a single active mission per repository at any time.
 
 **Acceptance Criteria:**
+
 - If `state.json` already has an active mission and `concert-init` is run, the user is warned and must explicitly choose to start a new mission
 - Only one mission's state is tracked in `state.json` at a time
 - Previous mission data remains in its `docs/concert/missions/` folder but is not active
@@ -49,6 +52,7 @@ The system must enforce a single active mission per repository at any time.
 The system must support generating requirements from an accepted vision.
 
 **Acceptance Criteria:**
+
 - The `concert-plan` command auto-selects the requirements stage when vision is accepted and requirements are pending
 - The `concert-analyst` agent reads VISION.md, existing project specs, and scans the codebase
 - The agent produces `REQUIREMENTS.md` in the mission folder with: functional requirements (unique IDs, acceptance criteria, priorities), non-functional requirements, data requirements, integration requirements, edge cases, out-of-scope, assumptions, and open questions
@@ -60,6 +64,7 @@ The system must support generating requirements from an accepted vision.
 The system must support generating an architecture plan from accepted requirements.
 
 **Acceptance Criteria:**
+
 - The `concert-plan` command auto-selects the architecture stage when requirements are accepted
 - The `concert-architect` agent reads VISION.md, REQUIREMENTS.md, existing specs, and deeply analyzes the codebase
 - The agent produces `ARCHITECTURE.md` with: system overview, tech stack decisions with rationale, component design, data model, API design, error handling, security, performance, integration points, trade-offs, and migration plan
@@ -71,6 +76,7 @@ The system must support generating an architecture plan from accepted requiremen
 The system must support generating UX specifications from accepted architecture.
 
 **Acceptance Criteria:**
+
 - The `concert-plan` command auto-selects the UX stage when architecture is accepted
 - The `concert-designer` agent reads all mission docs and loads platform-specific UX skills
 - The agent produces `UX.md` with: user flows, information architecture, component specifications (with all states), interaction patterns, accessibility requirements, and platform conventions
@@ -82,6 +88,7 @@ The system must support generating UX specifications from accepted architecture.
 The system must support decomposing approved plans into executable phases and task files.
 
 **Acceptance Criteria:**
+
 - The `concert-plan` command auto-selects the tasks stage when UX is accepted
 - The `concert-planner` agent reads all approved mission documents and analyzes the codebase
 - The agent creates a `phases/` directory structure with numbered phase directories
@@ -99,6 +106,7 @@ The system must support decomposing approved plans into executable phases and ta
 The system must support executing task files through phases and waves with atomic commits.
 
 **Acceptance Criteria:**
+
 - The `concert-continue` command starts execution from the current phase/task position in `state.json`
 - Tasks within a wave respect dependency ordering (wave 1 before wave 2, etc.)
 - Each task produces exactly one commit with conventional commit format
@@ -114,6 +122,7 @@ The system must support executing task files through phases and waves with atomi
 The system must support a review cycle at each planning stage (vision, requirements, architecture, UX, tasks).
 
 **Acceptance Criteria:**
+
 - After each planning stage produces a draft, the user is prompted with: accept, review, or restart options
 - `concert-review` reads `state.json` to determine the current stage and reviews the appropriate document
 - `concert-review` follows a two-phase review flow:
@@ -131,6 +140,7 @@ The system must support a review cycle at each planning stage (vision, requireme
 The system must provide a `concert-status` command that fully recovers context from a blank session.
 
 **Acceptance Criteria:**
+
 - `concert-status` reads `state.json` and displays: mission name, branch, PR number, pipeline progress (visual), feature size, current position, execution progress (if applicable), cost estimates, blockers, recent history (last 3-5 entries), and next steps
 - The command is read-only — it never modifies any files
 - The command runs on a budget model (fast and cheap)
@@ -143,6 +153,7 @@ The system must provide a `concert-status` command that fully recovers context f
 The system must support resuming work after session crashes, timeouts, plan usage exhaustion, or user return — including mid-code-quality-loop recovery and cross-environment handoffs (e.g., CC → GitHub).
 
 **Acceptance Criteria:**
+
 - The `concert-continue` command reads `state.json` and determines the exact continuation point
 - It handles all possible states: mid-task, between tasks, between task files, between phases, pre-execution, post-execution, in planning stages, with failure blocks, with blockers
 - It handles mid-code-quality-loop states: if the session halted during the orchestrator-coder-reviewer loop, it resumes from the correct position (e.g., coder iteration 2, reviewer pending) using the `quality_loop_state` in `state.json`
@@ -159,6 +170,7 @@ The system must support resuming work after session crashes, timeouts, plan usag
 All Concert-generated files must carry a "do not edit" header indicating they are managed by Concert.
 
 **Acceptance Criteria:**
+
 - Every agent definition file (`.claude/agents/*.md`) starts with a comment block: `<!-- AUTO-GENERATED BY CONCERT -- DO NOT EDIT ... -->`
 - Every workflow file (`docs/concert/workflows/*.md`) starts with the same header
 - Every skill file (`.claude/skills/*/SKILL.md`) starts with the same header
@@ -171,6 +183,7 @@ All Concert-generated files must carry a "do not edit" header indicating they ar
 The system must support updating Concert files in a repository to a new version.
 
 **Acceptance Criteria:**
+
 - A command (e.g., `npx @he3-org/concert update` or an update agent) upgrades Concert files in an existing installation
 - **Safe to overwrite:** Agent definitions, skill files, workflow files, GitHub agent files, and GitHub workflow files are replaced entirely from the new version
 - **Surgical updates:** `state.json` (at `docs/concert/state.json`) and `concert.jsonc` are merged intelligently — new fields are added, existing user values are preserved, removed fields are cleaned up
@@ -183,6 +196,7 @@ The system must support updating Concert files in a repository to a new version.
 All Concert commands must be prefixed with `concert-` to avoid collisions with Claude Code and other tools.
 
 **Acceptance Criteria:**
+
 - Every user-facing command uses the `concert-` prefix: `concert-init`, `concert-plan`, `concert-review`, `concert-accept`, `concert-restart`, `concert-status`, `concert-continue`, `concert-debug`, `concert-verify`, `concert-replan`, `concert-push`, `concert-quick`
 - No Concert command conflicts with built-in Claude Code commands
 - GitHub Agent definition files in `.github/agents/` use the `concert-` prefix in their filenames
@@ -192,6 +206,7 @@ All Concert commands must be prefixed with `concert-` to avoid collisions with C
 Every agent output must end with a structured "Next steps" section.
 
 **Acceptance Criteria:**
+
 - Every agent's final output includes a section titled "Next steps"
 - Next steps include specific file paths (absolute where applicable)
 - Next steps include copy-paste commands for both CLI and GitHub UI options
@@ -203,6 +218,7 @@ Every agent output must end with a structured "Next steps" section.
 Interactive interview agents must ask exactly one question at a time.
 
 **Acceptance Criteria:**
+
 - The `concert-interviewer` agent asks a single question and waits for a response before formulating the next question
 - Each answer may change the subsequent flow of questions
 - The agent adapts questioning style to user communication style (brief responses get targeted follow-ups)
@@ -213,6 +229,7 @@ Interactive interview agents must ask exactly one question at a time.
 The system must route tasks to the appropriate model tier based on task file metadata.
 
 **Acceptance Criteria:**
+
 - Task files specify a `model` field in frontmatter with values `haiku`, `sonnet`, or `opus`
 - In Claude Code sessions, subagents are spawned with the specified model tier
 - The task filename includes the model suffix (e.g., `TASK-01-db-schema-haiku.md`)
@@ -228,6 +245,7 @@ The system must route tasks to the appropriate model tier based on task file met
 The system must use an orchestrator-coder-reviewer loop for every task execution.
 
 **Acceptance Criteria:**
+
 - Every task uses the full orchestrator-coder-reviewer pattern — no simple/bypass mode
 - The reviewer rates findings with severity levels: CRIT, MAJ, MIN, NTH, PASS
 - If there are ANY findings (CRIT, MAJ, MIN, or NTH), the task is sent back to the coder for revision
@@ -247,6 +265,7 @@ The system must use an orchestrator-coder-reviewer loop for every task execution
 The system must support acceptance testing against requirements after execution completes.
 
 **Acceptance Criteria:**
+
 - The `concert-verify` command runs the QA agent
 - The QA agent reads REQUIREMENTS-SPEC.md and all PHASE-SUMMARY files
 - Each requirement is classified as PASS, PARTIAL, FAIL, or UNTESTABLE with evidence
@@ -259,6 +278,7 @@ The system must support acceptance testing against requirements after execution 
 The system should support post-mission retrospective analysis.
 
 **Acceptance Criteria:**
+
 - After successful verification, if `self_improvement.enabled` is true in `concert.jsonc`, the retrospective agent runs
 - The agent reads telemetry, failure_log, COST-REPORT.md, PHASE-SUMMARY files, and current agent/skill/workflow definitions
 - The agent produces `CONCERT-IMPROVEMENT.md` with prioritized suggestions (HIGH/MEDIUM/LOW), each citing specific telemetry evidence
@@ -270,6 +290,7 @@ The system should support post-mission retrospective analysis.
 The system should allow running stages out of order and rolling back to earlier stages.
 
 **Acceptance Criteria:**
+
 - `concert-plan <stage>` runs the specified stage regardless of current pipeline position
 - `concert-review <stage>` reviews a specific stage's output
 - `concert-accept <stage>` accepts a specific stage
@@ -281,6 +302,7 @@ The system should allow running stages out of order and rolling back to earlier 
 The system must log structured telemetry after each task completion.
 
 **Acceptance Criteria:**
+
 - After each task commits successfully, a telemetry record is appended to `state.json` -> `telemetry[]`
 - Each record includes: task_file, task_index, phase, model_assigned, confidence, review_result, revision_count, skills_loaded, files_changed, completed_at
 - Confidence is assessed based on: test coverage, requirements clarity, pattern familiarity, complexity vs model tier, acceptance criteria satisfaction
@@ -291,6 +313,7 @@ The system must log structured telemetry after each task completion.
 The system must handle failures with structured error classification and crash-safe state.
 
 **Acceptance Criteria:**
+
 - On task failure, execution stops immediately — no skipping ahead
 - A failure block is written to `state.json` with: phase, phase_name, task_file, task_index, task_title, failed_at (ISO 8601), error_type, error_summary, files_touched, last_successful_commit, context_usage_percent
 - Error types include: test_failure, build_error, context_exhaustion, dependency_missing, model_capability_exceeded, timeout, unknown
@@ -303,6 +326,7 @@ The system must handle failures with structured error classification and crash-s
 The system should provide a scientific-method debugging agent.
 
 **Acceptance Criteria:**
+
 - The `concert-debug` command spawns the debugger agent
 - The agent reads the failure block from `state.json` and relevant code/tests
 - The agent forms 2-3 ranked hypotheses and tests each systematically
@@ -315,6 +339,7 @@ The system should provide a scientific-method debugging agent.
 Concert 2 must be distributed as an npm package.
 
 **Acceptance Criteria:**
+
 - The package is published to npm under the name `@he3-org/concert`
 - `npx @he3-org/concert init` bootstraps a repository without requiring a global install
 - The package includes all agent definitions, workflow files, skill files, GitHub agent files, and GitHub workflow files as distributable assets
@@ -326,6 +351,7 @@ Concert 2 must be distributed as an npm package.
 Concert commands must work from the GitHub Agents UI.
 
 **Acceptance Criteria:**
+
 - Each Concert command has a corresponding `.github/agents/concert-<name>.agent.md` file
 - GitHub Agent files contain `name` and `description` frontmatter (no `model` or `tools`) and point to the full agent definition in `.claude/agents/`
 - Agents that require interactivity (`concert-init`, `concert-review`) detect non-interactive environments and output a clear error directing the user to Claude Code
@@ -336,6 +362,7 @@ Concert commands must work from the GitHub Agents UI.
 Concert commands must work from the Claude Code web UI for interactive steps.
 
 **Acceptance Criteria:**
+
 - Interactive commands (`concert-init`, `concert-review`) function correctly in Claude Code web UI sessions
 - The Claude Code skill commands (`/concert:init`, `/concert:plan`, etc.) map to the corresponding agent definitions
 - All agent outputs render correctly as markdown in the Claude Code web UI
@@ -345,6 +372,7 @@ Concert commands must work from the Claude Code web UI for interactive steps.
 All state changes must be committed to git.
 
 **Acceptance Criteria:**
+
 - State changes are committed alongside the work that triggered them (e.g., a task commit includes the state.json update); state-only commits occur only when no other files changed (e.g., a stage transition)
 - Every planning stage that produces a document commits the document
 - Every task execution commits the code with conventional commit format
@@ -355,6 +383,7 @@ All state changes must be committed to git.
 Concert 2 must be usable to develop Concert 2 itself.
 
 **Acceptance Criteria:**
+
 - Concert 2 can be installed in its own repository
 - A mission can be run through the full pipeline (vision through execution) on the Concert 2 codebase
 - The Concert 2 agents, workflows, and skills work correctly when the target project IS Concert 2
@@ -365,6 +394,7 @@ Concert 2 must be usable to develop Concert 2 itself.
 The system must select the appropriate workflow based on feature size.
 
 **Acceptance Criteria:**
+
 - Feature size "large" selects `CONCERT-WORKFLOW-MISSION-FULL.md` (vision, requirements, architecture, UX, tasks, execution)
 - Feature size "medium" selects `CONCERT-WORKFLOW-MISSION-MEDIUM.md` (vision, requirements, architecture, tasks, execution)
 - Feature size "small" selects `CONCERT-WORKFLOW-MISSION-SMALL.md` (vision, tasks, execution)
@@ -375,6 +405,7 @@ The system must select the appropriate workflow based on feature size.
 The system should maintain a human-readable status display.
 
 **Acceptance Criteria:**
+
 - When `status_display` in `concert.jsonc` is `"wip_pr"`, the WIP PR body is updated with pipeline progress after each stage transition
 - The status display shows the visual pipeline, current position, and recent history
 - The display is updated after stage acceptance and phase completion
@@ -384,6 +415,7 @@ The system should maintain a human-readable status display.
 The system should support automatic continuation with environment-aware execution strategy.
 
 **Acceptance Criteria:**
+
 - A GitHub Actions workflow triggers on pushes to `docs/concert/state.json`
 - The workflow checks if the mission stage is not "done" or "verified"
 - If work remains, it triggers the appropriate continuation strategy based on environment
@@ -397,6 +429,7 @@ The system should support automatic continuation with environment-aware executio
 The system must compact context as phases complete to keep agents within context window limits.
 
 **Acceptance Criteria:**
+
 - Agents reading execution state use a tiered strategy: current phase reads TASK files + PHASE-SUMMARY, previous phase reads PHASE-SUMMARY only, older phases are skipped unless specifically relevant
 - PHASE-SUMMARY files contain enough information for downstream agents to understand completed work without reading individual TASK files
 - The orchestrator monitors context usage and spawns continuation agents before hitting limits
@@ -406,6 +439,7 @@ The system must compact context as phases complete to keep agents within context
 The system must support a skills system that provides domain-specific guidance to agents.
 
 **Acceptance Criteria:**
+
 - Skills are defined as markdown files in `.claude/skills/<skill-name>/SKILL.md`
 - Each skill specifies file patterns indicating when it should apply (e.g., `**/*.ts`)
 - Task files reference skills by name in their specification
@@ -417,6 +451,7 @@ The system must support a skills system that provides domain-specific guidance t
 Interactive interview agents must be restricted to Claude Code unless the restriction is explicitly disabled.
 
 **Acceptance Criteria:**
+
 - `concert.jsonc` includes a configuration option `"interactive_mode": "claude_code_only"` (default)
 - When set to `"claude_code_only"`, interactive agents (`concert-init`, `concert-review`) refuse to run in GitHub Agents UI and output a message directing the user to Claude Code
 - When set to `"any"`, interactive agents attempt to run in any environment (for future GitHub interactivity support)
@@ -428,6 +463,7 @@ Interactive interview agents must be restricted to Claude Code unless the restri
 The system must provide a `concert-quick` command for small tasks that skip the full pipeline.
 
 **Acceptance Criteria:**
+
 - The `concert-quick` command accepts a task description as an argument
 - The agent operates as a senior full-stack developer with design, UX, security, and documentation expertise
 - The agent uses all available tools (Read, Write, Edit, Bash, Grep, Glob, etc.)
@@ -445,6 +481,7 @@ The system must provide a `concert-quick` command for small tasks that skip the 
 The system must provide a Node CLI command to safely push local work to origin for cross-environment continuation.
 
 **Acceptance Criteria:**
+
 - `npx @he3-org/concert push` is a pure Node CLI command — no LLM session required, runs entirely locally
 - The command commits any uncommitted state.json changes, stages any unstaged tracked files that are part of the current task, and pushes the current branch to origin
 - If the code quality loop is in progress, the command saves the full `quality_loop_state` to `state.json` (iteration number, active phase, prior findings, coder commits) before pushing
@@ -459,6 +496,7 @@ The system must provide a Node CLI command to safely push local work to origin f
 The `concert-continue` command must check context usage before starting each new task to avoid mid-task exhaustion.
 
 **Acceptance Criteria:**
+
 - `concert.jsonc` includes a configurable `"execution.max_context_usage_percent"` value (default: 85)
 - Before starting each new task, `concert-continue` checks current context usage (only when running in Claude Code)
 - If context usage exceeds the configured threshold, `concert-continue` stops, saves all state (including `quality_loop_state` if active), commits state.json, and outputs handoff instructions: "Run `npx @he3-org/concert push` to push to origin, then run `concert-continue` in GitHub Agents UI"
@@ -471,6 +509,7 @@ The `concert-continue` command must check context usage before starting each new
 The system must keep documentation current as code changes, using a hybrid inline + phase-level approach.
 
 **Acceptance Criteria:**
+
 - **During the coder/reviewer loop:** The coder updates documentation within files it is already touching — inline comments, JSDoc/TSDoc, function-level docs. The reviewer flags missing or outdated inline docs as findings.
 - **After each phase completes:** A dedicated documentation agent runs, reads the PHASE-SUMMARY and all commits from that phase, and updates higher-level documentation (README sections, API docs, architecture docs, guides)
 - The documentation agent produces a single conventional commit with all doc updates for the phase
@@ -483,6 +522,7 @@ The system must keep documentation current as code changes, using a hybrid inlin
 Concert workflow definitions must generate GitHub agentic workflow files for native execution.
 
 **Acceptance Criteria:**
+
 - Concert workflows (`docs/concert/workflows/*.md`) are the design-layer source of truth — they define pipeline stages, agent assignments, review rules, and orchestration logic
 - During `npx @he3-org/concert init` and `npx @he3-org/concert update`, Concert generates GitHub agentic workflow files (`.github/workflows/*.md` + `.lock.yml`) from the Concert workflow definitions
 - The generated GitHub workflow files use the dual-file format (markdown + lock) for compatibility with GitHub's agentic workflow infrastructure
@@ -494,10 +534,10 @@ Concert workflow definitions must generate GitHub agentic workflow files for nat
 
 ### FR-035: Cost-Optimized Task Decomposition (must)
 
-
 The planner agent must prioritize decomposing tasks so they can be executed by the cheapest viable model tier.
 
 **Acceptance Criteria:**
+
 - The planner actively breaks down complex work into smaller, simpler tasks that haiku can handle before resorting to sonnet or opus
 - Task decomposition favors many small haiku-tier tasks over fewer sonnet/opus-tier tasks when the result is equivalent
 - The planner only assigns sonnet when the task genuinely requires business logic reasoning, nuanced test writing, or multi-file coordination that haiku cannot handle
@@ -514,6 +554,7 @@ The planner agent must prioritize decomposing tasks so they can be executed by t
 The system must work effectively from a low-power Chromebook via browser interfaces.
 
 **Measurable Criteria:**
+
 - All planning-stage agents complete within GitHub Agents UI and Claude Code web UI session limits
 - `concert-status` agent completes in under 30 seconds on any model
 - No Concert command requires local compute beyond running `npx` for bootstrapping
@@ -524,6 +565,7 @@ The system must work effectively from a low-power Chromebook via browser interfa
 The npm package must have minimal external dependencies.
 
 **Measurable Criteria:**
+
 - The package has fewer than 20 direct production dependencies
 - No dependency requires native compilation (no node-gyp)
 - All dependencies are well-maintained (updated within the last 12 months)
@@ -534,6 +576,7 @@ The npm package must have minimal external dependencies.
 The system must be resilient to session crashes at any point during execution.
 
 **Measurable Criteria:**
+
 - `state.json` is updated after every task commit — at most one task of work is lost on crash
 - Any crashed session can be resumed with `concert-continue` from a fresh session
 - Debug state (hypotheses, experiments) persists across crashes
@@ -544,6 +587,7 @@ The system must be resilient to session crashes at any point during execution.
 Concert operations should produce clean, readable git history.
 
 **Measurable Criteria:**
+
 - Every task produces exactly one commit
 - All commits use conventional commit format (`type: description` or `type(scope): description`)
 - All PR titles use conventional commit format (`type: description`)
@@ -555,6 +599,7 @@ Concert operations should produce clean, readable git history.
 Agents should use context windows efficiently.
 
 **Measurable Criteria:**
+
 - The orchestrator keeps its own context to approximately 15% of the window
 - Subagents receive file paths rather than file contents
 - Completed phases are summarized via PHASE-SUMMARY files instead of re-reading TASK files
@@ -565,6 +610,7 @@ Agents should use context windows efficiently.
 Concert commands should be safe to run multiple times.
 
 **Measurable Criteria:**
+
 - Running `concert-status` multiple times produces the same output (read-only)
 - Running `concert-continue` when already at the correct position is a no-op
 - Running `concert-accept` on an already-accepted stage produces a warning rather than an error
@@ -574,6 +620,7 @@ Concert commands should be safe to run multiple times.
 All error states must produce clear, actionable error messages.
 
 **Measurable Criteria:**
+
 - Every error output includes: what failed, why it failed, and what the user should do next
 - Interactive-only commands in non-interactive environments produce a specific message directing the user to Claude Code
 - Missing prerequisites (e.g., no VISION.md when running requirements) produce specific guidance
@@ -587,6 +634,7 @@ All error states must produce clear, actionable error messages.
 The system must define and maintain a structured state file.
 
 **Schema Fields:**
+
 - `mission`: string — mission slug
 - `mission_path`: string — path to mission folder
 - `workflow`: string — active workflow name
@@ -619,6 +667,7 @@ The system must define and maintain a structured state file.
 - `next_steps`: array — actionable next steps for user/agent
 
 **Acceptance Criteria:**
+
 - The schema is documented and versioned
 - All agents read and write to this schema consistently
 - New fields can be added without breaking existing state files (forward compatibility)
@@ -629,6 +678,7 @@ The system must define and maintain a structured state file.
 The system must define a user-editable configuration file.
 
 **Schema Fields:**
+
 - `project_name`: string
 - `concert_version`: string
 - `project.platforms`: array
@@ -647,6 +697,7 @@ The system must define a user-editable configuration file.
 - `user_guidance`: object — always_show_next_steps, include_file_paths, include_copy_paste_commands, show_both_cli_and_ui_options
 
 **Acceptance Criteria:**
+
 - The file uses JSONC format (JSON with comments)
 - Default values are provided for all fields
 - User modifications survive updates (surgical merge)
@@ -656,6 +707,7 @@ The system must define a user-editable configuration file.
 Each mission must store its documents in a structured folder.
 
 **Required Structure:**
+
 ```
 docs/concert/missions/YYYY-MM-DD-<slug>/
   VISION.md
@@ -674,6 +726,7 @@ docs/concert/missions/YYYY-MM-DD-<slug>/
 ```
 
 **Acceptance Criteria:**
+
 - Mission folders are created by the interviewer agent with the correct date and slug
 - All planning stage documents are written to the mission folder
 - Phase directories use zero-padded numbering (01, 02, ...) for sort order
@@ -685,6 +738,7 @@ docs/concert/missions/YYYY-MM-DD-<slug>/
 Accepted stage outputs must be promoted to project-level spec files.
 
 **Acceptance Criteria:**
+
 - On accept, the plan document is copied/promoted to `docs/concert/` as `*-SPEC.md`:
   - VISION.md -> VISION-SPEC.md
   - REQUIREMENTS.md -> REQUIREMENTS-SPEC.md
@@ -698,6 +752,7 @@ Accepted stage outputs must be promoted to project-level spec files.
 Each telemetry record must follow a defined schema.
 
 **Schema Fields (per record):**
+
 - `task_file`: string
 - `task_index`: number (1-indexed)
 - `phase`: number
@@ -710,6 +765,7 @@ Each telemetry record must follow a defined schema.
 - `completed_at`: string (ISO 8601)
 
 **Acceptance Criteria:**
+
 - Every successful task completion appends a record with all fields populated
 - The schema is consistent across all executing agents
 
@@ -718,6 +774,7 @@ Each telemetry record must follow a defined schema.
 Task files must use a defined YAML frontmatter schema.
 
 **Schema Fields:**
+
 - `task`: string — slug identifier
 - `title`: string — descriptive title
 - `depends_on`: string[] — slugs of dependency tasks
@@ -725,6 +782,7 @@ Task files must use a defined YAML frontmatter schema.
 - `model`: "haiku" | "sonnet" | "opus" — model tier
 
 **Acceptance Criteria:**
+
 - All task files produced by the planner include valid frontmatter
 - The runner agent parses frontmatter to determine model tier and dependencies
 - The dependency DAG built from `depends_on` has no cycles
@@ -738,6 +796,7 @@ Task files must use a defined YAML frontmatter schema.
 Concert must integrate with the GitHub Agents UI for autonomous agent execution.
 
 **Acceptance Criteria:**
+
 - Each Concert command has a `.github/agents/concert-<name>.agent.md` file that GitHub Agents UI can discover
 - Agent files include `name` and `description` frontmatter fields (no `model` or `tools`) that appear in the GitHub UI agent selector
 - Agent files reference the full agent definition via "Read .claude/agents/..." instructions
@@ -749,6 +808,7 @@ Concert must integrate with the GitHub Agents UI for autonomous agent execution.
 Concert must integrate with Claude Code's skill/command system.
 
 **Acceptance Criteria:**
+
 - Concert commands are accessible via `/concert:init`, `/concert:plan`, `/concert:review`, `/concert:accept`, `/concert:status`, `/concert:continue`, `/concert:debug`, `/concert:verify`
 - Skill commands load and execute the corresponding agent definitions
 - The CLAUDE.md project configuration file references Concert commands
@@ -758,6 +818,7 @@ Concert must integrate with Claude Code's skill/command system.
 Concert must integrate with git for all state management and code commits.
 
 **Acceptance Criteria:**
+
 - All state changes, planning documents, and code are committed to git
 - Branch naming follows the project's convention
 - Commits use conventional commit format as configured in `concert.jsonc`
@@ -768,6 +829,7 @@ Concert must integrate with git for all state management and code commits.
 Concert must be published to and installable from the npm registry.
 
 **Acceptance Criteria:**
+
 - The package is published to npm with proper metadata (name, version, description, license, repository)
 - `npx @he3-org/concert init` works without prior installation
 - `npx @he3-org/concert update` works for upgrading existing installations
@@ -778,6 +840,7 @@ Concert must be published to and installable from the npm registry.
 Concert may integrate with GitHub Actions for automation.
 
 **Acceptance Criteria:**
+
 - The auto-continue workflow triggers on state.json changes and signals when work remains
 - The version-check workflow runs periodically to check for Concert updates
 - Workflow files are generated during init and updated during update

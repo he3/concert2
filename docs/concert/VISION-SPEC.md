@@ -27,30 +27,36 @@ A single developer (the author) working primarily from a browser environment, in
 ## Key Design Decisions
 
 ### Language & Distribution
+
 - TypeScript implementation, published as an npm package
 - `npx concert2 init` bootstraps a repo with all necessary files
 - Simple, maintainable dependency choices
 
 ### State Management
+
 - `concert-state.json` in the repo — GitHub is the source of truth
 - One active mission per repo at a time
 - All state changes committed to git
 
 ### Command Naming
+
 - All commands prefixed `concert-*` to avoid collisions with CC and other tools
 - Examples: `concert-init`, `concert-plan`, `concert-review`, `concert-status`, `concert-accept`, `concert-restart`
 
 ### Agent Interaction
+
 - Interview agents always ask **one question at a time** — each answer may change the flow
 - Every agent output ends with **actionable next steps** including example commands
 - `concert-status` is the cold-start recovery command — run it from a blank browser to know exactly where you left off and what to do next
 
 ### Update Strategy
+
 - **Safe to overwrite:** agents, skills, commands, workflows, GitHub agent definitions (`.github/agents/`), GitHub workflow files (`.github/workflows/`) — all generated files carry a "managed by Concert, do not edit" header
 - **Surgical updates:** `concert-state.json` and `concert-config.jsonc` — schema may evolve, so updates use intelligent merging (dedicated update agent rather than brittle migration scripts)
 - **User content preserved:** mission files (VISION.md, specs, task plans, etc.) are never overwritten by updates
 
 ### Future-Ready Architecture
+
 - Execution layer designed for eventual abstraction — GitHub Agents now, with potential for Cloudflare Workers, local CLI, or other runtimes later
 - Non-GitHub runtimes must handle failures gracefully and reconcile state back to the repo
 - Agent self-improvement/learning loop planned as a future feature (agents review their own performance and suggest improvements)
@@ -58,6 +64,7 @@ A single developer (the author) working primarily from a browser environment, in
 ## Scope
 
 ### In Scope (v1)
+
 - Full pipeline: vision → requirements → architecture → UX → tasks → execution
 - Review/accept/restart loops at each stage
 - GitHub Agents + Claude Code web UI as primary interfaces
@@ -68,6 +75,7 @@ A single developer (the author) working primarily from a browser environment, in
 - All generated files marked with "do not edit" headers
 
 ### Out of Scope (v1)
+
 - Multi-runtime abstraction (Cloudflare Workers, Deno, etc.)
 - Agent self-improvement/learning loop
 - Multi-mission concurrency within a single repo

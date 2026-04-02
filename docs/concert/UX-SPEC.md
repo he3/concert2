@@ -49,6 +49,7 @@ User opens Claude Code (web UI or CLI)
 ```
 
 **Key UX decisions:**
+
 - The npm `concert init` is non-interactive. It copies files and exits. No LLM needed.
 - The agent `concert-init` is interactive-only. It refuses to run in GitHub Agents UI with a clear redirect message.
 - The two steps (npm init, then agent init) are distinct. The npm command sets up files; the agent creates the first mission.
@@ -104,6 +105,7 @@ For each planning stage:
 ```
 
 **Key UX decisions:**
+
 - `concert-plan` auto-selects the stage. No argument needed for the common case. Explicit stage argument available for overrides.
 - Review is two-phase to respect user priorities. The reviewer never buries the user's concerns under its own.
 - Each review concern is discussed individually. No walls of text.
@@ -139,6 +141,7 @@ For each planning stage:
 ```
 
 **Key UX decisions:**
+
 - Execution is autonomous. The user starts it and checks back.
 - State is committed after every task for crash safety.
 - On failure, execution stops immediately with full failure context.
@@ -168,6 +171,7 @@ GitHub Agents UI
 ```
 
 **Key UX decisions:**
+
 - `concert push` is a pure Node CLI command. No LLM session required. This is critical because the most common trigger is exhausted plan usage.
 - The handoff message tells the user exactly which agent to run and what model to select.
 - The reverse handoff (GitHub -> CC) works identically: push from GitHub, continue in CC.
@@ -422,6 +426,7 @@ Agent: [writes VISION.md, creates branch, creates WIP PR, updates state.json, co
 ```
 
 **Key patterns:**
+
 - One question per message. Never a numbered list of questions.
 - Confirmation before writing. The agent summarizes and waits.
 - Adaptive flow. If the user volunteers constraint info in the description, the agent skips the constraints question.
@@ -493,6 +498,7 @@ Agent: Added EC-009 for that case. Committed.
 ```
 
 **Key patterns:**
+
 - Phase 1 always comes first. Even if the reviewer has critical concerns, the user's changes are handled first.
 - One concern at a time with a counter (e.g., `[2/3]`). The user always knows how many remain.
 - Each concern has a severity label and a concrete suggestion.
@@ -600,6 +606,7 @@ Concert Status: my-feature
 ```
 
 **Key patterns:**
+
 - Pipeline visualization uses `[x]` / `[ ]` checkboxes. Universally understood, screen-reader friendly.
 - Execution progress shows completion percentage and current position.
 - Failure blocks include the error type, summary, and last good commit.
@@ -667,35 +674,41 @@ The WIP PR body serves as the single human-readable status display across all en
 ## Concert Mission: concert2-v1
 
 ### Pipeline
-| Stage | Status |
-|-------|--------|
-| Vision | Accepted |
-| Requirements | Accepted |
-| Architecture | Accepted |
-| UX | **Draft** |
-| Tasks | Pending |
+
+| Stage        | Status    |
+| ------------ | --------- |
+| Vision       | Accepted  |
+| Requirements | Accepted  |
+| Architecture | Accepted  |
+| UX           | **Draft** |
+| Tasks        | Pending   |
 
 ### Current Position
+
 - **Stage:** UX (draft)
 - **Feature size:** Large
 
 ### Execution Progress
+
 _Not started — planning in progress._
 
 ### Recent Activity
-| Date | Event |
-|------|-------|
+
+| Date       | Event                 |
+| ---------- | --------------------- |
 | 2026-03-26 | Architecture accepted |
 | 2026-03-26 | Architecture reviewed |
-| 2026-03-26 | Architecture drafted |
+| 2026-03-26 | Architecture drafted  |
 | 2026-03-26 | Requirements accepted |
 
 ### Next Steps
+
 1. Review UX draft in Claude Code: `/concert:review`
 2. Accept UX: `/concert:accept`
 3. After accepting, advance to tasks: `/concert:continue`
 
 ---
+
 _Updated by Concert at 2026-03-26T18:00:00Z_
 ```
 
@@ -705,47 +718,54 @@ _Updated by Concert at 2026-03-26T18:00:00Z_
 ## Concert Mission: my-feature
 
 ### Pipeline
-| Stage | Status |
-|-------|--------|
-| Vision | Accepted |
+
+| Stage        | Status   |
+| ------------ | -------- |
+| Vision       | Accepted |
 | Requirements | Accepted |
 | Architecture | Accepted |
-| UX | Accepted |
-| Tasks | Planned |
+| UX           | Accepted |
+| Tasks        | Planned  |
 
 ### Execution Progress
+
 - **Phase:** 2 of 4 — "API Endpoints"
 - **Tasks:** 8 / 22 (36%)
 - **Current task:** auth-middleware (sonnet, reviewer iteration 2)
 
 #### Phase Summary
-| Phase | Name | Tasks | Status |
-|-------|------|-------|--------|
-| 1 | Foundation | 5/5 | Complete |
-| 2 | API Endpoints | 3/6 | In progress |
-| 3 | Frontend | 0/7 | Pending |
-| 4 | Integration | 0/4 | Pending |
+
+| Phase | Name          | Tasks | Status      |
+| ----- | ------------- | ----- | ----------- |
+| 1     | Foundation    | 5/5   | Complete    |
+| 2     | API Endpoints | 3/6   | In progress |
+| 3     | Frontend      | 0/7   | Pending     |
+| 4     | Integration   | 0/4   | Pending     |
 
 ### Recent Activity
-| Date | Event |
-|------|-------|
+
+| Date       | Event                              |
+| ---------- | ---------------------------------- |
 | 2026-03-28 | Task 8: user-routes (sonnet, PASS) |
-| 2026-03-28 | Task 7: db-queries (haiku, PASS) |
-| 2026-03-28 | Phase 1 complete: Foundation |
+| 2026-03-28 | Task 7: db-queries (haiku, PASS)   |
+| 2026-03-28 | Phase 1 complete: Foundation       |
 
 ### Cost Tracking
-| Stage | Estimate |
-|-------|----------|
-| Planning | ~$2.50 |
-| Phase 1 | ~$4.00 |
-| Phase 2 | ~$3.00 (in progress) |
-| Remaining | ~$8.00 |
+
+| Stage     | Estimate             |
+| --------- | -------------------- |
+| Planning  | ~$2.50               |
+| Phase 1   | ~$4.00               |
+| Phase 2   | ~$3.00 (in progress) |
+| Remaining | ~$8.00               |
 
 ### Next Steps
+
 1. Continue execution: run `concert-continue` with sonnet
 2. Push for handoff: `npx @he3-org/concert push`
 
 ---
+
 _Updated by Concert at 2026-03-28T14:30:00Z_
 ```
 
@@ -763,16 +783,16 @@ _Updated by Concert at 2026-03-28T14:30:00Z_
 
 ### 6.1 Text Formatting
 
-| Element | Format | Example |
-|---------|--------|---------|
-| Success header | Plain text | `Concert initialized in /home/user/project` |
-| Error header | `Error:` prefix | `Error: not a git repository` |
-| Warning header | `Warning:` prefix | `Warning: Concert files already exist` |
-| Section label | Indented, colon-terminated | `  Created:` |
-| List items | Indented with spaces | `    .claude/agents/  (14 files)` |
-| Next steps | Numbered list under `Next steps:` | `  1. Review concert.jsonc` |
-| File paths | Absolute or repo-relative | `docs/concert/state.json` |
-| Commands | Inline, unquoted | `npx @he3-org/concert update` |
+| Element        | Format                            | Example                                     |
+| -------------- | --------------------------------- | ------------------------------------------- |
+| Success header | Plain text                        | `Concert initialized in /home/user/project` |
+| Error header   | `Error:` prefix                   | `Error: not a git repository`               |
+| Warning header | `Warning:` prefix                 | `Warning: Concert files already exist`      |
+| Section label  | Indented, colon-terminated        | `  Created:`                                |
+| List items     | Indented with spaces              | `    .claude/agents/  (14 files)`           |
+| Next steps     | Numbered list under `Next steps:` | `  1. Review concert.jsonc`                 |
+| File paths     | Absolute or repo-relative         | `docs/concert/state.json`                   |
+| Commands       | Inline, unquoted                  | `npx @he3-org/concert update`               |
 
 ### 6.2 Iconography
 
@@ -783,6 +803,7 @@ Concert CLI output uses **no emoji and no Unicode symbols** beyond basic ASCII. 
 ### 6.3 Color Usage
 
 The CLI uses **no color by default**. The output is plain text that works identically in:
+
 - Terminal with color support
 - Terminal without color support
 - Piped to a file
@@ -799,22 +820,23 @@ Agent conversations in Claude Code / GitHub Agents UI have their own built-in pr
 
 ### 6.5 Stderr vs Stdout
 
-| Stream | Content |
-|--------|---------|
+| Stream | Content                                            |
+| ------ | -------------------------------------------------- |
 | stdout | All primary output — summaries, status, next steps |
-| stderr | Error messages (Error:, Warning:) |
+| stderr | Error messages (Error:, Warning:)                  |
 
 **Exit codes:**
 
-| Code | Meaning |
-|------|---------|
-| 0 | Success |
-| 1 | General error (operation failed) |
-| 2 | Usage error (bad arguments, missing prerequisites) |
+| Code | Meaning                                            |
+| ---- | -------------------------------------------------- |
+| 0    | Success                                            |
+| 1    | General error (operation failed)                   |
+| 2    | Usage error (bad arguments, missing prerequisites) |
 
 ### 6.6 Width and Wrapping
 
 CLI output is designed to fit within **80 columns**. No line exceeds 80 characters. This ensures readability in:
+
 - Split-screen terminal windows
 - Narrow browser-based terminals (Chromebook)
 - Piped output
@@ -1046,11 +1068,13 @@ Agent: Reading failure block from state.json...
 ### 9.3 Agent Conversation Accessibility
 
 Agent outputs use markdown formatting that renders consistently across:
+
 - Claude Code web UI
 - GitHub Agents UI
 - CLI terminal (raw markdown is still readable as plain text)
 
 No agent output relies on:
+
 - Emoji for meaning
 - Color for meaning
 - Unicode special characters
@@ -1062,57 +1086,57 @@ No agent output relies on:
 
 ### 10.1 CLI Conventions
 
-| Convention | Implementation |
-|-----------|----------------|
-| `--help` / `-h` | Supported on all 3 commands |
-| `--version` / `-V` | Prints package version |
-| Exit codes | 0 (success), 1 (error), 2 (usage error) |
-| No color | Default — no chalk, no ANSI codes |
-| 80-column width | All output fits 80 columns |
-| Stderr for errors | Error: and Warning: go to stderr |
+| Convention                | Implementation                                                     |
+| ------------------------- | ------------------------------------------------------------------ |
+| `--help` / `-h`           | Supported on all 3 commands                                        |
+| `--version` / `-V`        | Prints package version                                             |
+| Exit codes                | 0 (success), 1 (error), 2 (usage error)                            |
+| No color                  | Default — no chalk, no ANSI codes                                  |
+| 80-column width           | All output fits 80 columns                                         |
+| Stderr for errors         | Error: and Warning: go to stderr                                   |
 | Idempotent where possible | `init` detects existing files; `push` reports "already up to date" |
 
 ### 10.2 Missing from CLI (by design)
 
 The following CLI features are intentionally omitted for v1:
 
-| Feature | Reason for omission |
-|---------|-------------------|
-| `--json` output | No consumer — agents read state.json directly |
-| `--verbose` / `--quiet` | Output is already minimal; no detail levels needed |
-| `--force` on init | Covered by `update` command for managed files |
-| Shell completions | 3 commands with no flags — tab completion adds no value |
-| Config file flags | concert.jsonc is always at project root — no override needed |
-| Spinners / progress bars | Operations complete in seconds |
+| Feature                  | Reason for omission                                          |
+| ------------------------ | ------------------------------------------------------------ |
+| `--json` output          | No consumer — agents read state.json directly                |
+| `--verbose` / `--quiet`  | Output is already minimal; no detail levels needed           |
+| `--force` on init        | Covered by `update` command for managed files                |
+| Shell completions        | 3 commands with no flags — tab completion adds no value      |
+| Config file flags        | concert.jsonc is always at project root — no override needed |
+| Spinners / progress bars | Operations complete in seconds                               |
 
 These may be added in future versions if demand arises.
 
 ### 10.3 Agent Command Conventions
 
-| Convention | Implementation |
-|-----------|----------------|
-| Naming | `concert-<name>` prefix on all commands |
-| CC invocation | `/concert:<name>` skill commands |
-| GitHub invocation | Select `concert-<name>` agent in UI |
+| Convention            | Implementation                                            |
+| --------------------- | --------------------------------------------------------- |
+| Naming                | `concert-<name>` prefix on all commands                   |
+| CC invocation         | `/concert:<name>` skill commands                          |
+| GitHub invocation     | Select `concert-<name>` agent in UI                       |
 | Interactive detection | Check for Task tool availability (CC) vs absence (GitHub) |
-| State reads | Always from `docs/concert/state.json` |
-| State writes | Commit after every mutation |
-| Output ending | Always ends with `Next steps:` section |
+| State reads           | Always from `docs/concert/state.json`                     |
+| State writes          | Commit after every mutation                               |
+| Output ending         | Always ends with `Next steps:` section                    |
 
 ### 10.4 Markdown Formatting Conventions
 
 Agent outputs use these markdown elements:
 
-| Element | Use case |
-|---------|----------|
-| `**bold**` | Status labels, emphasis |
-| `code` | File paths, commands, values |
-| Tables | Pipeline status, phase summaries, comparisons |
-| Numbered lists | Ordered steps (next steps, procedures) |
-| Bulleted lists | Unordered items (files, features, concerns) |
-| Code blocks | Command examples, multi-line output |
-| Headers (`##`, `###`) | Major sections in generated documents |
-| Horizontal rules (`---`) | Section separation in generated documents |
+| Element                  | Use case                                      |
+| ------------------------ | --------------------------------------------- |
+| `**bold**`               | Status labels, emphasis                       |
+| `code`                   | File paths, commands, values                  |
+| Tables                   | Pipeline status, phase summaries, comparisons |
+| Numbered lists           | Ordered steps (next steps, procedures)        |
+| Bulleted lists           | Unordered items (files, features, concerns)   |
+| Code blocks              | Command examples, multi-line output           |
+| Headers (`##`, `###`)    | Major sections in generated documents         |
+| Horizontal rules (`---`) | Section separation in generated documents     |
 
 ---
 
@@ -1122,13 +1146,13 @@ Agent outputs use these markdown elements:
 
 The same information is available in all environments, just accessed differently:
 
-| Information | Claude Code | GitHub Agents UI | CLI |
-|-------------|-------------|-------------------|-----|
-| Pipeline status | `/concert:status` | `concert-status` agent | WIP PR body |
-| Execution progress | `/concert:status` | `concert-status` agent | WIP PR body |
-| Failure details | `/concert:status` | `concert-status` agent | WIP PR body |
-| Next steps | Every agent output | Every agent output | Every CLI output |
-| Full state | `state.json` | `state.json` | `state.json` |
+| Information        | Claude Code        | GitHub Agents UI       | CLI              |
+| ------------------ | ------------------ | ---------------------- | ---------------- |
+| Pipeline status    | `/concert:status`  | `concert-status` agent | WIP PR body      |
+| Execution progress | `/concert:status`  | `concert-status` agent | WIP PR body      |
+| Failure details    | `/concert:status`  | `concert-status` agent | WIP PR body      |
+| Next steps         | Every agent output | Every agent output     | Every CLI output |
+| Full state         | `state.json`       | `state.json`           | `state.json`     |
 
 ### 11.2 Handoff Guidance
 
@@ -1176,18 +1200,18 @@ Phase 2 has tasks at multiple model tiers:
 
 ## 12. Summary of Key UX Decisions
 
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| CLI color | None | Simplicity; 3 short commands don't benefit from color |
-| CLI emoji | None | ASCII universality across terminals |
-| CLI progress indicators | None | Operations complete in seconds |
-| Pipeline visualization | `[x]`/`[ ]` checkboxes | Universal, screen-reader friendly |
-| Interview style | One question at a time | Reduce cognitive load; each answer shapes the next question |
-| Review style | Two-phase (user first, then reviewer) | Respect user priorities |
-| Review presentation | One concern at a time with counter | Prevent information overload |
-| Status display | WIP PR body + concert-status agent | Single source of truth, accessible from any browser |
-| Error format | Three-part: what / why / fix | Actionable recovery every time |
-| Next steps | On every output, both CLI and UI options | Never leave user wondering what to do |
-| Width constraint | 80 columns for CLI output | Narrow terminals, split screens |
-| PR body updates | On stage/phase boundaries, not every task | Reduce PR edit noise |
-| Agent output structure | Summary, details, next steps | Consistent, scannable pattern |
+| Decision                | Choice                                    | Rationale                                                   |
+| ----------------------- | ----------------------------------------- | ----------------------------------------------------------- |
+| CLI color               | None                                      | Simplicity; 3 short commands don't benefit from color       |
+| CLI emoji               | None                                      | ASCII universality across terminals                         |
+| CLI progress indicators | None                                      | Operations complete in seconds                              |
+| Pipeline visualization  | `[x]`/`[ ]` checkboxes                    | Universal, screen-reader friendly                           |
+| Interview style         | One question at a time                    | Reduce cognitive load; each answer shapes the next question |
+| Review style            | Two-phase (user first, then reviewer)     | Respect user priorities                                     |
+| Review presentation     | One concern at a time with counter        | Prevent information overload                                |
+| Status display          | WIP PR body + concert-status agent        | Single source of truth, accessible from any browser         |
+| Error format            | Three-part: what / why / fix              | Actionable recovery every time                              |
+| Next steps              | On every output, both CLI and UI options  | Never leave user wondering what to do                       |
+| Width constraint        | 80 columns for CLI output                 | Narrow terminals, split screens                             |
+| PR body updates         | On stage/phase boundaries, not every task | Reduce PR edit noise                                        |
+| Agent output structure  | Summary, details, next steps              | Consistent, scannable pattern                               |

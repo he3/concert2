@@ -1,4 +1,4 @@
-import * as jsonc from "jsonc-parser";
+import * as jsonc from 'jsonc-parser';
 
 export interface MergeReport {
   added: string[]; // "cost.new_field"
@@ -16,10 +16,10 @@ export interface MergeReport {
  */
 export function mergeState(
   current: Record<string, unknown>,
-  template: Record<string, unknown>,
+  template: Record<string, unknown>
 ): { merged: Record<string, unknown>; report: MergeReport } {
   const report: MergeReport = { added: [], removed: [], warnings: [] };
-  const merged = mergeObjects(current, template, "", report);
+  const merged = mergeObjects(current, template, '', report);
   return { merged, report };
 }
 
@@ -27,7 +27,7 @@ function mergeObjects(
   current: Record<string, unknown>,
   template: Record<string, unknown>,
   keyPath: string,
-  report: MergeReport,
+  report: MergeReport
 ): Record<string, unknown> {
   const result: Record<string, unknown> = {};
 
@@ -55,15 +55,12 @@ function mergeObjects(
       }
 
       // Both are objects — recurse
-      if (
-        isPlainObject(templateValue) &&
-        isPlainObject(currentValue)
-      ) {
+      if (isPlainObject(templateValue) && isPlainObject(currentValue)) {
         result[key] = mergeObjects(
           currentValue as Record<string, unknown>,
           templateValue as Record<string, unknown>,
           fullPath,
-          report,
+          report
         );
         continue;
       }
@@ -77,7 +74,7 @@ function mergeObjects(
         typeof currentValue !== typeof templateValue
       ) {
         report.warnings.push(
-          `Type mismatch at ${fullPath}: template expects ${typeof templateValue}, got ${typeof currentValue}`,
+          `Type mismatch at ${fullPath}: template expects ${typeof templateValue}, got ${typeof currentValue}`
         );
       }
 
@@ -100,7 +97,7 @@ function mergeObjects(
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return (
-    typeof value === "object" &&
+    typeof value === 'object' &&
     value !== null &&
     !Array.isArray(value) &&
     Object.getPrototypeOf(value) === Object.prototype
@@ -113,7 +110,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
  */
 export function mergeConfig(
   currentRaw: string,
-  template: Record<string, unknown>,
+  template: Record<string, unknown>
 ): { mergedRaw: string; report: MergeReport } {
   const report: MergeReport = { added: [], removed: [], warnings: [] };
 
@@ -121,7 +118,7 @@ export function mergeConfig(
   const current = jsonc.parse(currentRaw, errors) as Record<string, unknown>;
   if (errors.length > 0) {
     throw new Error(
-      `Failed to parse current config: ${errors.map((e) => jsonc.printParseErrorCode(e.error)).join(", ")}`,
+      `Failed to parse current config: ${errors.map((e) => jsonc.printParseErrorCode(e.error)).join(', ')}`
     );
   }
 
@@ -141,18 +138,18 @@ function addMissingFields(
   current: Record<string, unknown>,
   template: Record<string, unknown>,
   pathPrefix: (string | number)[],
-  report: MergeReport,
+  report: MergeReport
 ): string {
   let result = raw;
 
   for (const [key, templateValue] of Object.entries(template)) {
     const jsonPath = [...pathPrefix, key];
-    const fullPath = jsonPath.join(".");
+    const fullPath = jsonPath.join('.');
 
     if (!(key in current)) {
       // New field — add with template default
       const edits = jsonc.modify(result, jsonPath, templateValue, {
-        formattingOptions: { tabSize: 2, insertSpaces: true, eol: "\n" },
+        formattingOptions: { tabSize: 2, insertSpaces: true, eol: '\n' },
       });
       result = jsonc.applyEdits(result, edits);
       report.added.push(fullPath);
@@ -167,7 +164,7 @@ function addMissingFields(
         current[key] as Record<string, unknown>,
         templateValue as Record<string, unknown>,
         jsonPath,
-        report,
+        report
       );
     }
   }
@@ -180,18 +177,18 @@ function removeDeprecatedFields(
   current: Record<string, unknown>,
   template: Record<string, unknown>,
   pathPrefix: (string | number)[],
-  report: MergeReport,
+  report: MergeReport
 ): string {
   let result = raw;
 
   for (const key of Object.keys(current)) {
     const jsonPath = [...pathPrefix, key];
-    const fullPath = jsonPath.join(".");
+    const fullPath = jsonPath.join('.');
 
     if (!(key in template)) {
       // Deprecated field — remove
       const edits = jsonc.modify(result, jsonPath, undefined, {
-        formattingOptions: { tabSize: 2, insertSpaces: true, eol: "\n" },
+        formattingOptions: { tabSize: 2, insertSpaces: true, eol: '\n' },
       });
       result = jsonc.applyEdits(result, edits);
       report.removed.push(fullPath);
@@ -206,7 +203,7 @@ function removeDeprecatedFields(
         current[key] as Record<string, unknown>,
         template[key] as Record<string, unknown>,
         jsonPath,
-        report,
+        report
       );
     }
   }
