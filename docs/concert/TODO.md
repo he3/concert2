@@ -7,3 +7,4 @@ Ad hoc checklist items for tracking work that needs attention.
 > be implemented when explicitly given guidance to do so.
 
 <!-- Add checklist items below this line -->
+ - [ ] After Vision was created,the guidence didnt have the approve option, it needs to be included as an option.
