@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/he3-org/concert/compare/v1.6.2...v1.7.0) (2026-04-04)
+
+
+### Features
+
+* move YAML frontmatter before DO NOT EDIT comment in .claude/agents ([#37](https://github.com/he3-org/concert/issues/37)) ([383e077](https://github.com/he3-org/concert/commit/383e0777c648ac61ef61ef4bfb419d05b343319b))
+
 ## [1.6.2](https://github.com/he3-org/concert/compare/v1.6.1...v1.6.2) (2026-04-04)
 
 
