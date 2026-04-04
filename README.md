@@ -43,7 +43,7 @@ npx @he3-org/concert@latest update
 | 5   | Task Planning | `concert-planner`    | `phases/TASK-*.md`                  | Decomposes work into phased task files with model tier assignments               |
 | 6   | Execution     | `concert-coder`      | Code + `PHASE-SUMMARY` files        | Implements tasks with TDD, commits along the way                                 |
 | 7   | Verification  | `concert-verifier`   | `VERIFICATION.md`, `COST-REPORT.md` | Acceptance checks against requirements                                           |
-| 8   | Refactoring   | `concert-refactorer` | `REFACTORING-PLAN-*.md`             | Prioritized refactoring plan (CRIT/MAJ/MIN/NTH) — human reviews and executes     |
+| 8   | Refactoring   | `concert-refactorer` | `REFACTORING-PLAN-YYYY-MM-DD.md`    | Prioritized refactoring plan (CRIT/MAJ/MIN/NTH) — human reviews and executes     |
 | 9   | Retrospective | _(self-improvement)_ | `CONCERT-IMPROVEMENT.md`            | Analyzes mission telemetry to suggest Concert improvements                       |
 
 > **Medium missions** skip UX (stage 4). **Small missions** skip requirements, architecture, and UX (stages 2–4).
@@ -197,7 +197,7 @@ Switch back to **Opus** for the refactoring stage — deep codebase analysis nee
 @concert-continue      # → Refactoring stage
 ```
 
-The refactoring agent produces a prioritized plan in `docs/REFACTORING-PLAN-<date>.md` with checkbox items categorized by severity. You review and execute the refactoring items yourself.
+The refactoring agent produces a prioritized plan in `docs/REFACTORING-PLAN-YYYY-MM-DD.md` with checkbox items categorized by severity. You review and execute the refactoring items yourself.
 
 ### 9. Retrospective (Sonnet)
 
