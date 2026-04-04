@@ -46,7 +46,7 @@ describe('concert init e2e', () => {
     }
 
     // Verify state.json was created
-    expect(fs.existsSync(path.join(tmpDir, 'docs', 'concert', 'state.json'))).toBe(true);
+    expect(fs.existsSync(path.join(tmpDir, '.concert', 'state.json'))).toBe(true);
     // Verify concert.jsonc was created
     expect(fs.existsSync(path.join(tmpDir, 'concert.jsonc'))).toBe(true);
     // Verify CLAUDE.md with Concert section

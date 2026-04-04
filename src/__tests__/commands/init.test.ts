@@ -56,14 +56,14 @@ describe('runInit', () => {
       process.stdout.write = origStdout;
     }
     // Verify state.json was created
-    expect(fs.existsSync(path.join(tmpDir, 'docs', 'concert', 'state.json'))).toBe(true);
+    expect(fs.existsSync(path.join(tmpDir, '.concert', 'state.json'))).toBe(true);
     // Verify concert.jsonc was created
     expect(fs.existsSync(path.join(tmpDir, 'concert.jsonc'))).toBe(true);
   });
 
-  it('fails with code 1 if docs/concert/ already exists', async () => {
+  it('fails with code 1 if .concert/ already exists', async () => {
     initGitRepo(tmpDir);
-    fs.mkdirSync(path.join(tmpDir, 'docs', 'concert'), { recursive: true });
+    fs.mkdirSync(path.join(tmpDir, '.concert'), { recursive: true });
     const stderrOutput: string[] = [];
     const origStderr = process.stderr.write.bind(process.stderr);
     process.stderr.write = (data: string | Uint8Array) => {

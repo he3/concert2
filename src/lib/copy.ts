@@ -198,19 +198,19 @@ export const EXCLUDED_WORKFLOWS: readonly string[] = ['concert-ci.yml'];
  */
 export const LIVE_FILE_SOURCES = [
   { src: '.claude/agents', target: '.claude/agents' },
-  { src: 'docs/concert/workflows', target: 'docs/concert/workflows' },
-  { src: 'docs/concert/templates', target: 'docs/concert/templates' },
+  { src: '.concert/workflows', target: '.concert/workflows' },
+  { src: '.concert/templates', target: '.concert/templates' },
   { src: '.claude/commands/concert', target: '.claude/commands/concert' },
   { src: '.github/agents', target: '.github/agents', pattern: /^concert-.*\.agent\.md$/ },
   { src: '.github/workflows', target: '.github/workflows', pattern: /^concert-.*\.yml$/ },
 ] as const;
 
 /**
- * Individual files in docs/concert/ that ship as live files.
+ * Individual files in .concert/ that ship as live files.
  * These are copied individually (not as directory contents).
  */
 export const LIVE_INDIVIDUAL_FILES = [
-  { src: 'docs/concert/stage-registry.jsonc', target: 'docs/concert/stage-registry.jsonc' },
+  { src: '.concert/stage-registry.jsonc', target: '.concert/stage-registry.jsonc' },
 ] as const;
 
 /**

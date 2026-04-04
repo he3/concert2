@@ -13,7 +13,7 @@
 - concert2 v1 — complete npm package rewrite ([#4](https://github.com/he3-org/concert/issues/4)) ([a597f10](https://github.com/he3-org/concert/commit/a597f10eb351b82acc3aeb5c68827d3122f93ad3))
 - install concert ([e258c9d](https://github.com/he3-org/concert/commit/e258c9d9d84263f3e50ca77c8fc0cfcf8e64176c))
 - install concert and add CLAUDE.md ([cb14848](https://github.com/he3-org/concert/commit/cb148483f949354a52bfe1345e1d155e95fa368c))
-- move agents and skills from docs/concert/ to .claude/ to prevent auto-discovery bloat loading ([#21](https://github.com/he3-org/concert/issues/21)) ([39dccda](https://github.com/he3-org/concert/commit/39dccda57b83fff695c1c1159c36a04f6f315aea))
+- move agents and skills from .concert/ to .claude/ to prevent auto-discovery bloat loading ([#21](https://github.com/he3-org/concert/issues/21)) ([39dccda](https://github.com/he3-org/concert/commit/39dccda57b83fff695c1c1159c36a04f6f315aea))
 - move YAML frontmatter before DO NOT EDIT comment in .claude/agents ([#37](https://github.com/he3-org/concert/issues/37)) ([383e077](https://github.com/he3-org/concert/commit/383e0777c648ac61ef61ef4bfb419d05b343319b))
 - upgrade concert to v1.4.0 ([d989385](https://github.com/he3-org/concert/commit/d98938539233debfb2c553cece5a21df8fdd6c77))
 
@@ -96,7 +96,7 @@
 
 ### Features
 
-- move agents and skills from docs/concert/ to .claude/ to prevent auto-discovery bloat loading ([#21](https://github.com/he3-org/concert/issues/21)) ([39dccda](https://github.com/he3-org/concert/commit/39dccda57b83fff695c1c1159c36a04f6f315aea))
+- move agents and skills from .concert/ to .claude/ to prevent auto-discovery bloat loading ([#21](https://github.com/he3-org/concert/issues/21)) ([39dccda](https://github.com/he3-org/concert/commit/39dccda57b83fff695c1c1159c36a04f6f315aea))
 
 ## [1.2.0](https://github.com/he3-org/concert/compare/v1.1.1...v1.2.0) (2026-03-29)
 

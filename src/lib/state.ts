@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import type { ConcertState, HistoryEntry } from '../types.js';
 
-const STATE_PATH = 'docs/concert/state.json';
+const STATE_PATH = '.concert/state.json';
 
 /**
  * Resolve the absolute path to state.json from the given working directory.

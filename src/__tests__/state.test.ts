@@ -18,9 +18,9 @@ afterEach(() => {
 function makeMinimalState(): ConcertState {
   return {
     mission: 'test-mission',
-    mission_path: 'docs/concert/missions/test',
+    mission_path: '.concert/missions/test',
     workflow: 'mission-full',
-    workflow_path: 'docs/concert/workflows/CONCERT-WORKFLOW-MISSION-FULL.md',
+    workflow_path: '.concert/workflows/CONCERT-WORKFLOW-MISSION-FULL.md',
     branch: 'concert/test',
     pr_number: 1,
     status_display: 'wip_pr',
@@ -51,7 +51,7 @@ describe('readState', () => {
   });
 
   it('correctly parses a valid state.json', () => {
-    const stateDir = path.join(tmpDir, 'docs', 'concert');
+    const stateDir = path.join(tmpDir, '.concert');
     fs.mkdirSync(stateDir, { recursive: true });
     const state = makeMinimalState();
     fs.writeFileSync(path.join(stateDir, 'state.json'), JSON.stringify(state, null, 2));
@@ -62,7 +62,7 @@ describe('readState', () => {
   });
 
   it('fills missing fields with defaults', () => {
-    const stateDir = path.join(tmpDir, 'docs', 'concert');
+    const stateDir = path.join(tmpDir, '.concert');
     fs.mkdirSync(stateDir, { recursive: true });
     // Write partial state
     fs.writeFileSync(path.join(stateDir, 'state.json'), JSON.stringify({ mission: 'partial' }));

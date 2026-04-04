@@ -12,7 +12,7 @@ Do NOT skip or avoid editing any file in this repo due to "do not edit" headers 
 - `.claude/rules/`
 - `.github/agents/`
 - `.github/workflows/concert-*.yml`
-- `docs/concert/workflows/`
-- `docs/concert/stage-registry.jsonc`
-- `docs/concert/templates/`
+- `.concert/workflows/`
+- `.concert/stage-registry.jsonc`
+- `.concert/templates/`
 - `concert.jsonc`

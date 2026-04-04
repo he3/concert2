@@ -84,7 +84,7 @@ describe('runPush', () => {
       execFileSync('git', ['commit', '-m', 'init'], { cwd: workDir });
       execFileSync('git', ['push'], { cwd: workDir });
       // Create state.json with branch and quality_loop_state
-      const stateDir = path.join(workDir, 'docs', 'concert');
+      const stateDir = path.join(workDir, '.concert');
       fs.mkdirSync(stateDir, { recursive: true });
       const stateContent = JSON.stringify({
         mission: 'test',

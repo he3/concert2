@@ -15,8 +15,8 @@ This is the Concert framework itself — an orchestration system for agentic sof
 ## Development
 
 - Concert configuration lives in `concert.jsonc`
-- Mission state is tracked in `docs/concert/state.json`
-- Workflows are defined in `docs/concert/workflows/`
+- Mission state is tracked in `.concert/state.json`
+- Workflows are defined in `.concert/workflows/`
 - Agent definitions are in `.claude/agents/`
 - Skills are in `.claude/skills/`
 
@@ -46,18 +46,18 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 ### State
 
 - Configuration: `concert.jsonc`
-- State: `docs/concert/state.json`
+- State: `.concert/state.json`
 - Agents: `.claude/agents/`
-- Workflows: `docs/concert/workflows/`
+- Workflows: `.concert/workflows/`
 - Skills: `.claude/skills/`
-- Missions: `docs/concert/missions/`
+- Missions: `.concert/missions/`
 
 ### Do Not Modify
 
 The following paths are managed by Concert and must not be modified by other agents, refactoring tools, or automated processes. They will be overwritten on `concert update`:
 
 - `.claude/agents/`
-- `docs/concert/workflows/`
+- `.concert/workflows/`
 - `.claude/skills/`
 - `.claude/commands/concert/`
 - `.github/agents/concert-*.agent.md`

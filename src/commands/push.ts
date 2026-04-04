@@ -13,7 +13,7 @@ import {
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-const STATE_FILE = 'docs/concert/state.json';
+const STATE_FILE = '.concert/state.json';
 
 /**
  * Run the concert push command.

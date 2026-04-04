@@ -4,7 +4,7 @@ Resume from where the last session stopped.
 
 ## Steps
 
-1. Read `docs/concert/state.json` — this is your ONLY source of truth
+1. Read `.concert/state.json` — this is your ONLY source of truth
 2. Read the active workflow file (from `workflow_path`)
 3. Assess the current state and determine the next action:
    - If no mission exists → output "No active mission. Start one with `/concert:init`"
