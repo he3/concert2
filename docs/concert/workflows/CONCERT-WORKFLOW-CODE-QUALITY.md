@@ -38,7 +38,7 @@ steps:
     on_fail: record failure
 
   3:
-    gate: review has zero findings (CRIT==0, MAJ==0, MIN==0, NTH==0)
+    gate: CRIT == 0 AND MAJ == 0 AND MIN == 0 AND NTH == 0
     on_pass: commit and proceed to next task
     on_fail: back_to(step 1, max_iterations: 3)
 

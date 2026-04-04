@@ -70,7 +70,7 @@ Boot sequence — read these before reviewing:
    - **MIN** — Style issue, minor improvement
    - **NTH** — Nice-to-have suggestion
 
-5. **Determine outcome** — Any findings (CRIT/MAJ/MIN/NTH) present → REMAINING; no findings → CLEAN. The orchestrator loop decides whether to iterate or exit.
+5. **Determine outcome** — Report all findings with severity counts. Zero findings → PASS. Any findings → report counts per severity so the orchestrator loop can decide whether to iterate or exit.
 
 6. **Update state.json** with review result.
 
