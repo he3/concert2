@@ -181,7 +181,7 @@ describe('concert update e2e', () => {
     }
 
     // Create a user file in the concert directory (no managed header)
-    const userFilePath = path.join(tmpDir, 'docs', 'concert', 'MY-NOTES.md');
+    const userFilePath = path.join(tmpDir, '.concert', 'MY-NOTES.md');
     fs.writeFileSync(userFilePath, '# My notes\nThis is user content.\n');
 
     const restore2 = silenceOutput();

@@ -12,7 +12,7 @@ import { readConfigRaw, writeConfig, modifyConfigField, detectProjectName } from
 import { getPackageVersion } from '../lib/version.js';
 import { CLAUDE_SECTION_START, CLAUDE_SECTION_END } from '../types.js';
 
-const CONCERT_DIR = 'docs/concert';
+const CONCERT_DIR = '.concert';
 
 /**
  * Build the Concert CLAUDE.md section content.
@@ -41,19 +41,19 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 ### State
 
 - Configuration: \`concert.jsonc\`
-- State: \`docs/concert/state.json\`
+- State: \`.concert/state.json\`
 - Agents: \`.claude/agents/\`
-- Workflows: \`docs/concert/workflows/\`
+- Workflows: \`.concert/workflows/\`
 - Skills: \`.claude/skills/\`
 - Rules: \`.claude/rules/\`
-- Missions: \`docs/concert/missions/\`
+- Missions: \`.concert/missions/\`
 
 ### Do Not Modify
 
 The following paths are managed by Concert and must not be modified by other agents, refactoring tools, or automated processes. They will be overwritten on \`concert update\`:
 
 - \`.claude/agents/\`
-- \`docs/concert/workflows/\`
+- \`.concert/workflows/\`
 - \`.claude/skills/\`
 - \`.claude/rules/\`
 - \`.claude/commands/concert/\`
@@ -119,7 +119,7 @@ export async function runInit(cwd: string): Promise<number> {
     process.stderr.write(`Warning: Concert files already exist in this repository
 
   Existing files found:
-    docs/concert/    (${agentCount} agents, ${workflowCount} workflows)
+    .concert/    (${agentCount} agents, ${workflowCount} workflows)
     concert.jsonc    (user configuration)
 
   Options:
@@ -177,10 +177,10 @@ export async function runInit(cwd: string): Promise<number> {
 
   Created:
     .claude/agents/               (${agentCount} agent definitions)
-    docs/concert/workflows/       (${workflowCount} workflow files)
+    .concert/workflows/       (${workflowCount} workflow files)
     .claude/skills/               (${skillCount} skill files)
     .claude/rules/                (${ruleCount} rule files)
-    docs/concert/state.json       (empty state)
+    .concert/state.json       (empty state)
     .github/agents/               (${ghAgentCount} GitHub agent stubs)
     .github/workflows/            (${ghWorkflowCount} workflow files)
     .claude/commands/             (${commandCount} skill commands)

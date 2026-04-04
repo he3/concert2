@@ -24,18 +24,18 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 ### State
 
 - Configuration: `concert.jsonc`
-- State: `docs/concert/state.json`
+- State: `.concert/state.json`
 - Agents: `.claude/agents/`
-- Workflows: `docs/concert/workflows/`
+- Workflows: `.concert/workflows/`
 - Skills: `.claude/skills/`
-- Missions: `docs/concert/missions/`
+- Missions: `.concert/missions/`
 
 ### Do Not Modify
 
 The following paths are managed by Concert and must not be modified by other agents, refactoring tools, or automated processes. They will be overwritten on `concert update`:
 
 - `.claude/agents/`
-- `docs/concert/workflows/`
+- `.concert/workflows/`
 - `.claude/skills/`
 - `.claude/commands/concert/`
 - `.github/agents/concert-*.agent.md`

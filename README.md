@@ -30,7 +30,7 @@ In any git repository with at least one commit:
 npx @he3-org/concert@latest init
 ```
 
-This creates `docs/concert/`, `concert.jsonc`, and adds Concert commands to your `CLAUDE.md`.
+This creates `.concert/`, `concert.jsonc`, and adds Concert commands to your `CLAUDE.md`.
 
 ### 2. Start a mission
 

@@ -8,7 +8,7 @@ import { mergeState, mergeConfig } from '../lib/merge.js';
 import { CLAUDE_SECTION_START, CLAUDE_SECTION_END } from '../types.js';
 import * as jsonc from 'jsonc-parser';
 
-const CONCERT_DIR = 'docs/concert';
+const CONCERT_DIR = '.concert';
 
 /**
  * Build the Concert CLAUDE.md section content.
@@ -37,18 +37,18 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 ### State
 
 - Configuration: \`concert.jsonc\`
-- State: \`docs/concert/state.json\`
+- State: \`.concert/state.json\`
 - Agents: \`.claude/agents/\`
-- Workflows: \`docs/concert/workflows/\`
+- Workflows: \`.concert/workflows/\`
 - Skills: \`.claude/skills/\`
-- Missions: \`docs/concert/missions/\`
+- Missions: \`.concert/missions/\`
 
 ### Do Not Modify
 
 The following paths are managed by Concert and must not be modified by other agents, refactoring tools, or automated processes. They will be overwritten on \`concert update\`:
 
 - \`.claude/agents/\`
-- \`docs/concert/workflows/\`
+- \`.concert/workflows/\`
 - \`.claude/skills/\`
 - \`.claude/commands/concert/\`
 - \`.github/agents/concert-*.agent.md\`
@@ -164,7 +164,7 @@ export async function runUpdate(cwd: string): Promise<number> {
   // Update state.json — surgical merge
   let stateReport = { added: [] as string[], removed: [] as string[], warnings: [] as string[] };
   const currentState = readState(cwd);
-  const templateStatePath = path.join(templatesDir, 'docs', 'concert', 'state.json');
+  const templateStatePath = path.join(templatesDir, '.concert', 'state.json');
   if (currentState && fs.existsSync(templateStatePath)) {
     const templateStateRaw = fs.readFileSync(templateStatePath, 'utf-8');
     const templateState = JSON.parse(templateStateRaw) as Record<string, unknown>;

@@ -89,8 +89,8 @@ describe('templates directory', () => {
     expect(fs.existsSync(TEMPLATES_DIR)).toBe(true);
   });
 
-  it('contains docs/concert directory', () => {
-    expect(fs.existsSync(path.join(TEMPLATES_DIR, 'docs', 'concert'))).toBe(true);
+  it('contains .concert directory', () => {
+    expect(fs.existsSync(path.join(TEMPLATES_DIR, '.concert'))).toBe(true);
   });
 
   // .github workflows, .claude commands, agents, etc. are live files

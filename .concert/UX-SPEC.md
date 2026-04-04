@@ -236,9 +236,9 @@ Concert initialized in /home/user/my-project
 
   Created:
     .claude/agents/          (14 agent definitions)
-    docs/concert/workflows/       (8 workflow files)
+    .concert/workflows/       (8 workflow files)
     .claude/skills/          (7 skill files)
-    docs/concert/state.json       (empty state)
+    .concert/state.json       (empty state)
     .github/agents/               (14 GitHub agent stubs)
     .github/workflows/            (2 workflow files)
     .claude/commands/             (13 skill commands)
@@ -269,7 +269,7 @@ Error: not a git repository
 Warning: Concert files already exist in this repository
 
   Existing files found:
-    docs/concert/    (14 agents, 8 workflows)
+    .concert/    (14 agents, 8 workflows)
     concert.jsonc    (user configuration)
 
   Options:
@@ -287,7 +287,7 @@ Concert updated to v0.4.0 (was v0.3.0)
   Updated managed files:
     .claude/agents/concert-continue.md  (v0.3.0 -> v0.4.0)
     .claude/agents/concert-reviewer.md  (v0.3.0 -> v0.4.0)
-    docs/concert/workflows/CONCERT-WORKFLOW-EXECUTION.md  (v0.3.0 -> v0.4.0)
+    .concert/workflows/CONCERT-WORKFLOW-EXECUTION.md  (v0.3.0 -> v0.4.0)
 
   Skipped (already current):
     .claude/agents/concert-init.md      (v0.4.0)
@@ -417,7 +417,7 @@ Agent: [writes VISION.md, creates branch, creates WIP PR, updates state.json, co
        Done. Mission created: 2026-03-28-md-to-pdf
 
        Files created:
-         docs/concert/missions/2026-03-28-md-to-pdf/VISION.md
+         .concert/missions/2026-03-28-md-to-pdf/VISION.md
 
        Next steps:
          1. Review the vision:       /concert:review
@@ -791,7 +791,7 @@ _Updated by Concert at 2026-03-28T14:30:00Z_
 | Section label  | Indented, colon-terminated        | `  Created:`                                |
 | List items     | Indented with spaces              | `    .claude/agents/  (14 files)`           |
 | Next steps     | Numbered list under `Next steps:` | `  1. Review concert.jsonc`                 |
-| File paths     | Absolute or repo-relative         | `docs/concert/state.json`                   |
+| File paths     | Absolute or repo-relative         | `.concert/state.json`                       |
 | Commands       | Inline, unquoted                  | `npx @he3-org/concert update`               |
 
 ### 6.2 Iconography
@@ -992,7 +992,7 @@ Error: state.json has an invalid field
   of: pending, draft, accepted
 
   Fix:
-    1. Edit docs/concert/state.json and fix the value
+    1. Edit .concert/state.json and fix the value
     2. Or reset the stage:  /concert:restart architecture
 ```
 
@@ -1119,7 +1119,7 @@ These may be added in future versions if demand arises.
 | CC invocation         | `/concert:<name>` skill commands                          |
 | GitHub invocation     | Select `concert-<name>` agent in UI                       |
 | Interactive detection | Check for Task tool availability (CC) vs absence (GitHub) |
-| State reads           | Always from `docs/concert/state.json`                     |
+| State reads           | Always from `.concert/state.json`                         |
 | State writes          | Commit after every mutation                               |
 | Output ending         | Always ends with `Next steps:` section                    |
 

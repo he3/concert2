@@ -4,7 +4,7 @@ Go back to a specific pipeline stage during execution.
 
 ## Steps
 
-1. Read `docs/concert/state.json` → get current stage, mission_path, workflow_path
+1. Read `.concert/state.json` → get current stage, mission_path, workflow_path
 2. Parse the target stage from `[stage]` argument (required)
 3. Validate the target stage is earlier than the current stage
 4. Interview the user about what needs to change and why

@@ -4,8 +4,8 @@ Acceptance testing of completed work.
 
 ## Steps
 
-1. Read `docs/concert/state.json` → get mission_path, workflow_path
-2. Read `docs/concert/REQUIREMENTS-SPEC.md` + completed `PHASE-SUMMARY-*.md` files
+1. Read `.concert/state.json` → get mission_path, workflow_path
+2. Read `.concert/REQUIREMENTS-SPEC.md` + completed `PHASE-SUMMARY-*.md` files
 3. Extract testable deliverables from requirements
 4. Spawn the `concert-qa` agent (see `.claude/agents/concert-qa.md`)
 5. QA agent checks: "what must be TRUE?" against actual implementation
@@ -22,9 +22,9 @@ After verify, output:
 
 ```
 📋 Next steps:
-  → Review verification:  docs/concert/missions/.../VERIFICATION.md
-  → Cost report:          docs/concert/missions/.../COST-REPORT.md
-  → Improvements:         docs/concert/missions/.../CONCERT-IMPROVEMENT.md
+  → Review verification:  .concert/missions/.../VERIFICATION.md
+  → Cost report:          .concert/missions/.../COST-REPORT.md
+  → Improvements:         .concert/missions/.../CONCERT-IMPROVEMENT.md
   → If issues found:      /concert:continue      (@concert-continue in Copilot)
   → If clean:             Mission complete! Create PR for human review.
   → Archive mission:      /concert:archive       (@concert-archive in Copilot)

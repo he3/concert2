@@ -23,9 +23,9 @@ describe('types', () => {
   it('ConcertState interface can be instantiated', () => {
     const state: ConcertState = {
       mission: 'test-mission',
-      mission_path: 'docs/concert/missions/test',
+      mission_path: '.concert/missions/test',
       workflow: 'mission-full',
-      workflow_path: 'docs/concert/workflows/CONCERT-WORKFLOW-MISSION-FULL.md',
+      workflow_path: '.concert/workflows/CONCERT-WORKFLOW-MISSION-FULL.md',
       branch: 'concert/test',
       pr_number: 42,
       status_display: 'wip_pr',

@@ -4,16 +4,16 @@ Create a new Concert mission.
 
 ## Steps
 
-1. Check if `docs/concert/state.json` exists and has an active mission — if so, warn the user
-2. Check if project-level specs exist (`docs/concert/*-SPEC.md`) to detect new project vs. new feature
-3. Read `docs/concert/concert.jsonc` for project configuration
+1. Check if `.concert/state.json` exists and has an active mission — if so, warn the user
+2. Check if project-level specs exist (`.concert/*-SPEC.md`) to detect new project vs. new feature
+3. Read `.concert/concert.jsonc` for project configuration
 4. Spawn the `concert-interviewer` agent (see `.claude/agents/concert-interviewer.md`):
    - Interview the user about their vision
    - Classify feature size (small/medium/large)
    - Propose a workflow (user can override)
-5. Create the mission folder: `docs/concert/missions/YYYY-MM-DD-slug/`
+5. Create the mission folder: `.concert/missions/YYYY-MM-DD-slug/`
 6. Write `VISION.md` in the mission folder
-7. Initialize `docs/concert/state.json` with:
+7. Initialize `.concert/state.json` with:
    - Mission name and path
    - Selected workflow and workflow_path
    - Feature size

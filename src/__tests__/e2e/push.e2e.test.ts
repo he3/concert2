@@ -82,7 +82,7 @@ describe('concert push e2e', () => {
     const { workDir } = tmpRepo;
 
     // Create state.json with a branch
-    const stateDir = path.join(workDir, 'docs', 'concert');
+    const stateDir = path.join(workDir, '.concert');
     fs.mkdirSync(stateDir, { recursive: true });
     const stateContent = JSON.stringify({
       mission: 'test',
@@ -119,7 +119,7 @@ describe('concert push e2e', () => {
     tmpRepo = createTempRepoWithRemote();
     const { workDir } = tmpRepo;
 
-    const stateDir = path.join(workDir, 'docs', 'concert');
+    const stateDir = path.join(workDir, '.concert');
     fs.mkdirSync(stateDir, { recursive: true });
     const stateContent = JSON.stringify({
       mission: 'test',
