@@ -92,8 +92,20 @@
       "display_name": "Verification",
     },
     {
-      "name": "retrospective",
+      "name": "refactoring",
       "order": 8,
+      "agent": "concert-refactorer.md",
+      "inputs": ["all specs", "VERIFICATION.md", "codebase", "skills"],
+      "outputs": ["REFACTORING-PLAN-YYYY-MM-DD.md"],
+      "output_template": "REFACTORING-PLAN-YYYY-MM-DD.md",
+      "triggers_review": false,
+      "produces_spec": null,
+      "interactive": false,
+      "display_name": "Refactoring",
+    },
+    {
+      "name": "retrospective",
+      "order": 9,
       "agent": null, // retrospective agent not yet implemented
       "inputs": ["telemetry", "COST-REPORT.md", "failure_log", "mission docs"],
       "outputs": ["CONCERT-IMPROVEMENT.md"],
@@ -116,6 +128,7 @@
       "tasks",
       "execution",
       "verification",
+      "refactoring",
       "retrospective",
     ],
     "mission-medium": [
@@ -125,8 +138,16 @@
       "tasks",
       "execution",
       "verification",
+      "refactoring",
       "retrospective",
     ],
-    "mission-small": ["vision", "tasks", "execution", "verification", "retrospective"],
+    "mission-small": [
+      "vision",
+      "tasks",
+      "execution",
+      "verification",
+      "refactoring",
+      "retrospective",
+    ],
   },
 }

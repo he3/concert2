@@ -142,6 +142,7 @@ const EXPECTED_AGENTS = [
   'concert-archive',
   'concert-review',
   'concert-verify',
+  'concert-refactorer',
 ];
 
 describe('agent definition files (live)', () => {

@@ -1,6 +1,6 @@
 ---
 name: mission-full
-description: Full mission pipeline for large features — vision through retrospective
+description: Full mission pipeline for large features — vision through retrospective with refactoring
 triggers:
   - feature_size: large
 ---
@@ -13,18 +13,21 @@ triggers:
 
 The full mission pipeline handles large features that require comprehensive planning
 across all domains: vision, requirements, architecture, UX design, task planning,
-execution, verification, and retrospective analysis. This is the most thorough
-workflow and is selected when `/concert:init` classifies a feature as **large**.
+execution, verification, refactoring, and retrospective analysis. This is the most
+thorough workflow and is selected when `/concert:init` classifies a feature as **large**.
 
 Each planning stage (1–5) triggers the review cycle defined in
 `CONCERT-WORKFLOW-REVIEW-CYCLE.md`. The user must accept each stage before the
 pipeline advances. Execution follows `CONCERT-WORKFLOW-EXECUTION.md` rules.
+Verification uses `concert-verifier`. Refactoring uses `concert-refactorer` to
+produce a prioritized refactoring plan. The retrospective follows
+`CONCERT-WORKFLOW-SELF-IMPROVEMENT.md` to produce improvement suggestions.
 
 ---
 
 ## Stages
 
-Stages: vision, requirements, architecture, ux, tasks, execution, verification, retrospective
+Stages: vision, requirements, architecture, ux, tasks, execution, verification, refactoring, retrospective
 
 → See `.concert/stage-registry.jsonc` for stage details (agent, inputs, outputs, transitions).
 
@@ -39,18 +42,112 @@ After each planning stage (stages 1–5), the review cycle runs automatically:
 The review cycle allows the user to:
 
 1. **Accept** the stage output → creates the corresponding `*-SPEC.md` and advances
-2. **Revise** the stage output → open conversation to refine, then re-review
+2. **Revise** the stage output → open conversation to refine, then the specialist re-reviews for new concerns
 3. **Restart** the stage → discards the output and re-runs the consultant from scratch
 
-Stages 6–8 (execution, verification, retrospective) do NOT trigger the interactive
+After accepting, the user is guided to continue (start the next stage) or stop automation.
+
+Stages 6–9 (execution, verification, refactoring, retrospective) do NOT trigger the interactive
 review cycle. Execution produces code reviewed by the code quality workflow.
-Verification is its own review gate. Retrospective is informational only.
+Verification is its own review gate. Refactoring produces a plan document for
+human review. Retrospective is informational only.
+
+---
+
+## Stage 6: Execution
+
+→ **Refer to:** `CONCERT-WORKFLOW-EXECUTION.md`
+
+The coder agent (`concert-coder`) executes TASK files in wave order. Each task
+produces code and tests reviewed by the code quality workflow
+(`CONCERT-WORKFLOW-CODE-QUALITY.md`). Phase summaries are written after each
+phase completes.
+
+On completion, the user is guided:
+
+```
+✅ Execution complete — all phases finished.
+
+📋 Next steps:
+  → Verify the work:        /concert:verify        (@concert-verify in Copilot)
+  → Check status:           /concert:status         (@concert-status in Copilot)
+```
+
+---
+
+## Stage 7: Verification
+
+→ **Agent:** `concert-verifier`
+
+The verifier reads `REQUIREMENTS-SPEC.md` and all `PHASE-SUMMARY` files, runs
+acceptance checks, and produces:
+
+- `VERIFICATION.md` — acceptance test results and coverage analysis
+- `COST-REPORT.md` — model tier effectiveness and cost breakdown
+
+On completion, the user is guided:
+
+```
+✅ Verification complete.
+
+📋 Next steps:
+  → Continue to refactoring: /concert:continue     (@concert-continue in Copilot)
+  → Check status:            /concert:status        (@concert-status in Copilot)
+```
+
+---
+
+## Stage 8: Refactoring
+
+→ **Agent:** `concert-refactorer`
+
+After verification confirms the feature works, the refactoring agent analyzes
+the entire codebase (or a user-specified subset) and produces a prioritized
+refactoring plan document with checkbox task list in the project's `docs/` folder.
+
+The refactoring plan covers code quality improvements categorized by severity
+(critical, major, minor, nice-to-have) and is intended for human review and
+execution — the agent does NOT implement the refactoring itself.
+
+On completion, the user is guided:
+
+```
+✅ Refactoring plan created.
+
+📋 Next steps:
+  → Continue to retrospective: /concert:continue   (@concert-continue in Copilot)
+  → Check status:              /concert:status      (@concert-status in Copilot)
+```
+
+---
+
+## Stage 9: Retrospective
+
+→ **Refer to:** `CONCERT-WORKFLOW-SELF-IMPROVEMENT.md`
+
+The retrospective stage runs the self-improvement workflow. It analyzes mission
+telemetry, failure patterns, and review cycles to produce `CONCERT-IMPROVEMENT.md`
+with concrete suggestions for improving Concert's agents, workflows, skills, and
+model tier logic.
+
+Only runs if `concert.jsonc` → `self_improvement.enabled` is `true` (default: `true`).
+
+On completion, the user is guided:
+
+```
+✅ Retrospective complete — CONCERT-IMPROVEMENT.md written.
+
+📋 Next steps:
+  → Review improvement suggestions in the mission folder
+  → Archive the mission:     /concert:archive       (@concert-archive in Copilot)
+  → Check status:            /concert:status         (@concert-status in Copilot)
+```
 
 ---
 
 ## On Stage Complete
 
-After each stage completes and is accepted:
+After each planning stage completes and is accepted:
 
 1. **Create project-level spec** — Generate `*-SPEC.md` in `.concert/` from the plan file:
    - Stage 1 → `VISION-SPEC.md`
@@ -60,7 +157,7 @@ After each stage completes and is accepted:
    - Stage 5 → No spec (produces TASK files directly)
 2. **Update state.json** — Set `pipeline.<stage>` to `"accepted"` and advance `stage` to the next value in the table
 3. **Update human status display** — Update WIP PR body
-4. **Output next steps** — Show the user what to do next with specific file paths and commands
+4. **Output next steps** — Guide the user to continue (start next stage) or stop automation
 
 ---
 

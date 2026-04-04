@@ -26,7 +26,7 @@ If any skipped stage is later needed, the user can run `/concert:replan <stage>`
 
 ## Stages
 
-Stages: vision, tasks, execution, verification, retrospective
+Stages: vision, tasks, execution, verification, refactoring, retrospective
 
 → See `.concert/stage-registry.jsonc` for stage details (agent, inputs, outputs, transitions).
 
@@ -59,24 +59,108 @@ After each planning stage (stages 1–2), the review cycle runs automatically:
 The review cycle allows the user to:
 
 1. **Accept** the stage output → creates `*-SPEC.md` (vision only) and advances
-2. **Revise** the stage output → refine via conversation, then re-review
+2. **Revise** the stage output → refine via conversation, then the specialist re-reviews for new concerns
 3. **Restart** the stage → discards output and re-runs the consultant
 
-Stages 3–5 (execution, verification, retrospective) do NOT trigger the interactive
+After accepting, the user is guided to continue (start the next stage) or stop automation.
+
+Stages 3–6 (execution, verification, refactoring, retrospective) do NOT trigger the interactive
 review cycle.
+
+---
+
+## Stage 3: Execution
+
+→ **Refer to:** `CONCERT-WORKFLOW-EXECUTION.md`
+
+The coder agent executes TASK files in wave order. Each task produces code and
+tests reviewed by the code quality workflow. Phase summaries are written after
+each phase completes.
+
+On completion, the user is guided:
+
+```
+✅ Execution complete — all phases finished.
+
+📋 Next steps:
+  → Verify the work:        /concert:verify        (@concert-verify in Copilot)
+  → Check status:           /concert:status         (@concert-status in Copilot)
+```
+
+---
+
+## Stage 4: Verification
+
+→ **Agent:** `concert-verifier`
+
+The verifier reads `REQUIREMENTS-SPEC.md` (if present) and all `PHASE-SUMMARY` files,
+runs acceptance checks, and produces `VERIFICATION.md` and `COST-REPORT.md`.
+
+On completion, the user is guided:
+
+```
+✅ Verification complete.
+
+📋 Next steps:
+  → Continue to refactoring: /concert:continue     (@concert-continue in Copilot)
+  → Check status:            /concert:status        (@concert-status in Copilot)
+```
+
+---
+
+## Stage 5: Refactoring
+
+→ **Agent:** `concert-refactorer`
+
+After verification, the refactoring agent analyzes the codebase and produces a
+prioritized refactoring plan document in the project's `docs/` folder. The plan
+categorizes suggestions by severity (critical, major, minor, nice-to-have) and
+is intended for human review — the agent does NOT implement refactoring itself.
+
+On completion, the user is guided:
+
+```
+✅ Refactoring plan created.
+
+📋 Next steps:
+  → Continue to retrospective: /concert:continue   (@concert-continue in Copilot)
+  → Check status:              /concert:status      (@concert-status in Copilot)
+```
+
+---
+
+## Stage 6: Retrospective
+
+→ **Refer to:** `CONCERT-WORKFLOW-SELF-IMPROVEMENT.md`
+
+The retrospective stage analyzes mission telemetry and produces `CONCERT-IMPROVEMENT.md`
+with suggestions for improving Concert's agents, workflows, and skills.
+
+Only runs if `concert.jsonc` → `self_improvement.enabled` is `true` (default: `true`).
+
+On completion, the user is guided:
+
+```
+✅ Retrospective complete — CONCERT-IMPROVEMENT.md written.
+
+📋 Next steps:
+  → Review improvement suggestions in the mission folder
+  → Archive the mission:     /concert:archive       (@concert-archive in Copilot)
+  → Check status:            /concert:status         (@concert-status in Copilot)
+```
 
 ---
 
 ## On Stage Complete
 
-After each stage completes and is accepted:
+After each planning stage completes and is accepted:
 
 1. **Create project-level spec** (where applicable):
    - Stage 1 → `VISION-SPEC.md`
    - Stage 2 → No spec (produces TASK files directly)
 2. **Update state.json** — Set `pipeline.<stage>` to `"accepted"` and advance `stage`
 3. **Update human status display** — Update WIP PR body
-4. **Output next steps** — Show the user what to do next with file paths and commands
+4. **Output next steps** — Guide the user to continue (start next stage) or stop automation
 
 ---
 
