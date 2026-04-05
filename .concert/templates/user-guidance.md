@@ -171,6 +171,8 @@ Use when concert-fix finishes a fix.
    Regression test: {test_name}
    Confidence: {confidence} — {reasoning}
 
+📝 Recommendations added to .concert/CONCERT-RECOMMENDS.md: {recommends_count}
+
 📋 Next steps:
   → Review the fix:       git diff HEAD~1
   → Run full tests:       {test_command}
