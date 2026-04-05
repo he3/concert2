@@ -121,24 +121,25 @@ When a planning stage completes, the user is prompted to review:
    - Starts with highest severity (Critical → Important → Suggestion)
    - For each concern: explains WHY it matters, suggests resolution
    - Waits for user response before presenting the next concern
-   - After all concerns: "Would you like to address any of these,
-     or are you ready to proceed?"
+   - Tracks open questions (concerns not yet addressed or explicitly accepted as risk)
+   - After all concerns: "Do you want to make any changes or have any questions, or are you done?"
+     Do NOT offer to accept during the review — acceptance happens after the review is complete.
 
-5a. If ACCEPT:
-    → Calls accept logic (same as /concert:accept)
-    → Creates *-SPEC.md (project-level)
-    → Updates state.json → pipeline.<stage> = "accepted"
-    → Updates PR body
-    → Guides the user:
-      "✅ Stage accepted. Next steps:
-        → Continue to next stage:  /concert:continue  (@concert-continue in Copilot)
-        → Stop here for now:       (no action needed — resume later with /concert:continue)"
+5a. If DONE (user has no more changes or questions):
+    → Show open question summary: "❓ Open questions: {count}"
+    → List any unresolved concerns briefly
+    → If document was modified during the review, proceed to STEP 6 (Specialist Re-Review)
+    → If document was NOT modified, guide the user with options (including open question count):
+      "❓ Open questions: {count}
+        → Accept and advance:      /concert:accept    (@concert-accept in Copilot)
+        → Review again:            /concert:review    (@concert-review in Copilot)
+        → Start over:              /concert:restart   (@concert-restart in Copilot)"
 
 5b. If CHANGES:
     → Open conversation:
       - User adds requirements, asks questions, provides feedback
       - Agent incorporates feedback into the plan
-      - After each exchange: "Any more changes, or shall I update the document?"
+      - After each exchange: "Any more changes or questions, or are you done?"
       - When done: agent rewrites the plan file with all accumulated changes
       - Shows updated document
     → After document is updated, proceed to STEP 6 (Specialist Re-Review)
@@ -147,7 +148,7 @@ When a planning stage completes, the user is prompted to review:
     → Same open conversation flow
     → Agent answers questions about the plan, rationale, trade-offs
     → Questions do NOT modify the plan unless the user requests changes
-    → After answering: asks if the user wants to accept, make changes, or ask more
+    → After answering: "Do you want to make any changes or have more questions, or are you done?"
 
 6. SPECIALIST RE-REVIEW (runs after ALL user issues AND ALL agent concerns are
    resolved, AND the document was modified during either the user-change or
@@ -163,17 +164,21 @@ When a planning stage completes, the user is prompted to review:
 
    6a. If the specialist HAS new questions:
        → Present the new questions to the user
-       → Guide the user:
+       → Guide the user (include open question count from both original review and new questions):
          "The specialist agent has new questions after reviewing the changes.
+           ❓ Open questions: {count}
            → Start a new review:    /concert:review    (@concert-review in Copilot)
-           → Stop automation here:  (no action needed — resume later with /concert:review)"
+           → Accept and advance:    /concert:accept    (@concert-accept in Copilot)
+           → Start over:            /concert:restart   (@concert-restart in Copilot)"
 
    6b. If the specialist has NO new questions:
        → Inform the user the document looks good
-       → Guide the user:
+       → Guide the user (include open question count from original review):
          "No new concerns from the specialist agent.
+           ❓ Open questions: {count}
            → Accept now:            /concert:accept    (@concert-accept in Copilot)
-           → Stop automation here:  (no action needed — resume later with /concert:accept)"
+           → Review again:          /concert:review    (@concert-review in Copilot)
+           → Start over:            /concert:restart   (@concert-restart in Copilot)"
 ```
 
 After the review conversation ends, the agent MUST output standard guidance

@@ -38,6 +38,26 @@ Use when a planning agent finishes drafting its output document.
 
 ---
 
+## Review Complete
+
+Use when the reviewer agent finishes the review conversation and the user says they are done.
+Includes an open question count so the user can make an informed decision about accepting.
+
+**Variables:** `{open_question_count}` — number of unresolved concerns from the review.
+
+```
+✅ {stage_display} review complete: {document_path}
+
+❓ Open questions: {open_question_count}
+📋 Next steps:
+  → Accept and advance:      /concert:accept       (@concert-accept in Copilot)
+  → Review again:            /concert:review       (@concert-review in Copilot)
+  → Start over:              /concert:restart      (@concert-restart in Copilot)
+  → Check status:            /concert:status       (@concert-status in Copilot)
+```
+
+---
+
 ## Stage Accepted
 
 Use when a stage is accepted and the pipeline advances.
