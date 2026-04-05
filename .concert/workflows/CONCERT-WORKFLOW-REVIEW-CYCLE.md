@@ -126,11 +126,11 @@ When a planning stage completes, the user is prompted to review:
      Do NOT offer to accept during the review — acceptance happens after the review is complete.
 
 5a. If DONE (user has no more changes or questions):
-    → Show open question summary: "📋 Open questions: {count}"
+    → Show open question summary: "❓ Open questions: {count}"
     → List any unresolved concerns briefly
     → If document was modified during the review, proceed to STEP 6 (Specialist Re-Review)
     → If document was NOT modified, guide the user with options (including open question count):
-      "📋 Open questions: {count}
+      "❓ Open questions: {count}
         → Accept and advance:      /concert:accept    (@concert-accept in Copilot)
         → Review again:            /concert:review    (@concert-review in Copilot)
         → Start over:              /concert:restart   (@concert-restart in Copilot)"
@@ -166,7 +166,7 @@ When a planning stage completes, the user is prompted to review:
        → Present the new questions to the user
        → Guide the user (include open question count from both original review and new questions):
          "The specialist agent has new questions after reviewing the changes.
-           📋 Open questions: {count}
+           ❓ Open questions: {count}
            → Start a new review:    /concert:review    (@concert-review in Copilot)
            → Accept and advance:    /concert:accept    (@concert-accept in Copilot)
            → Start over:            /concert:restart   (@concert-restart in Copilot)"
@@ -175,7 +175,7 @@ When a planning stage completes, the user is prompted to review:
        → Inform the user the document looks good
        → Guide the user (include open question count from original review):
          "No new concerns from the specialist agent.
-           📋 Open questions: {count}
+           ❓ Open questions: {count}
            → Accept now:            /concert:accept    (@concert-accept in Copilot)
            → Review again:          /concert:review    (@concert-review in Copilot)
            → Start over:            /concert:restart   (@concert-restart in Copilot)"

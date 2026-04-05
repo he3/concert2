@@ -96,10 +96,10 @@ Boot sequence — read these before reviewing:
 6. **After conversation concludes** — Summarize changes made, accepted risks, and open question count.
 
 7. **Output user guidance with open question count**:
-   - Show "📋 Open questions: {count}" with a brief list of any unresolved concerns
+   - Show "❓ Open questions: {count}" with a brief list of any unresolved concerns
    - If the document was modified during the review → trigger specialist re-review per the review-cycle workflow
    - If the document was NOT modified → guide the user:
-     "📋 Open questions: {count}
+     "❓ Open questions: {count}
      → Accept and advance: /concert:accept (@concert-accept in Copilot)
      → Review again: /concert:review (@concert-review in Copilot)
      → Start over: /concert:restart (@concert-restart in Copilot)"
@@ -128,7 +128,7 @@ After the review conversation ends, you MUST output the standard guidance from `
 ```
 ✅ {stage_display} review complete: {document_path}
 
-📋 Open questions: {count}
+❓ Open questions: {count}
 📋 Next steps:
   → Accept and advance:      /concert:accept      (@concert-accept in Copilot)
   → Review again:            /concert:review      (@concert-review in Copilot)
