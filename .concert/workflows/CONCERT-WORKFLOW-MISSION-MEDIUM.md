@@ -141,7 +141,7 @@ On completion, the user is guided:
 
 📋 Next steps:
   → Review improvement suggestions in the mission folder
-  → Archive the mission:     /concert:archive       (@concert-archive in Copilot)
+  → Delete the mission:      /concert:delete        (@concert-delete in Copilot)
   → Check status:            /concert:status         (@concert-status in Copilot)
 ```
 

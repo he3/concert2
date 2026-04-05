@@ -110,12 +110,12 @@ Use when concert-init completes mission setup.
 
 ---
 
-## Mission Archived
+## Mission Deleted
 
-Use when concert-archive completes.
+Use when concert-delete completes.
 
 ```
-📦 Mission archived: {mission_name}
+🗑️ Mission deleted: {mission_name}
    Deleted: {mission_path}
    State reset: .concert/state.json
 
@@ -341,7 +341,7 @@ Use when concert-verifier finishes.
   → Cost report:          {cost_report_path}
   → If issues found:      /concert:continue      (@concert-continue in Copilot)
   → If clean:             Mission complete! Create PR for human review.
-  → Archive mission:      /concert:archive       (@concert-archive in Copilot)
+  → Delete mission:        /concert:delete        (@concert-delete in Copilot)
 ```
 
 ---

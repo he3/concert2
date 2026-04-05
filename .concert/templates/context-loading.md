@@ -43,7 +43,7 @@ By enforcing a consistent loading order:
 
 | Tier                     | Levels Read | Agents                                                        |
 | ------------------------ | ----------- | ------------------------------------------------------------- |
-| **Minimal** (budget)     | 0-1         | status, accept, archive, push                                 |
+| **Minimal** (budget)     | 0-1         | status, accept, delete, push                                  |
 | **Standard** (balanced)  | 0-3         | continue, restart, reviewer, replan                           |
 | **Execution** (balanced) | 0-4         | coder, code-reviewer, documenter, debug, fix, quick, verifier |
 | **Planning** (quality)   | 0-3         | analyst, architect, designer, planner                         |

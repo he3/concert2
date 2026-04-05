@@ -64,7 +64,7 @@ Never cached — loaded fresh each time based on agent needs.
 
 **concert-status:** Tier 1 + Tier 2 + Tier 3 (read-only)
 **concert-accept:** Tier 1 + Tier 2 + workflow file
-**concert-archive:** Tier 1 only
+**concert-delete:** Tier 1 only
 **concert-push:** Tier 1 only (reference agent)
 
 ### Standard Agents (balanced tier)

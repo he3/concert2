@@ -28,7 +28,7 @@ npx @he3-org/concert@latest update
 | Push state & branch    | `/concert:push`     | `@concert-push`         |
 | Restart a stage        | `/concert:restart`  | `@concert-restart`      |
 | Replan from a stage    | `/concert:replan`   | `@concert-replan`       |
-| Archive mission        | `/concert:archive`  | `@concert-archive`      |
+| Delete mission         | `/concert:delete`   | `@concert-delete`       |
 
 ---
 
@@ -214,7 +214,7 @@ Produces `CONCERT-IMPROVEMENT.md` with suggestions for improving Concert's agent
 ### 10. Archive
 
 ```
-@concert-archive       # Clean up mission state for next feature
+@concert-delete        # Clean up mission state for next feature
 ```
 
 ---

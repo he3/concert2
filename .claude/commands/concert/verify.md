@@ -27,5 +27,5 @@ After verify, output:
   → Improvements:         .concert/missions/.../CONCERT-IMPROVEMENT.md
   → If issues found:      /concert:continue      (@concert-continue in Copilot)
   → If clean:             Mission complete! Create PR for human review.
-  → Archive mission:      /concert:archive       (@concert-archive in Copilot)
+  → Delete mission:        /concert:delete        (@concert-delete in Copilot)
 ```
