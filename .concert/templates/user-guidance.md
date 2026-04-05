@@ -370,11 +370,15 @@ Use when a stage fails.
 Use when displaying current mission position. Variables include execution-specific
 fields: `{current_phase}`, `{tasks_completed}`, `{tasks_total}`, `{phases_completed}`, `{phases_total}`.
 
+**Variables:** `{open_questions_line}` — formatted open question counts per document (only shown before tasks stage). Example: `❓ Open Questions: Vision: 1, Requirements: 2, Alignment: 1`
+
 ```
 📊 Mission: {mission_path}  (PR #{pr_number})
 
 Pipeline: {pipeline_display}
 Size: {feature_size}
+
+{open_questions_line}
 
 📋 Next steps:
   → {recommended_action}

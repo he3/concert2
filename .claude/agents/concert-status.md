@@ -49,15 +49,41 @@ Boot sequence — read these before displaying:
    b. **Pipeline progress** — Visual pipeline using stage display names from registry with statuses (✅ ⏳ ○)
    c. **Feature size** — small/medium/large
    d. **Current position** — Exact stage and position within it
-   e. **Execution progress** (if in execution) — Current phase/task, progress bar, tasks completed/total
-   f. **Cost** — Spent this mission + estimated remaining
-   g. **Blockers** — Active blockers or failure blocks (highlighted)
-   h. **Recent history** — Last 3-5 history entries
-   i. **Next steps** — Specific, actionable recommendations with commands
-   </execution_flow>
+   e. **Open questions** (only if the current stage is BEFORE the "tasks" stage in the workflow):
+   - Scan each mission document that exists in the mission folder (VISION.md, REQUIREMENTS.md, ARCHITECTURE.md, UX.md, ALIGNMENT.md) for open questions.
+   - Open questions are items in "Open Questions" or "Open Alignment Questions" sections, items marked with ❓, unchecked items (`- [ ]`) in an "Open" section, or items marked as TBD/unresolved.
+   - Count open questions per document.
+   - Display in format: `❓ Open Questions: Vision: {n}, Requirements: {n}, Architecture: {n}, Alignment: {n}` (only include documents that have open questions, omit documents with 0)
+   - If there are ANY open questions, add a suggestion line: `   💡 Resolve open questions: /concert:review    (@concert-review in Copilot)`
+     f. **Execution progress** (if in execution) — Current phase/task, progress bar, tasks completed/total
+     g. **Cost** — Spent this mission + estimated remaining
+     h. **Blockers** — Active blockers or failure blocks (highlighted)
+     i. **Recent history** — Last 3-5 history entries
+     j. **Next steps** — Specific, actionable recommendations with commands
+     </execution_flow>
 
 <user_guidance>
 Every output ends with specific next steps:
+
+```
+📊 Mission: 2026-03-22-invoice-saas  (PR #42)
+
+Pipeline: vision ✅ → requirements ✅ → architecture ⏳ → UX ○ → tasks ○ → execution ○
+Size: large
+
+❓ Open Questions: Vision: 1, Requirements: 2, Alignment: 1
+   💡 Resolve open questions: /concert:review    (@concert-review in Copilot)
+
+📋 Recent:
+  - Requirements: ACCEPTED ✅
+  - Architecture: DRAFT — awaiting review
+
+📋 Next steps:
+  → Review architecture:  /concert:review        (@concert-review in Copilot)
+  → Check status:         /concert:status        (@concert-status in Copilot)
+```
+
+When in execution phase (past tasks stage), open questions line is omitted:
 
 ```
 📊 Mission: 2026-03-22-invoice-saas  (PR #42)
