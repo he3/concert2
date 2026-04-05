@@ -70,16 +70,24 @@ Boot sequence — read these before reviewing:
 2. **Load context** — Complete the boot sequence above. Identify all mission documents produced so far.
 
 3. **Resolve open questions across ALL mission docs** — Before presenting agent findings, loop through ALL mission documents in workflow stage order and resolve open questions:
-   a. For each document (VISION.md, REQUIREMENTS.md, ARCHITECTURE.md, UX.md, ALIGNMENT.md — in workflow stage order, only those that exist):
-   - Scan the document for open questions. Open questions are items in "Open Questions" sections, items marked with ❓, or items marked as TBD/unresolved.
+   a. For each document in this order (only process those that exist in the mission folder):
+   1. VISION.md
+   2. REQUIREMENTS.md
+   3. ARCHITECTURE.md
+   4. UX.md
+   5. ALIGNMENT.md (processed last — it is a cross-cutting document, not tied to a specific pipeline stage)
+   - Scan the document for open questions. Open questions are identified by ANY of: items in "Open Questions" or "Open Alignment Questions" sections, items marked with ❓, or items marked as TBD/unresolved.
    - For each open question found, present it to the user ONE at a time with the source document clearly identified:
      **Format:** `"From {DOCUMENT_NAME}: {question text}"`
      **Example:** `"From VISION.md: Should the invoice system support multi-currency?"`
    - Wait for the user's response before moving to the next question.
-   - Based on the user's answer: - If resolved → update the question in the source document (remove it from open questions, incorporate the answer into the relevant section) - If the user wants to defer → leave it as an open question - If the answer reveals a misalignment between documents → add it to ALIGNMENT.md (see step 3c)
-     b. After all open questions from all documents have been addressed, ask:
-     "All open questions have been reviewed. Do you have any additional changes or questions before I share my review findings?"
-     c. **ALIGNMENT.md management:**
+   - Based on the user's answer:
+     - If resolved → update the question in the source document (remove it from open questions, incorporate the answer into the relevant section)
+     - If the user wants to defer → leave it as an open question
+     - If the answer reveals a misalignment between documents → add it to ALIGNMENT.md (see step 3c)
+       b. After all open questions from all documents have been addressed, ask:
+       "All open questions have been reviewed. Do you have any additional changes or questions before I share my review findings?"
+       c. **ALIGNMENT.md management:**
    - If any cross-document inconsistencies or alignment concerns are identified (by you or the user), create or update `ALIGNMENT.md` in the mission folder.
    - ALIGNMENT.md format:
 

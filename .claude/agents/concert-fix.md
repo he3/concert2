@@ -109,7 +109,14 @@ After the fix passes, ask whether changes to skills, agents, or docs would preve
 
 **How to write to CONCERT-RECOMMENDS.md:**
 
-- If the file does not exist, create it with the header: `# Concert Recommendations\n\nRecommended changes identified by Concert agents. Review and apply as appropriate.\n`
+- If the file does not exist, create it with this header:
+
+  ```markdown
+  # Concert Recommendations
+
+  Recommended changes identified by Concert agents. Review and apply as appropriate.
+  ```
+
 - Append a checklist item for each recommendation in this format:
   ```
   - [ ] **[Source: concert-fix]** <target file path> — <description of the recommended change and why>

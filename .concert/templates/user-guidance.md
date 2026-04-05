@@ -165,6 +165,8 @@ Use when concert-restart finishes resetting and re-running a consultant.
 
 Use when concert-fix finishes a fix.
 
+**Variables:** `{recommends_count}` — number of new recommendations added to CONCERT-RECOMMENDS.md during this fix session. Use `0` or `none` if no recommendations were added.
+
 ```
 ✅ Fix complete: {root_cause}
    Fix type: {fix_type}

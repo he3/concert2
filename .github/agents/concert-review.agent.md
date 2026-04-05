@@ -22,4 +22,4 @@ Do NOT attempt to proceed without user input. Do NOT guess at answers.
 
 Read .claude/agents/concert-reviewer.md for your complete instructions.
 Read .concert/state.json for current pipeline position.
-Present findings by severity, ask user how to proceed.
+Loop through ALL mission documents in workflow stage order, resolve open questions one at a time, then present stage review findings by severity.
