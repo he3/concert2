@@ -88,7 +88,7 @@ Read .claude/agents/<agent-name>.md for your complete instructions.
 Critical rules for stubs:
 
 - YAML frontmatter `---` MUST be on line 1 — no HTML comments before it
-- Do NOT include `tools:` or `model:` in stubs — stubs are metadata-only
+- Do NOT include `tools:`, `model:`, or `interactive_only:` in stubs — stubs are metadata-only and should only contain `name` and `description`
 - The `Read` instruction must point to the correct `.claude/agents/` path
 - Description should match the full definition (may be slightly shorter)
 

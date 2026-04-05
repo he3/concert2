@@ -455,7 +455,7 @@ Interactive interview agents must be restricted to Claude Code unless the restri
 - `concert.jsonc` includes a configuration option `"interactive_mode": "claude_code_only"` (default)
 - When set to `"claude_code_only"`, interactive agents (`concert-init`, `concert-review`) refuse to run in GitHub Agents UI and output a message directing the user to Claude Code
 - When set to `"any"`, interactive agents attempt to run in any environment (for future GitHub interactivity support)
-- The toggle is respected by all agents marked `interactive_only: true`
+- The toggle is respected by all interactive agents
 - The default value is `"claude_code_only"` in newly initialized repos
 
 ### FR-037: Quick Task Execution (must)

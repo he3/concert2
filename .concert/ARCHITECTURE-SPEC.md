@@ -237,9 +237,6 @@ This three-file pattern ensures the full agent definition is the single source o
 
 name: concert-<name>
 description: <one-line description>
-tools: <comma-separated tool list>
-model: <quality|balanced|budget>
-interactive_only: <true|false>
 
 ---
 

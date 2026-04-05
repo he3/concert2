@@ -123,7 +123,7 @@ On failure:
 <user_guidance>
 Every output ends with a structured report showing concerns addressed, accepted risks, open question count, and confidence level.
 
-After the review conversation ends, you MUST output the standard guidance from `.concert/templates/user-guidance.md`. Use the "Stage Draft Complete" template with open question count:
+After the review conversation ends, you MUST output the standard guidance from `.concert/templates/user-guidance.md`. Use the "Review Complete" template:
 
 ```
 ✅ {stage_display} review complete: {document_path}
