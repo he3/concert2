@@ -4,7 +4,7 @@
 
 # Interactive Environment Check
 
-Used by interactive agents (`interactive_only: true`) to verify they can prompt the user.
+Used by interactive agents to verify they can prompt the user.
 Agents and stubs reference this template instead of duplicating the check inline.
 
 **Variable:** `{command_name}` — the slash command name (e.g., `init`, `review`, `replan`)

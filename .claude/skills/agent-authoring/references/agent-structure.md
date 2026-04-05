@@ -10,9 +10,6 @@ Agent definitions live at `.claude/agents/<agent-name>.md`. The filename must us
 ---
 name: <agent-name>
 description: <one-line purpose — what this agent does and when to use it>
-tools: Read, Write, Edit, Bash, Grep, Glob
-model: balanced
-interactive_only: false
 ---
 ```
 
@@ -20,9 +17,6 @@ Field reference:
 
 - `name` — matches the filename (without `.md`). Lowercase, hyphens, 1-64 chars.
 - `description` — concise purpose statement. Used for routing and display.
-- `tools` — comma-separated list of tools the agent needs. Only request tools actually used.
-- `model` — `budget` (simple tasks), `balanced` (default), or `quality` (complex reasoning).
-- `interactive_only` — `true` if the agent requires user input (interviews, confirmations). `false` for batch-capable agents.
 
 ### Required Sections
 
@@ -63,7 +57,7 @@ Read .concert/state.json for current position.
 <one-line context about what the agent should do>
 ```
 
-**Interactive format** (for agents with `interactive_only: true`):
+**Interactive format** (for agents that require user input):
 
 ```markdown
 ---
@@ -94,7 +88,7 @@ Read .claude/agents/<agent-name>.md for your complete instructions.
 Critical rules for stubs:
 
 - YAML frontmatter `---` MUST be on line 1 — no HTML comments before it
-- Do NOT include `tools:` or `model:` — stubs are metadata-only
+- Do NOT include `tools:` or `model:` in stubs — stubs are metadata-only
 - The `Read` instruction must point to the correct `.claude/agents/` path
 - Description should match the full definition (may be slightly shorter)
 
@@ -109,9 +103,6 @@ When a slash command name differs from the canonical agent name (e.g., `/concert
 
 name: concert-review
 description: Command alias — delegates to concert-reviewer
-tools: Read, Write, Edit, Bash, Grep, Glob
-model: balanced
-interactive_only: true
 
 ---
 

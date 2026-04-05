@@ -46,7 +46,7 @@ Read `references/verification.md` for practical verification patterns for coding
 
 Before considering the agent complete:
 
-1. Verify the definition file has valid YAML frontmatter with all required fields (`name`, `description`, `tools`, `model`, `interactive_only`).
+1. Verify the definition file has valid YAML frontmatter with all required fields (`name`, `description`).
 2. Verify the GitHub stub exists at `.github/agents/<agent-name>.agent.md` with correct redirect path.
 3. Verify the stub contains `name` and `description` in frontmatter but does NOT contain `tools:` or `model:` (stubs are metadata-only).
 4. Dry-run the execution flow: walk through each step as if you were the agent. Flag any step where the next action is ambiguous.
