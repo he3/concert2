@@ -70,6 +70,7 @@ Boot sequence — read these before reviewing:
 2. **Load context** — Complete the boot sequence above. Identify all mission documents produced so far.
 
 3. **Resolve open questions across ALL mission docs** — Before presenting agent findings, loop through ALL mission documents in workflow stage order and resolve open questions:
+
    a. For each document in this order (only process those that exist in the mission folder):
    1. VISION.md
    2. REQUIREMENTS.md
@@ -85,9 +86,11 @@ Boot sequence — read these before reviewing:
      - If resolved → update the question in the source document (remove it from open questions, incorporate the answer into the relevant section)
      - If the user wants to defer → leave it as an open question
      - If the answer reveals a misalignment between documents → add it to ALIGNMENT.md (see step 3c)
-       b. After all open questions from all documents have been addressed, ask:
-       "All open questions have been reviewed. Do you have any additional changes or questions before I share my review findings?"
-       c. **ALIGNMENT.md management:**
+
+   b. After all open questions from all documents have been addressed, ask:
+   "All open questions have been reviewed. Do you have any additional changes or questions before I share my review findings?"
+
+   c. **ALIGNMENT.md management:**
    - If any cross-document inconsistencies or alignment concerns are identified (by you or the user), create or update `ALIGNMENT.md` in the mission folder.
    - ALIGNMENT.md format:
 

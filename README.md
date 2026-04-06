@@ -211,7 +211,7 @@ Switch to **Sonnet** for the final stage:
 
 Produces `CONCERT-IMPROVEMENT.md` with suggestions for improving Concert's agents and workflows based on mission data.
 
-### 10. Archive
+### 10. Delete
 
 ```
 @concert-delete        # Clean up mission state for next feature
