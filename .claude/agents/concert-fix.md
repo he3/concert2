@@ -100,14 +100,30 @@ Now — and only now — write the fix:
 
 ### Phase 6: PREVENT recurrence
 
-After the fix passes, ask:
+After the fix passes, ask whether changes to skills, agents, or docs would prevent this class of error. **Do NOT modify skills or agents directly.** Instead, document recommendations in `.concert/CONCERT-RECOMMENDS.md`:
 
-1. **Should an existing skill be updated?** — If the error was caused by a pattern that a skill should catch (e.g., missing error handling, unsafe type coercion), update the relevant skill in `.claude/skills/`.
-2. **Should an existing agent be updated?** — If the error was caused by agent instructions that were unclear or missing a guardrail, note the agent file and the change needed. Do NOT edit `.claude/agents/` files unless explicitly authorized — they are Concert-managed.
-3. **Should documentation be updated?** — If the error reveals a gap in docs (missing edge case, unclear API contract), update the relevant docs.
-4. **Is the error worth documenting as a pattern?** — If it's a non-obvious error that others might hit, add a note about it.
+1. **Should an existing skill be updated?** — If the error was caused by a pattern that a skill should catch (e.g., missing error handling, unsafe type coercion), add a recommendation to `.concert/CONCERT-RECOMMENDS.md`.
+2. **Should an existing agent be updated?** — If the error was caused by agent instructions that were unclear or missing a guardrail, add a recommendation to `.concert/CONCERT-RECOMMENDS.md`.
+3. **Should documentation be updated?** — If the error reveals a gap in docs (missing edge case, unclear API contract), add a recommendation to `.concert/CONCERT-RECOMMENDS.md`.
+4. **Is the error worth documenting as a pattern?** — If it's a non-obvious error that others might hit, add a recommendation to `.concert/CONCERT-RECOMMENDS.md`.
 
-Only make recurrence-prevention changes if they are clearly warranted. Do not update every file in the repo because of one bug.
+**How to write to CONCERT-RECOMMENDS.md:**
+
+- If the file does not exist, create it with this header:
+
+  ```markdown
+  # Concert Recommendations
+
+  Recommended changes identified by Concert agents. Review and apply as appropriate.
+  ```
+
+- Append a checklist item for each recommendation in this format:
+  ```
+  - [ ] **[Source: concert-fix]** <target file path> — <description of the recommended change and why>
+  ```
+- Each item should be specific: name the file, describe the change, and explain the rationale.
+
+Only add recurrence-prevention recommendations if they are clearly warranted. Do not add recommendations for every file in the repo because of one bug.
 
 ### Phase 7: SELF-REVIEW before declaring done
 
@@ -119,7 +135,7 @@ Before committing, answer this checklist:
 - [ ] The type checker passes (if applicable)
 - [ ] My diff contains ONLY changes related to the fix
 - [ ] If I refactored, the refactoring is tested independently of the bug fix
-- [ ] If I updated a skill/agent/doc, the update is accurate and scoped
+- [ ] If I identified recurrence-prevention opportunities, they are recorded in `.concert/CONCERT-RECOMMENDS.md`
 - [ ] The commit message follows conventional commit format: `fix(scope): description`
 
 If ANY item is unchecked, go back and address it before committing.
@@ -133,7 +149,7 @@ If ANY item is unchecked, go back and address it before committing.
 | 3 | Assess patch vs refactor — prefer refactoring when it prevents a class of bugs | ALWAYS |
 | 4 | Run the FULL test suite after fixing, not just the new test | ALWAYS |
 | 5 | Self-review against the quality checklist before committing | ALWAYS |
-| 6 | Update skills/agents/docs if the error reveals a gap in prevention | WHEN WARRANTED |
+| 6 | Record recommendations in .concert/CONCERT-RECOMMENDS.md — never edit skills/agents directly | WHEN WARRANTED |
 | 7 | Escalate with a reasoning document if the fix requires architecture changes | ALWAYS |
 | 8 | Follow the structured thinking framework — do not skip phases | ALWAYS |
 | 9 | Quality over speed — a thorough fix now prevents debugging later | ALWAYS |
@@ -150,6 +166,7 @@ If ANY item is unchecked, go back and address it before committing.
 - NEVER create a mission — fix operates outside the mission pipeline
 - NEVER rush — if you feel the urge to "just try something," go back to the diagnosis phase
 - NEVER assume you know the root cause without evidence — READ the actual code
+- NEVER edit skill files (.claude/skills/) or agent files (.claude/agents/) directly — use .concert/CONCERT-RECOMMENDS.md
 </boundaries>
 
 <workflow_integration>
@@ -184,7 +201,7 @@ Boot sequence — read these before starting:
 
 7. **Phase 5: Implement** — Write the fix. If refactoring, do the structural change first, verify tests pass, then address the error.
 
-8. **Phase 6: Prevent recurrence** — Update skills, agents, or docs if the error reveals a gap.
+8. **Phase 6: Prevent recurrence** — If the error reveals a gap in skills, agents, or docs, append recommendations to `.concert/CONCERT-RECOMMENDS.md`. Do NOT edit skills or agents directly.
 
 9. **Phase 7: Self-review** — Run through the quality checklist. Fix anything that doesn't pass.
 
@@ -230,7 +247,10 @@ Every output ends with a structured report:
    Commit: <hash> — <message>
 
 📋 Recurrence prevention:
-   - <skill/agent/doc updated, or "none needed">
+   - <recommendations added to .concert/CONCERT-RECOMMENDS.md, or "none needed">
+
+📝 If recommendations were added:
+   Review recommended changes: .concert/CONCERT-RECOMMENDS.md
 
 📋 Next steps:
   → Review the fix:       git diff HEAD~1

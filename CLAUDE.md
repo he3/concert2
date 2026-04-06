@@ -41,7 +41,7 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 | Run a quick task       | `/concert:quick`    | `@concert-quick`        |
 | Restart a stage        | `/concert:restart`  | `@concert-restart`      |
 | Replan from a stage    | `/concert:replan`   | `@concert-replan`       |
-| Archive mission        | `/concert:archive`  | `@concert-archive`      |
+| Delete mission         | `/concert:delete`   | `@concert-delete`       |
 
 ### State
 

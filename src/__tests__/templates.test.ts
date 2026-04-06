@@ -139,7 +139,7 @@ const EXPECTED_AGENTS = [
   'concert-accept',
   'concert-restart',
   'concert-replan',
-  'concert-archive',
+  'concert-delete',
   'concert-review',
   'concert-verify',
   'concert-refactorer',
@@ -214,7 +214,7 @@ const EXPECTED_COMMANDS = [
   'push',
   'restart',
   'replan',
-  'archive',
+  'delete',
   'fix',
 ];
 
@@ -432,7 +432,7 @@ describe('user guidance templates', () => {
       'Stage Accepted',
       'Review Prompt',
       'Mission Initialized',
-      'Mission Archived',
+      'Mission Deleted',
       'Replan Complete',
       'Restart Complete',
       'Fix Complete',

@@ -32,7 +32,7 @@ This project uses [Concert](https://github.com/he3-org/concert) for agentic deve
 - \`/concert:quick\` — Run a quick task
 - \`/concert:restart\` — Restart a stage
 - \`/concert:replan\` — Replan from a stage
-- \`/concert:archive\` — Archive completed mission and reset state
+- \`/concert:delete\` — Delete completed mission and reset state
 
 ### State
 

@@ -110,12 +110,12 @@ Use when concert-init completes mission setup.
 
 ---
 
-## Mission Archived
+## Mission Deleted
 
-Use when concert-archive completes.
+Use when concert-delete completes.
 
 ```
-📦 Mission archived: {mission_name}
+🗑️ Mission deleted: {mission_name}
    Deleted: {mission_path}
    State reset: .concert/state.json
 
@@ -165,11 +165,15 @@ Use when concert-restart finishes resetting and re-running a consultant.
 
 Use when concert-fix finishes a fix.
 
+**Variables:** `{recommends_count}` — number of new recommendations added to CONCERT-RECOMMENDS.md during this fix session. Use `0` or `none` if no recommendations were added.
+
 ```
 ✅ Fix complete: {root_cause}
    Fix type: {fix_type}
    Regression test: {test_name}
    Confidence: {confidence} — {reasoning}
+
+📝 Recommendations added to .concert/CONCERT-RECOMMENDS.md: {recommends_count}
 
 📋 Next steps:
   → Review the fix:       git diff HEAD~1
@@ -341,7 +345,7 @@ Use when concert-verifier finishes.
   → Cost report:          {cost_report_path}
   → If issues found:      /concert:continue      (@concert-continue in Copilot)
   → If clean:             Mission complete! Create PR for human review.
-  → Archive mission:      /concert:archive       (@concert-archive in Copilot)
+  → Delete mission:        /concert:delete        (@concert-delete in Copilot)
 ```
 
 ---
@@ -368,11 +372,15 @@ Use when a stage fails.
 Use when displaying current mission position. Variables include execution-specific
 fields: `{current_phase}`, `{tasks_completed}`, `{tasks_total}`, `{phases_completed}`, `{phases_total}`.
 
+**Variables:** `{open_questions_line}` — formatted open question counts per document (only shown before tasks stage). Example: `❓ Open Questions: Vision: 1, Requirements: 2, Alignment: 1`
+
 ```
 📊 Mission: {mission_path}  (PR #{pr_number})
 
 Pipeline: {pipeline_display}
 Size: {feature_size}
+
+{open_questions_line}
 
 📋 Next steps:
   → {recommended_action}

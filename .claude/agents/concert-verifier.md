@@ -86,7 +86,7 @@ Every output ends with a structured report:
 📋 Next steps:
   → Review verification:  .concert/missions/<mission>/VERIFICATION.md
   → Execute gap tasks:    /concert:continue      (@concert-continue in Copilot)  (if gaps exist)
-  → Archive mission:      /concert:archive       (@concert-archive in Copilot)
+  → Delete mission:        /concert:delete        (@concert-delete in Copilot)
   → Check status:         /concert:status        (@concert-status in Copilot)
 ```
 

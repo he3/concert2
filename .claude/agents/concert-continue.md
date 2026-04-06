@@ -72,7 +72,7 @@ Boot sequence — read these before doing anything:
 
    **Verification stage** → Run QA agent if not yet done, or report verification results.
 
-   **Mission complete** → Report completion and suggest `/concert:archive`.
+   **Mission complete** → Report completion and suggest `/concert:delete`.
 
 3. **Commit state.json after every update** — `git add .concert/state.json && git commit`. This is non-negotiable: crash recovery must lose at most one task of work.
 
