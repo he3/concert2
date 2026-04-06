@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.0](https://github.com/he3-org/concert/compare/v1.8.1...v1.9.0) (2026-04-06)
+
+
+### Features
+
+* clean up agent frontmatter and improve review-cycle workflow ([#45](https://github.com/he3-org/concert/issues/45)) ([71ffe64](https://github.com/he3-org/concert/commit/71ffe64ce5df3b8e5bf0bf93a8ba82ae1030019b))
+* rename archive→delete, CONCERT-RECOMMENDS.md, ALIGNMENT.md, status open questions, cross-doc review loop ([#47](https://github.com/he3-org/concert/issues/47)) ([cd97321](https://github.com/he3-org/concert/commit/cd9732143a4d4289757b3c20fc90be9f52c8f384))
+
 ## [1.8.1](https://github.com/he3-org/concert/compare/v1.8.0...v1.8.1) (2026-04-04)
 
 ### Bug Fixes
